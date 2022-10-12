@@ -52,6 +52,18 @@ If you are in need of some extra help, take a look into the demonstration mods:
                         <restriction indicies="1 2 .. n" name="string"/>
                     </configurationsRestrictions>
                     
+                    <!-- You want to use some extra dashboards for your control? -->
+                    <!-- There are three new valueTypes: ic_state (BOOLEAN) | ic_stateValue (FLOAT 0-1) | ic_action (in combination with 'raiseTime', 'activeTime', 'onICActivate', 'onICDeactivate')-->
+                    <dashboard activeTime="1" animName="string" baseColor="string" displayType="string" doInterpolation="false" emissiveScale="0.2" emitColor="string"font="DIGIT" fontThickness="1" groups="string" hasNormalMap="false" hiddenColor="string" idleValue="0" intensity="1" interpolationSpeed="0.005" maxRot="string" maxValueAnim="float" maxValueRot="float" maxValueSlider="float" minRot="string" minValueAnim="float" minValueRot="float" minValueSlider="float" node="node" numberColor="string" numbers="node" onICActivate="true" onICDeactivate="true" precision="1" raiseTime="1" rotAxis="float" textAlignment="RIGHT" textColor="string" textMask="00.0" textScaleX="1" textScaleY="1" textSize="0.03" valueType="string">
+                        <state rotation="x y z" scale="x y z" translation="x y z" value="1 2 .. n" visibility="boolean"/>
+                    </dashboard>
+                    
+                    <!-- You can block unused moving parts here -->
+                    <dependingMovingPart isInactive="true" node="node"/>
+
+                    <!-- You can block unused moving tools here -->
+                    <dependingMovingTool isInactive="true" node="node"/>
+                    
                     <!-- Add a function to your control, if you want to control a attached vehicle function, define an attacher joint index -->
                     <function name="string">
                         <attacherJoint index="integer"/>
@@ -80,7 +92,25 @@ If you are in need of some extra help, take a look into the demonstration mods:
 
 ### FunctionOverview:
 
-Function | Name     | Description
--------- | -------- | --------
-Inhalt   | Inhalt   | Inhalt
-Inhalt   | Inhalt   | Inhalt
+Function | Description
+-------- | --------
+MOTOR_START_STOPP | Toggle vehicle motor start and stop
+LIGHTS_TOGGLE | Toggle lights on and off
+LIGHTS_WORKBACK_TOGGLE | Toggle worklights back on and off
+LIGHTS_WORKFRONT_TOGGLE | Toggle worklights front on and off
+LIGHTS_HIGHBEAM_TOGGLE | Toggle highbeamlights on and off
+LIGHTS_TURNLIGHT_HAZARD_TOGGLE | Toggle hazard lights on and off
+LIGHTS_TURNLIGHT_LEFT_TOGGLE | Toggle turnlight left on and off
+LIGHTS_TURNLIGHT_RIGHT_TOGGLE | Toggle turnlight right on and off
+LIGHTS_BEACON_TOGGLE | Toggle beaconlight on and off
+GPS_TOGGLE | Toggle GudianceSteering on and off
+CRUISE_CONTROL_TOGGLE | Toggle cruise control on and off
+DRIVE_DIRECTION_TOGGLE | Toggle vehicle drive direction
+COVER_TOGGLE | Toggle cover state
+ATTACHERJOINT_LIFT_LOWER | Lift/lower implement on attacherJoint index
+ATTACHERJOINT_TURN_ON_OFF | Turn on/off implement on attacherJoint index
+TURN_ON_OFF | Turn on/off vehicle
+ATTACHERJOINT_FOLDING_TOGGLE | Fold/unfold implement on attacherJoint index
+FOLDING_TOGGLE | Fold/unfold vehicle
+ATTACHERJOINTS_TOGGLE_DISCHARGE | Toggles discharging on selected attacherJoint if in 'indices'
+TOGGLE_DISCHARGE | Toggles discharging on vehicle
