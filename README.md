@@ -1,13 +1,13 @@
 # Interactive Control
 
 'Interactive Control' is a global script mod for Farming Simulator 22.
-While this mod is active, you are able to use several other mods that support Interactive Control.
+While this mod is active, you are able to use many other mods that support Interactive Control.
 With IC you get the possibility to control many parts of several (prepared) vehicles interacitvly. 
 
 
 ## Possibilities
 
-'Interactive Control' provides different possibilities to interact with your vehicles. You can use click icons that appear when you turn them on or when you are nearby. Another way to use the functionalities is a key binding event. The controls are able to be used as switch or to force a state.
+'Interactive Control' provides different possibilities to interact with your vehicles. You can use click icons that appear when you turn on IC or when you are nearby. Another way for interactive handling is a key binding event. The controls are able to be used as switch or to force a state.
 All interactions are generally possible to use from the inside and the outside of a vehicle. 
 
 Using the controls you can steer different things:
@@ -51,7 +51,7 @@ If you are in need of some extra help, take a look into the demonstration mods:
                         <restriction indicies="1 2 .. n" name="string"/>
                     </configurationsRestrictions>
                     
-                    <!-- Add a functio to your control, if you want to control a attached vehicle function, define an attacher joint index -->
+                    <!-- Add a function to your control, if you want to control a attached vehicle function, define an attacher joint index -->
                     <function name="string">
                         <attacherJoint index="integer"/>
                     </function>
