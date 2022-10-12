@@ -28,6 +28,7 @@ If you are in need of some extra help, take a look into the demonstration mods:
   * Modhub: 
 
 
+### XML
 ```xml
 <interactiveControl>
     <interactiveControlConfigurations>
@@ -75,6 +76,7 @@ If you are in need of some extra help, take a look into the demonstration mods:
 </interactiveControl>
 
 ```
+
 
 ### FunctionOverview:
 
