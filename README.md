@@ -19,7 +19,7 @@ Using the controls you can steer different things:
 ## Documentation
 
 The documentation is not finished yet, but should be sufficient for experienced users.
-If you are in need of some extra help, take a look into the demonstation mods:
+If you are in need of some extra help, take a look into the demonstration mods:
 * Fendt Vario 900 Gen 6
   * Modhub: 
 * Fendt Vario 900 Gen 7
