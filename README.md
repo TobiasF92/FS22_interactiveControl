@@ -101,7 +101,7 @@ LIGHTS_TURNLIGHT_HAZARD_TOGGLE | Toggle hazard lights on and off
 LIGHTS_TURNLIGHT_LEFT_TOGGLE | Toggle turnlight left on and off
 LIGHTS_TURNLIGHT_RIGHT_TOGGLE | Toggle turnlight right on and off
 LIGHTS_BEACON_TOGGLE | Toggle beaconlight on and off
-GPS_TOGGLE | Toggle [GuidanceSteering](#https://www.farming-simulator.com/mod.php?lang=de&country=at&mod_id=228522) on and off
+GPS_TOGGLE | Toggle [GuidanceSteering](https://www.farming-simulator.com/mod.php?lang=de&country=at&mod_id=228522) on and off
 CRUISE_CONTROL_TOGGLE | Toggle cruise control on and off
 DRIVE_DIRECTION_TOGGLE | Toggle vehicle drive direction
 COVER_TOGGLE | Toggle cover state
