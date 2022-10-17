@@ -20,9 +20,7 @@ Using the controls you can steer different things:
 
 The documentation is not finished yet, but should be sufficient for experienced users.
 If you are in need of some extra help, take a look into the demonstration mods:
-* Fendt Vario 900 Gen 6
-  * Modhub: 
-* Fendt Vario 900 Gen 7
+* Fendt Vario 900 Gen 6 / Gen 7
   * Modhub: 
 * Kerner Corona Pack
   * Modhub: 
@@ -114,3 +112,4 @@ ATTACHERJOINT_FOLDING_TOGGLE | Fold/unfold implement on attacherJoint index
 FOLDING_TOGGLE | Fold/unfold vehicle
 ATTACHERJOINTS_TOGGLE_DISCHARGE | Toggles discharging on selected attacherJoint if in 'indices'
 TOGGLE_DISCHARGE | Toggles discharging on vehicle
+
