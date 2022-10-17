@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <texts>
+        <!-- actions -->
+        <text name="action_activateIC" text="Activate Interactive Control"/>
+        <text name="action_deactivateIC" text="Dectivate Interactive Control"/>
+
+        <!-- interactive control actions -->
+        <text name="actionIC_activate" text="IC: Activate"/>
+        <text name="actionIC_deactivate" text="IC: Deactivate"/>
+        
+        <text name="actionIC_startMotor" text="IC: Start motor"/>
+        <text name="actionIC_stopMotor" text="IC: Stop motor"/>
+        
+        <text name="actionIC_liftImplement" text="IC: Lift implement"/>
+        <text name="actionIC_lowerImplement" text="IC: Lower implement"/>
+        
+        <text name="actionIC_turnOnImplement" text="IC: Turn on implement"/>
+        <text name="actionIC_turnOffImplement" text="IC: Turn off implement"/>
+
+        <text name="actionIC_foldImplement" text="IC: Fold implement"/>
+        <text name="actionIC_unfoldImplement" text="IC: Unfold implement"/>
+        
+        <text name="actionIC_openRoof" text="IC: Open roof"/>
+        <text name="actionIC_closeRoof" text="IC: Close roof"/>
+        
+        <text name="actionIC_openDoor" text="IC: Open door"/>
+        <text name="actionIC_closeDoor" text="IC: Close door"/>
+        
+        <text name="actionIC_openWindow" text="IC: Open window"/>
+        <text name="actionIC_closeWindow" text="IC: Close window"/>
+        
+        <text name="actionIC_lightsOn" text="IC: Turn lights on"/>
+        <text name="actionIC_lightsOff" text="IC: Turn lights off"/>
+        
+        <text name="actionIC_highbeamlightsOn" text="IC: Turn highbeamlights lights on"/>
+        <text name="actionIC_highbeamlightsOff" text="IC: Turn highbeamlights lights off"/>
+        
+        <text name="actionIC_workLightsFrontOn" text="IC: Turn front worklights on"/>
+        <text name="actionIC_workLightsFrontOff" text="IC: Turn front worklights off"/>
+        
+        <text name="actionIC_workLightsBackOn" text="IC: Turn back worklights on"/>
+        <text name="actionIC_workLightsBackOff" text="IC: Turn back worklights off"/>
+
+        <text name="actionIC_turnLightsLeftOn" text="IC: Turn left turnlights on"/>
+        <text name="actionIC_turnLightsLeftOff" text="IC: Turn left turnlights off"/>
+
+        <text name="actionIC_turnLightsRightOn" text="IC: Turn right turnlights on"/>
+        <text name="actionIC_turnLightsRightOff" text="IC: Turn right turnlights off"/>
+
+        <text name="actionIC_hazardLightsOn" text="IC: Turn hazardlights on"/>
+        <text name="actionIC_hazardLightsOff" text="IC: Turn hazardlights off"/>
+
+        <text name="actionIC_gs_activate" text="IC: GS activate"/>
+        <text name="actionIC_gs_deactivate" text="IC: GS deactivate"/>
+
+        <text name="actionIC_cruiseControl_toggle" text="IC: Toggle cruise control"/>
+        
+        <text name="actionIC_openCover" text="IC: Open cover"/>
+        <text name="actionIC_closeCover" text="IC: Close cover"/>
+
+        <!-- inputs -->
+        <text name="input_IC_CLICK" text="IC: Interactive Control ClickPoint"/>
+        <text name="input_IC_TOGGLE_STATE" text="IC: Toggle Interactive Control"/>
+    </texts>
+</l10n>
