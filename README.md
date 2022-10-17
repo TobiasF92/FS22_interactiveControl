@@ -113,3 +113,9 @@ FOLDING_TOGGLE | Fold/unfold vehicle
 ATTACHERJOINTS_TOGGLE_DISCHARGE | Toggles discharging on selected attacherJoint if in 'indices'
 TOGGLE_DISCHARGE | Toggles discharging on vehicle
 
+
+## Copyright
+
+Copyright (c) 2022, John Deere 6930. All rights reserved.
+
+Thanks goes to: Wopster, JoPi, SirJoki80 & Flowsen (for the ui elements) and Face (for the initial idea)
