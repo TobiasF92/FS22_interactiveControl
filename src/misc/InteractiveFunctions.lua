@@ -567,8 +567,8 @@ InteractiveFunctions.addFunction("ATTACHERJOINTS_TOGGLE_DISCHARGE", {
     end
 })
 
----FUNCTION_TOGGLE_DISCHARGE
-InteractiveFunctions.addFunction("TOGGLE_DISCHARGE", {
+---FUNCTION_DISCHARGE_TOGGLE
+InteractiveFunctions.addFunction("DISCHARGE_TOGGLE", {
     posFunc = function(target, data, noEventSend)
         if target.getDischargeState ~= nil then
             local dischargeState = target:getDischargeState()
