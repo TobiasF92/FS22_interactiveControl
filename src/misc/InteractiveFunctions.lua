@@ -597,3 +597,18 @@ InteractiveFunctions.addFunction("TOGGLE_DISCHARGE", {
         return nil
     end
 })
+
+---FUNCTION_CRABSTEERING_TOGGLE
+InteractiveFunctions.addFunction("CRABSTEERING_TOGGLE", {
+    posFunc = function(target, data, noEventSend)
+        if target.getCanToggleCrabSteering ~= nil and CrabSteering.actionEventToggleCrabSteeringModes ~= nil then
+            CrabSteering.actionEventToggleCrabSteeringModes(target, nil, nil, 1)
+        end
+    end,
+    isEnabledFunc = function(target, data)
+        if target.getCanToggleCrabSteering ~= nil then
+            return target:getCanToggleCrabSteering()
+        end
+        return nil
+    end
+})
