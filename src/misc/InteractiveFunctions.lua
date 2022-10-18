@@ -612,3 +612,26 @@ InteractiveFunctions.addFunction("CRABSTEERING_TOGGLE", {
         return nil
     end
 })
+
+---FUNCTION_RADIO_TOGGLE
+InteractiveFunctions.addFunction("RADIO_TOGGLE", {
+    posFunc = function(target, data, noEventSend)
+        if g_soundPlayer ~= nil and g_currentMission ~= nil and g_currentMission.onToggleRadio ~= nil then
+            g_currentMission:onToggleRadio()
+        end
+    end,
+    updateFunc = function(target, data)
+        if g_currentMission.getIsRadioPlaying ~= nil then
+            return g_currentMission:getIsRadioPlaying()
+        end
+        return nil
+    end,
+    isEnabledFunc = function(target, data)
+        if g_soundPlayer ~= nil then
+            local isVehicleOnly = g_gameSettings:getValue(GameSettings.SETTING.RADIO_VEHICLE_ONLY)
+
+            return not isVehicleOnly or isVehicleOnly and target ~= nil and target.supportsRadio
+        end
+        return nil
+    end
+})
