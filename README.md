@@ -112,11 +112,13 @@ ATTACHERJOINT_FOLDING_TOGGLE | Fold/unfold implement on attacherJoint index
 FOLDING_TOGGLE | Fold/unfold vehicle
 ATTACHERJOINTS_TOGGLE_DISCHARGE | Toggles discharging on selected attacherJoint if in 'indices'
 DISCHARGE_TOGGLE | Toggles discharging on vehicle
-CRABSTEERING_TOGGLE | Toggles crab steering mode to next mode
+CRABSTEERING_TOGGLE | Toggle crab steering mode to next mode
+RADIO_TOGGLE | Toggle radio on/off
 
 
 ## Copyright
 
 Copyright (c) 2022, John Deere 6930. All rights reserved.
 
-Thanks goes to: Wopster, JoPi, SirJoki80 & Flowsen (for the ui elements) and Face (for the initial idea)
+
+***Thanks goes to: Wopster, JoPi, SirJoki80 & Flowsen (for the ui elements) and Face (for the initial idea)***
