@@ -111,7 +111,8 @@ TURN_ON_OFF | Turn on/off vehicle
 ATTACHERJOINT_FOLDING_TOGGLE | Fold/unfold implement on attacherJoint index
 FOLDING_TOGGLE | Fold/unfold vehicle
 ATTACHERJOINTS_TOGGLE_DISCHARGE | Toggles discharging on selected attacherJoint if in 'indices'
-TOGGLE_DISCHARGE | Toggles discharging on vehicle
+DISCHARGE_TOGGLE | Toggles discharging on vehicle
+CRABSTEERING_TOGGLE | Toggles crab steering mode to next mode
 
 
 ## Copyright
