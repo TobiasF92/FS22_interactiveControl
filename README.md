@@ -74,7 +74,9 @@ If you are in need of some extra help, take a look into the demonstration mods:
                     </function>
                     
                     <objectChange centerOfMassActive="x y z" centerOfMassInactive="x y z" compoundChildActive="boolean" compoundChildInactive="boolean" interpolation="false" interpolationTime="1" massActive="float" massInactive="float" node="node" parentNodeActive="node" parentNodeInactive="node" rigidBodyTypeActive="string" rigidBodyTypeInactive="string" rotationActive="x y z" rotationInactive="x y z" scaleActive="x y z" scaleInactive="x y z" shaderParameter="string" shaderParameterActive="x y z w" shaderParameterInactive="x y z w" sharedShaderParameter="false" translationActive="x y z" translationInactive="x y z" visibilityActive="boolean" visibilityInactive="boolean"/>
-                    <soundModifier indoorFactor="float"/>
+                    <!-- Modify sound here, 'indoorFactor' is the sound percantage factor if control is active -->
+                    <!-- Set 'delayedSoundAnimationTime' if the sound should be changed on specific animation time (first animation or 'name') -->
+                    <soundModifier indoorFactor="float" delayedSoundAnimationTime="float" name="string"/>
                 </interactiveControl>
                 
                 <!-- The outdoor trigger is important, if you want to use IC from the outside of a vehicle -->
@@ -116,8 +118,8 @@ ATTACHERJOINT_TURN_ON_OFF | Turn on/off implement on attacherJoint index
 TURN_ON_OFF | Turn on/off vehicle
 ATTACHERJOINT_FOLDING_TOGGLE | Fold/unfold implement on attacherJoint index
 FOLDING_TOGGLE | Fold/unfold vehicle
-ATTACHERJOINTS_TOGGLE_DISCHARGE | Toggles discharging on selected attacherJoint if in 'indices'
-DISCHARGE_TOGGLE | Toggles discharging on vehicle
+ATTACHERJOINTS_TOGGLE_DISCHARGE | Toggle discharging on selected attacherJoint if in 'indices'
+DISCHARGE_TOGGLE | Toggle discharging on vehicle
 CRABSTEERING_TOGGLE | Toggle crab steering mode to next mode
 RADIO_TOGGLE | Toggle radio on/off
 
