@@ -590,17 +590,13 @@ end
 ---@param isActiveForInputIgnoreSelection boolean
 ---@param isSelected boolean
 function InteractiveControl:onDraw(isActiveForInput, isActiveForInputIgnoreSelection, isSelected)
-    if self:getState() and isActiveForInputIgnoreSelection and g_currentMission.player ~= nil then
-        g_currentMission.player.aimOverlay:render()
-    end
+    if self.isClient and self:getState() then
+        if isActiveForInputIgnoreSelection and g_currentMission.player ~= nil then
+            g_currentMission.player.aimOverlay:render()
+        end
 
-    if self.isClient then
-        if self:getState() then
-            local isIndoor = g_soundManager:getIsIndoor()
-
-            if isIndoor then
-                self:updateInteractiveControls(isIndoor, false, isActiveForInputIgnoreSelection)
-            end
+        if g_soundManager:getIsIndoor() then
+            self:updateInteractiveControls(true, false, isActiveForInputIgnoreSelection)
         end
     end
 end
