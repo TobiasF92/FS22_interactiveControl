@@ -121,4 +121,7 @@ RADIO_TOGGLE | Toggle radio on/off
 Copyright (c) 2022, John Deere 6930. All rights reserved.
 
 
-***Thanks goes to: Wopster, JoPi, SirJoki80 & Flowsen (for the ui elements) and Face (for the initial idea)***
+
+***Thanks goes to:***
+- ***Wopster, JoPi, SirJoki80 & Flowsen (for the ui elements) and Face (for the initial idea)***
+- ***VertexDezign & SchnibblModding for testing and providing demo mods!***
