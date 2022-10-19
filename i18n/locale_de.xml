@@ -59,6 +59,11 @@
         <text name="actionIC_openCover" text="IC: Abdeckung öffnen"/>
         <text name="actionIC_closeCover" text="IC: Abdeckung schließen"/>
 
+        <text name="actionIC_radioOn" text="IC: Radio anschalten"/>
+        <text name="actionIC_radioOff" text="IC: Radio ausschalten"/>
+    
+        <text name="actionIC_crabSteering_toggle" text="IC: Lenkmodus wechseln"/>
+    
         <!-- inputs -->
         <text name="input_IC_CLICK" text="IC: Interactive Control ClickPoint"/>
         <text name="input_IC_TOGGLE_STATE" text="IC: Interactive Control umschalten"/>
