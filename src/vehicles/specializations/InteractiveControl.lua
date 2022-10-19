@@ -11,6 +11,7 @@
 InteractiveControl = {}
 InteractiveControl.NUM_BITS = 8
 InteractiveControl.NUM_MAX_CONTROLS = 2 ^ InteractiveControl.NUM_BITS - 1
+InteractiveControl.MAX_TRIGGER_CALLBACK_TICK = 15
 
 InteractiveControl.INTERACTIVE_CONTROLS_CONFIG_XML_KEY = "vehicle.interactiveControl.interactiveControlConfigurations.interactiveControlConfiguration(?)"
 InteractiveControl.INTERACTIVE_CONTROL_XML_KEY = InteractiveControl.INTERACTIVE_CONTROLS_CONFIG_XML_KEY .. ".interactiveControls.interactiveControl(?)"
@@ -211,6 +212,7 @@ function InteractiveControl:onLoad(savegame)
 
         spec.isPlayerInRange = false
     end
+    spec.interactiveControlTriggerCallbackTick = 0
 
     spec.updateTimer = 0
     spec.updateTimerOffset = 1500  -- ms
@@ -885,6 +887,14 @@ end
 ---@param onStay boolean
 function InteractiveControl:interactiveControlTriggerCallback(triggerId, otherId, onEnter, onLeave, onStay)
     local spec = self.spec_interactiveControl
+
+    if spec.interactiveControlTriggerCallbackTick < InteractiveControl.MAX_TRIGGER_CALLBACK_TICK then
+        spec.interactiveControlTriggerCallbackTick = spec.interactiveControlTriggerCallbackTick + 1
+        return
+    end
+
+    spec.interactiveControlTriggerCallbackTick = 0
+
     if self:getOwnerFarmId() == g_currentMission:getFarmId() and g_currentMission.player ~= nil and otherId == g_currentMission.player.rootNode then
         if onEnter then
             spec.isPlayerInRange = true
@@ -1065,11 +1075,10 @@ function InteractiveControl:getIsMovingToolActive(superFunc, movingTool)
     local spec = self.spec_interactiveControl
 
     if spec.movingToolsInactive[movingTool] ~= nil then
-        log("found inactive moving tool")
         return false
     end
 
-	return superFunc(self, movingTool)
+    return superFunc(self, movingTool)
 end
 
 ---Overwritten function: getIsMovingPartActive
@@ -1079,9 +1088,8 @@ function InteractiveControl:getIsMovingPartActive(superFunc, movingPart)
     local spec = self.spec_interactiveControl
 
     if spec.movingPartsInactive[movingPart] ~= nil then
-        log("found inactive moving part")
         return false
     end
 
-	return superFunc(self, movingPart)
+    return superFunc(self, movingPart)
 end
