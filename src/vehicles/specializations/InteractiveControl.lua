@@ -68,6 +68,8 @@ function InteractiveControl.initSpecialization()
 
         -- register sound modifier
         schema:register(XMLValueType.FLOAT, interactiveControlPath .. ".soundModifier#indoorFactor", "Indoor sound modifier factor for active interactive control")
+        schema:register(XMLValueType.FLOAT, interactiveControlPath .. ".soundModifier#delayedSoundAnimationTime", "Delayed sound animation time")
+        schema:register(XMLValueType.STRING, interactiveControlPath .. ".soundModifier#name", "Animation name, if not set, first animation will be used")
         schema:setXMLSpecializationType()
 
         -- register dashboards
@@ -114,6 +116,7 @@ function InteractiveControl.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "interactiveControlTriggerCallback", InteractiveControl.interactiveControlTriggerCallback)
     SpecializationUtil.registerFunction(vehicleType, "isOutdoorActive", InteractiveControl.isOutdoorActive)
     SpecializationUtil.registerFunction(vehicleType, "getIndoorModifiedSoundFactor", InteractiveControl.getIndoorModifiedSoundFactor)
+    SpecializationUtil.registerFunction(vehicleType, "isSoundAnimationDelayed", InteractiveControl.isSoundAnimationDelayed)
     SpecializationUtil.registerFunction(vehicleType, "updateIndoorSoundModifierByControl", InteractiveControl.updateIndoorSoundModifierByControl)
     SpecializationUtil.registerFunction(vehicleType, "getMaxIndoorSoundModifier", InteractiveControl.getMaxIndoorSoundModifier)
 end
@@ -214,7 +217,9 @@ function InteractiveControl:onLoad(savegame)
 
     spec.updateTimer = 0
     spec.updateTimerOffset = 1500  -- ms
+
     spec.indoorSoundModifierFactor = 1.0
+    spec.pendingSoundControls = {}
 end
 
 ---Called after load
@@ -404,7 +409,9 @@ function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
     entry.isEnabled = isRestricted(xmlFile, key .. ".configurationsRestrictions")
 
     entry.soundModifier = {
-        indoorFactor = xmlFile:getValue(key .. ".soundModifier#indoorFactor")
+        indoorFactor = xmlFile:getValue(key .. ".soundModifier#indoorFactor"),
+        delayedSoundAnimationTime = xmlFile:getValue(key .. ".soundModifier#delayedSoundAnimationTime"),
+        name = xmlFile:getValue(key .. ".soundModifier#name")
     }
 
     -- load dashboards
@@ -579,6 +586,17 @@ function InteractiveControl:onUpdateTick(dt, isActiveForInput, isActiveForInputI
                             self:setControlState(interactiveControl, retState, false, true)
                         end
                     end
+                end
+            end
+        end
+
+        -- update pending animation sounds
+        if isActiveForInputIgnoreSelection and #spec.pendingSoundControls > 0 then
+            for _, interactiveControl in ipairs(spec.pendingSoundControls) do
+                if self:isSoundAnimationDelayed(interactiveControl) then
+                    self:updateIndoorSoundModifierByControl(interactiveControl)
+
+                    table.removeElement(spec.pendingSoundControls, interactiveControl)
                 end
             end
         end
@@ -918,10 +936,37 @@ function InteractiveControl:getIndoorModifiedSoundFactor()
     end
 end
 
+---Returns true if sound is ready to change, false otherwise
+---@param interactiveControl table interactiveControl entry
+---@return boolean isDelayed
+function InteractiveControl:isSoundAnimationDelayed(interactiveControl)
+    if interactiveControl == nil or interactiveControl.soundModifier.delayedSoundAnimationTime == nil then
+        return true
+    end
+
+    for _, animation in pairs(interactiveControl.animations) do
+        if interactiveControl.delayedSoundAnimation == nil or interactiveControl.delayedSoundAnimation == animation.name then
+            local animTime = self:getAnimationTime(animation.name)
+
+            if interactiveControl.state then
+                return animTime >= interactiveControl.soundModifier.delayedSoundAnimationTime
+            else
+                return animTime < interactiveControl.soundModifier.delayedSoundAnimationTime
+            end
+        end
+    end
+end
+
 ---Updates current indoor sound modifier factor by interactiveControl
 ---@param interactiveControl table
 function InteractiveControl:updateIndoorSoundModifierByControl(interactiveControl)
     local spec = self.spec_interactiveControl
+
+    if not self:isSoundAnimationDelayed(interactiveControl) then
+        table.addElement(spec.pendingSoundControls, interactiveControl)
+
+        return
+    end
 
     local indoorFactor = interactiveControl.state and interactiveControl.soundModifier.indoorFactor or 1.0
     if spec.indoorSoundModifierFactor < indoorFactor then
