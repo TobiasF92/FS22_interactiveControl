@@ -74,7 +74,7 @@ If you are in need of some extra help, take a look into the demonstration mods:
                     </function>
                     
                     <objectChange centerOfMassActive="x y z" centerOfMassInactive="x y z" compoundChildActive="boolean" compoundChildInactive="boolean" interpolation="false" interpolationTime="1" massActive="float" massInactive="float" node="node" parentNodeActive="node" parentNodeInactive="node" rigidBodyTypeActive="string" rigidBodyTypeInactive="string" rotationActive="x y z" rotationInactive="x y z" scaleActive="x y z" scaleInactive="x y z" shaderParameter="string" shaderParameterActive="x y z w" shaderParameterInactive="x y z w" sharedShaderParameter="false" translationActive="x y z" translationInactive="x y z" visibilityActive="boolean" visibilityInactive="boolean"/>
-                    <!-- Modify sound here, 'indoorFactor' is the sound percantage factor if control is active -->
+                    <!-- Modify sound here, 'indoorFactor' is the sound percentage factor if control is active -->
                     <!-- Set 'delayedSoundAnimationTime' if the sound should be changed on specific animation time (first animation or 'name') -->
                     <soundModifier indoorFactor="float" delayedSoundAnimationTime="float" name="string"/>
                 </interactiveControl>
