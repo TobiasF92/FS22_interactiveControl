@@ -135,8 +135,8 @@ end
 
 function InteractiveControl.registerOverwrittenFunctions(vehicleType)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "getIsActive", InteractiveControl.getIsActive)
-	SpecializationUtil.registerOverwrittenFunction(vehicleType, "getIsMovingToolActive", InteractiveControl.getIsMovingToolActive)
-	SpecializationUtil.registerOverwrittenFunction(vehicleType, "getIsMovingPartActive", InteractiveControl.getIsMovingPartActive)
+    SpecializationUtil.registerOverwrittenFunction(vehicleType, "getIsMovingToolActive", InteractiveControl.getIsMovingToolActive)
+    SpecializationUtil.registerOverwrittenFunction(vehicleType, "getIsMovingPartActive", InteractiveControl.getIsMovingPartActive)
 end
 
 ---Called before load
@@ -424,12 +424,12 @@ function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
             valueObject = entry
         })
         self:loadDashboardsFromXML(xmlFile, key, {
-			maxFunc = 1,
-			minFunc = 0,
-			valueTypeToLoad = "ic_action",
-			valueObject = entry,
-			valueFunc = InteractiveControl.getInteractiveControlDashboardValue,
-			additionalAttributesFunc = InteractiveControl.interactiveControlDashboardAttributes
+            maxFunc = 1,
+            minFunc = 0,
+            valueTypeToLoad = "ic_action",
+            valueObject = entry,
+            valueFunc = InteractiveControl.getInteractiveControlDashboardValue,
+            additionalAttributesFunc = InteractiveControl.interactiveControlDashboardAttributes
         })
     end
 
