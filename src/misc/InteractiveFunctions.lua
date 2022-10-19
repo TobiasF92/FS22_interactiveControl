@@ -46,6 +46,7 @@ function InteractiveFunctions.addFunction(functionIdStr, functionArgs)
     InteractiveFunctions.FUNCTION_ID[functionIdStr] = getNextId()
 
     local entry = {}
+    entry.name = functionIdStr
     entry.functionId = InteractiveFunctions.FUNCTION_ID[functionIdStr]
 
     entry.posFunc = functionArgs.posFunc

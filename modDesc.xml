@@ -18,6 +18,7 @@ Using the controls you can steer different things:
 - Call specific functions (e.g. Start/Stop Motor, TurnOn/Off tool, Lift/Lower attacher joints, ...)
 - ObjectChanges (to change translation/rotation/visibility/...)
 
+For further informations: <a href="https://github.com/TobiasF92/FS22_interactiveControl/blob/develop/README.md">README</a> on Github.
         ]]></en>
         <de><![CDATA['Interactive Control' ist ein globaler Skript-Mod für den Landwirtschafts-Simulator 22. Während dieser Mod aktiv ist, sind Sie in der Lage, viele andere Mods zu verwenden, die Interactive Control unterstützen. Mit IC erhalten Sie die Möglichkeit, viele Teile von mehreren (vorbereiteten) Fahrzeugen interaktiv zu steuern.
 
@@ -29,6 +30,7 @@ Mit den Bedienelementen können Sie verschiedene Dinge steuern:
 - Aufrufen bestimmter Funktionen (z.B. Motor starten/stoppen, Werkzeug ein-/ausschalten, Gelenke heben/senken, ...)
 - ObjectChanges (zum Ändern von Translation/Rotation/Sichtbarkeit/...)
 
+Für mehr Informationen: <a href="https://github.com/TobiasF92/FS22_interactiveControl/blob/develop/README.md">README</a> auf Github.
         ]]></de>
     </description>
 
