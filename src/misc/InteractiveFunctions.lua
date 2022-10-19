@@ -61,6 +61,18 @@ function InteractiveFunctions.addFunction(functionIdStr, functionArgs)
     return true
 end
 
+---Returns knwon function data for given function name
+---@param functionName string function name to get data
+---@return table|nil functionData
+function InteractiveFunctions.getFunctionData(functionName)
+    local identifier = InteractiveFunctions.FUNCTION_ID[functionName]
+    if identifier == nil then
+        return nil
+    end
+
+    return InteractiveFunctions.FUNCTIONS[identifier]
+end
+
 ---FUNCTION_MOTOR_START_STOPP
 InteractiveFunctions.addFunction("MOTOR_START_STOPP", {
     posFunc = function(target, data, noEventSend)

@@ -487,14 +487,12 @@ end
 ---@param icFunction table
 ---@return boolean
 function InteractiveControl:loadFunctionFromXML(xmlFile, functionKey, icFunction)
-    local funcName = xmlFile:getValue(functionKey .. "#name")
-    funcName = funcName:upper()
-
-    local identifier = InteractiveFunctions.FUNCTION_ID[funcName]
-    local data = InteractiveFunctions.FUNCTIONS[identifier]
+    local functionName = xmlFile:getValue(functionKey .. "#name")
+    functionName = functionName:upper()
+    local data = InteractiveFunctions.getFunctionData(functionName)
 
     if data == nil then
-        Logging.xmlWarning(xmlFile, "Unable to find functionName '%s' for interactive function '%s'", funcName, functionKey)
+        Logging.xmlWarning(xmlFile, "Unable to find functionName '%s' for interactive function '%s'", functionName, functionKey)
         return false
     end
 
