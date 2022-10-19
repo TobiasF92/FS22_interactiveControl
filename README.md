@@ -15,6 +15,12 @@ Using the controls you can steer different things:
 * Call specific [functions](#FunctionOverview) (e.g. Start/Stop Motor, TurnOn/Off tool, Lift/Lower attacher joints, ...)
 * ObjectChanges (to change translation/rotation/visibility/...)
 
+## Thanks goes to:
+***Wopster, JoPi, SirJoki80 & Flowsen (for the ui elements) and Face (for the initial idea)***
+
+***VertexDezign & SchnibblModding for testing and providing demo mods!***
+
+
 
 ## Documentation
 
@@ -119,9 +125,3 @@ RADIO_TOGGLE | Toggle radio on/off
 ## Copyright
 
 Copyright (c) 2022, John Deere 6930. All rights reserved.
-
-
-
-***Thanks goes to:***
-- ***Wopster, JoPi, SirJoki80 & Flowsen (for the ui elements) and Face (for the initial idea)***
-- ***VertexDezign & SchnibblModding for testing and providing demo mods!***
