@@ -489,8 +489,8 @@ end
 function InteractiveControl:loadFunctionFromXML(xmlFile, functionKey, icFunction)
     local functionName = xmlFile:getValue(functionKey .. "#name")
     functionName = functionName:upper()
-    local data = InteractiveFunctions.getFunctionData(functionName)
 
+    local data = InteractiveFunctions.getFunctionData(functionName)
     if data == nil then
         Logging.xmlWarning(xmlFile, "Unable to find functionName '%s' for interactive function '%s'", functionName, functionKey)
         return false
@@ -1108,11 +1108,10 @@ function InteractiveControl:getIsMovingToolActive(superFunc, movingTool)
     local spec = self.spec_interactiveControl
 
     if spec.movingToolsInactive[movingTool] ~= nil then
-        log("found inactive moving tool")
         return false
     end
 
-	return superFunc(self, movingTool)
+    return superFunc(self, movingTool)
 end
 
 ---Overwritten function: getIsMovingPartActive
@@ -1122,9 +1121,8 @@ function InteractiveControl:getIsMovingPartActive(superFunc, movingPart)
     local spec = self.spec_interactiveControl
 
     if spec.movingPartsInactive[movingPart] ~= nil then
-        log("found inactive moving part")
         return false
     end
 
-	return superFunc(self, movingPart)
+    return superFunc(self, movingPart)
 end

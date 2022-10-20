@@ -99,21 +99,21 @@ end
 ---@return boolean isActivatable
 function InteractiveBase:isActivatable()
     -- check foldAnim time
-	if self.target.getFoldAnimTime ~= nil then
-		local time = self.target:getFoldAnimTime()
+    if self.target.getFoldAnimTime ~= nil then
+        local time = self.target:getFoldAnimTime()
 
-		if self.foldMaxLimit < time or time < self.foldMinLimit then
-			return false
-		end
-	end
+        if self.foldMaxLimit < time or time < self.foldMinLimit then
+            return false
+        end
+    end
 
     -- check animation time
-	if self.target.getAnimationTime ~= nil and self.animName ~= nil then
-		local animTime = self.target:getAnimationTime(self.animName)
+    if self.target.getAnimationTime ~= nil and self.animName ~= nil then
+        local animTime = self.target:getAnimationTime(self.animName)
 
-		if self.animMaxLimit < animTime or animTime < self.animMinLimit then
-			return false
-		end
+        if self.animMaxLimit < animTime or animTime < self.animMinLimit then
+            return false
+        end
     end
 
     -- check forced state
