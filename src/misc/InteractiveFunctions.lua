@@ -38,8 +38,7 @@ function InteractiveFunctions.addFunction(functionIdStr, functionArgs)
         return false
     end
     if InteractiveFunctions.FUNCTION_ID[functionIdStr] ~= nil then
-        Logging.warning("Warning: InteractiveFunction with ID: %s was not added! FunctionID already exists!",
-            functionIdStr)
+        Logging.warning("Warning: InteractiveFunction with ID: %s was not added! FunctionID already exists!", functionIdStr)
         return false
     end
 
@@ -76,8 +75,7 @@ end
 ---FUNCTION_MOTOR_START_STOPP
 InteractiveFunctions.addFunction("MOTOR_START_STOPP", {
     posFunc = function(target, data, noEventSend)
-        if not g_currentMission.missionInfo.automaticMotorStartEnabled and target.getCanMotorRun ~= nil and
-            target.startMotor ~= nil then
+        if not g_currentMission.missionInfo.automaticMotorStartEnabled and target.getCanMotorRun ~= nil and target.startMotor ~= nil then
             if target:getCanMotorRun() then
                 target:startMotor(noEventSend)
             end
@@ -152,7 +150,6 @@ InteractiveFunctions.addFunction("LIGHTS_TURNLIGHT_HAZARD_TOGGLE", {
         if target.getCanToggleLight ~= nil and target.setTurnLightState ~= nil then
             if target:getCanToggleLight() then
                 local state = Lights.TURNLIGHT_OFF
-
                 if target.spec_lights.turnLightState ~= Lights.TURNLIGHT_HAZARD then
                     state = Lights.TURNLIGHT_HAZARD
                 end
@@ -175,7 +172,6 @@ InteractiveFunctions.addFunction("LIGHTS_TURNLIGHT_LEFT_TOGGLE", {
         if target.getCanToggleLight ~= nil and target.setTurnLightState ~= nil then
             if target:getCanToggleLight() then
                 local state = Lights.TURNLIGHT_OFF
-
                 if target.spec_lights.turnLightState ~= Lights.TURNLIGHT_LEFT then
                     state = Lights.TURNLIGHT_LEFT
                 end
@@ -198,7 +194,6 @@ InteractiveFunctions.addFunction("LIGHTS_TURNLIGHT_RIGHT_TOGGLE", {
         if target.getCanToggleLight ~= nil and target.setTurnLightState ~= nil then
             if target:getCanToggleLight() then
                 local state = Lights.TURNLIGHT_OFF
-
                 if target.spec_lights.turnLightState ~= Lights.TURNLIGHT_RIGHT then
                     state = Lights.TURNLIGHT_RIGHT
                 end
@@ -326,9 +321,7 @@ InteractiveFunctions.addFunction("ATTACHERJOINT_LIFT_LOWER", {
     loadFunc = function(xmlFile, key, data)
         data.attacherJointIndex = xmlFile:getValue(key .. ".attacherJoint#index")
         if data.attacherJointIndex == nil then
-            Logging.xmlWarning(xmlFile,
-                "Failed to load attacherJoint index, ignoring control\nSet value '%s.attacherJoint#index' to use function: ATTACHERJOINT_LIFT_LOWER"
-                , key)
+            Logging.xmlWarning(xmlFile, "Failed to load attacherJoint index, ignoring control\nSet value '%s.attacherJoint#index' to use function: ATTACHERJOINT_LIFT_LOWER", key)
             return false
         end
         return true
@@ -384,9 +377,7 @@ InteractiveFunctions.addFunction("ATTACHERJOINT_TURN_ON_OFF", {
     loadFunc = function(xmlFile, key, data)
         data.attacherJointIndex = xmlFile:getValue(key .. ".attacherJoint#index")
         if data.attacherJointIndex == nil then
-            Logging.xmlWarning(xmlFile,
-                "Failed to load attacherJoint index, ignoring control\nSet value '%s.attacherJoint#index' to use function: ATTACHERJOINT_TURN_ON_OFF"
-                , key)
+            Logging.xmlWarning(xmlFile, "Failed to load attacherJoint index, ignoring control\nSet value '%s.attacherJoint#index' to use function: ATTACHERJOINT_TURN_ON_OFF", key)
             return false
         end
         return true
@@ -465,9 +456,7 @@ InteractiveFunctions.addFunction("ATTACHERJOINT_FOLDING_TOGGLE", {
     loadFunc = function(xmlFile, key, data)
         data.attacherJointIndex = xmlFile:getValue(key .. ".attacherJoint#index")
         if data.attacherJointIndex == nil then
-            Logging.xmlWarning(xmlFile,
-                "Failed to load attacherJoint index, ignoring control\nSet value '%s.attacherJoint#index' to use function: ATTACHERJOINT_FOLDING_TOGGLE"
-                , key)
+            Logging.xmlWarning(xmlFile, "Failed to load attacherJoint index, ignoring control\nSet value '%s.attacherJoint#index' to use function: ATTACHERJOINT_FOLDING_TOGGLE", key)
             return false
         end
         return true
@@ -532,17 +521,14 @@ InteractiveFunctions.addFunction("ATTACHERJOINTS_TOGGLE_DISCHARGE", {
         return nil
     end,
     schemaFunc = function(schema, path)
-        schema:register(XMLValueType.VECTOR_N, path .. ".attacherJoint#indicies",
-            "Attacher joint indicies to be controlled", true)
+        schema:register(XMLValueType.VECTOR_N, path .. ".attacherJoint#indicies", "Attacher joint indicies to be controlled", true)
     end,
     loadFunc = function(xmlFile, key, data)
         data.attacherJointIndicies = xmlFile:getValue(key .. ".attacherJoint#indicies", nil, true)
         data.selectedObject = nil
 
         if data.attacherJointIndicies == nil or table.getn(data.attacherJointIndicies) <= 0 then
-            Logging.xmlWarning(xmlFile,
-                "Failed to load attacherJoint indicies, ignoring control\nSet value '%s.attacherJoint#indicies' to use function: ATTACHERJOINTS_TOGGLE_DISCHARGE"
-                , key)
+            Logging.xmlWarning(xmlFile, "Failed to load attacherJoint indicies, ignoring control\nSet value '%s.attacherJoint#indicies' to use function: ATTACHERJOINTS_TOGGLE_DISCHARGE", key)
             return false
         end
         return true
@@ -629,7 +615,7 @@ InteractiveFunctions.addFunction("CRABSTEERING_TOGGLE", {
 ---FUNCTION_RADIO_TOGGLE
 InteractiveFunctions.addFunction("RADIO_TOGGLE", {
     posFunc = function(target, data, noEventSend)
-        if g_soundPlayer ~= nil and g_currentMission ~= nil and g_currentMission.onToggleRadio ~= nil then
+        if g_soundPlayer ~= nil and g_currentMission ~= nil and g_currentMission.onToggleRadio ~= nil and g_currentMission.controlledVehicle == target then
             g_currentMission:onToggleRadio()
         end
     end,

@@ -54,7 +54,7 @@ function InteractiveControl.initSpecialization()
                 functionData.schemaFunc(schema, interactiveControlPath .. ".function(?)")
             end
 
-            functionNames = string.format("%s | %s", functionNames, functionData.name)
+            functionNames = ("%s | %s"):format(functionNames, functionData.name)
         end
         schema:register(XMLValueType.STRING, interactiveControlPath .. ".function(?)#name", ("Function name (Avaiable: %s)"):format(functionNames))
 
@@ -79,11 +79,18 @@ function InteractiveControl.initSpecialization()
         schema:register(XMLValueType.BOOL, interactiveControlPath .. ".dashboard(?)#onICActivate", "(IC) Use dashboard on activate ic action", true)
         schema:register(XMLValueType.BOOL, interactiveControlPath .. ".dashboard(?)#onICDeactivate", "(IC) Use dashboard on deactivate ic action", true)
 
-        -- register cylindered updates
+        -- register depending movingTools
         schema:register(XMLValueType.NODE_INDEX, interactiveControlPath .. ".dependingMovingTool(?)#node", "Moving tool node")
         schema:register(XMLValueType.BOOL, interactiveControlPath .. ".dependingMovingTool(?)#isInactive", "(IC) Is moving tool active while control is used", true)
+
+        -- register depending movingTools
         schema:register(XMLValueType.NODE_INDEX, interactiveControlPath .. ".dependingMovingPart(?)#node", "Moving part node")
         schema:register(XMLValueType.BOOL, interactiveControlPath .. ".dependingMovingPart(?)#isInactive", "(IC) Is moving part active while control is used", true)
+
+        -- register depending interactive controls
+        schema:register(XMLValueType.INT, interactiveControlPath .. ".dependingInteractiveControl(?)#index", "Index of depending interactive control")
+        schema:register(XMLValueType.BOOL, interactiveControlPath .. ".dependingInteractiveControl(?)#blockState", "Interactive control state to block depending control")
+        schema:register(XMLValueType.BOOL, interactiveControlPath .. ".dependingInteractiveControl(?)#forcedBlockedState", "Forced state of depending control if blocked")
     end
 
     -- add to vehicle schema
@@ -113,6 +120,7 @@ function InteractiveControl.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "setControlStateByIndex", InteractiveControl.setControlStateByIndex)
     SpecializationUtil.registerFunction(vehicleType, "toggleControlState", InteractiveControl.toggleControlState)
     SpecializationUtil.registerFunction(vehicleType, "isControlEnabledByFunction", InteractiveControl.isControlEnabledByFunction)
+    SpecializationUtil.registerFunction(vehicleType, "isControlBlocked", InteractiveControl.isControlBlocked)
     SpecializationUtil.registerFunction(vehicleType, "interactiveControlTriggerCallback", InteractiveControl.interactiveControlTriggerCallback)
     SpecializationUtil.registerFunction(vehicleType, "isOutdoorActive", InteractiveControl.isOutdoorActive)
     SpecializationUtil.registerFunction(vehicleType, "getIndoorModifiedSoundFactor", InteractiveControl.getIndoorModifiedSoundFactor)
@@ -237,6 +245,7 @@ function InteractiveControl:onPostLoad(savegame)
         return
     end
 
+    -- load interactive control from xml
     if savegame ~= nil then
         local iterationKey = savegame.key .. "." .. g_interactiveControlModName .. ".interactiveControl.control"
 
@@ -262,6 +271,7 @@ function InteractiveControl:onPostLoad(savegame)
         end)
     end
 
+    -- update interactive animations depending on current state
     if self.playAnimation ~= nil then
         for _, interactiveControl in pairs(spec.interactiveControls) do
             for _, animation in pairs(interactiveControl.animations) do
@@ -276,6 +286,7 @@ function InteractiveControl:onPostLoad(savegame)
                 end
                 AnimatedVehicle.updateAnimationByName(self, animation.name, 9999999, true)
             end
+
             interactiveControl.loadedDirty = false
         end
     end
@@ -303,11 +314,13 @@ function InteractiveControl:saveToXMLFile(xmlFile, key, usedModNames)
 end
 
 ---Load interactiveControl from XML
----@param xmlFile table
----@param key string
----@param entry table
----@return boolean
+---@param xmlFile XMLFile xml file class instance
+---@param key string xml path
+---@param entry table interactive control entry
+---@return boolean loaded
 function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
+    local spec = self.spec_interactiveControl
+
     entry.state = false
     entry.posText = xmlFile:getValue(key .. "#posText", nil, self.customEnvironment)
     entry.negText = xmlFile:getValue(key .. "#negText", nil, self.customEnvironment)
@@ -323,6 +336,22 @@ function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
         else
             clickPoint:delete()
             Logging.xmlWarning(xmlFile, "Could not load interactive click point for '%s'", clickPointKey)
+
+            return false
+        end
+    end)
+
+    -- load buttons from XML
+    entry.buttons = {}
+
+    xmlFile:iterate(key .. ".button", function (_, buttonKey)
+        local button = InteractiveButton.new()
+
+        if button:loadFromXML(xmlFile, buttonKey, self, entry) then
+            table.insert(entry.buttons, button)
+        else
+            button:delete()
+            Logging.xmlWarning(xmlFile, "Could not load button for '%s'", buttonKey)
 
             return false
         end
@@ -358,56 +387,7 @@ function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
         end
     end)
 
-    entry.allowsSaving = #entry.functions == 0
-    entry.loadedDirty = false
-
-    -- load buttons from XML
-    entry.buttons = {}
-
-    xmlFile:iterate(key .. ".button", function (_, buttonKey)
-        local button = InteractiveButton.new()
-
-        if button:loadFromXML(xmlFile, buttonKey, self, entry) then
-            table.insert(entry.buttons, button)
-        else
-            button:delete()
-            Logging.xmlWarning(xmlFile, "Could not load button for '%s'", buttonKey)
-
-            return false
-        end
-    end)
-
-    entry.changeObjects = {}
-    ObjectChangeUtil.loadObjectChangeFromXML(xmlFile, key, entry.changeObjects, self.components, self)
-    ObjectChangeUtil.setObjectChanges(entry.changeObjects, false, self, self.setMovingToolDirty, true)
-
-    local function isRestricted(_xmlFile, _key)
-        local isEnabled = true
-
-        _xmlFile:iterate(_key .. ".restriction", function (_, restrictionKey)
-            if isEnabled then
-                local name = _xmlFile:getValue(restrictionKey .. "#name")
-
-                if self.configurations[name] ~= nil then
-                    local indicies = _xmlFile:getValue(restrictionKey .. "#indicies", nil, true)
-
-                    for _, index in ipairs(indicies) do
-                        if index == self.configurations[name] then
-                            isEnabled = false
-                            break
-                        end
-                    end
-                else
-                    isEnabled = false
-                end
-            end
-        end)
-
-        return isEnabled
-    end
-
-    entry.isEnabled = isRestricted(xmlFile, key .. ".configurationsRestrictions")
-
+    -- load sound modifier
     entry.soundModifier = {
         indoorFactor = xmlFile:getValue(key .. ".soundModifier#indoorFactor"),
         delayedSoundAnimationTime = xmlFile:getValue(key .. ".soundModifier#delayedSoundAnimationTime"),
@@ -438,8 +418,7 @@ function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
         })
     end
 
-    local spec = self.spec_interactiveControl
-
+    -- load dependingMovingTools from xml
     xmlFile:iterate(key .. ".dependingMovingTool", function (_, movingToolKey)
         local mNode = xmlFile:getValue(movingToolKey .. "#node", nil, self.components, self.i3dMappings)
         local isInactive = xmlFile:getValue(movingToolKey .. "#isInactive")
@@ -450,6 +429,7 @@ function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
         end
     end)
 
+    -- load dependingMovingParts from xml
     xmlFile:iterate(key .. ".dependingMovingPart", function (_, movingPartKey)
         local mNode = xmlFile:getValue(movingPartKey .. "#node", nil, self.components, self.i3dMappings)
         local isInactive = xmlFile:getValue(movingPartKey .. "#isInactive")
@@ -459,6 +439,60 @@ function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
             spec.movingPartsInactive[movingPart] = true
         end
     end)
+
+    -- load depending interactive controls from xml
+    entry.isBlocked = false
+    entry.dependingControls = {}
+    xmlFile:iterate(key .. ".dependingInteractiveControl", function (_, dependingControlKey)
+        local index = xmlFile:getValue(dependingControlKey .. "#index")
+
+        local depending = {
+            index = index,
+            blockState = xmlFile:getValue(dependingControlKey .. "#blockState"),
+            forcedBlockedState = xmlFile:getValue(dependingControlKey .. "#forcedBlockedState"),
+        }
+
+        if depending.blockState ~= nil then
+            table.addElement(entry.dependingControls, depending)
+        end
+    end)
+
+    ---Returns true if interactive control is enabled by configuration setup
+    ---@param _xmlFile XMLFile xml file class instance
+    ---@param _key string xml path
+    ---@return boolean isEnabled
+    local function isRestricted(_xmlFile, _key)
+        local isEnabled = true
+
+        _xmlFile:iterate(_key .. ".restriction", function (_, restrictionKey)
+            if isEnabled then
+                local name = _xmlFile:getValue(restrictionKey .. "#name")
+
+                if self.configurations[name] ~= nil then
+                    local indicies = _xmlFile:getValue(restrictionKey .. "#indicies", nil, true)
+
+                    for _, index in ipairs(indicies) do
+                        if index == self.configurations[name] then
+                            isEnabled = false
+                            break
+                        end
+                    end
+                else
+                    isEnabled = false
+                end
+            end
+        end)
+
+        return isEnabled
+    end
+
+    entry.isEnabled = isRestricted(xmlFile, key .. ".configurationsRestrictions")
+    entry.allowsSaving = #entry.functions == 0
+    entry.loadedDirty = false
+
+    entry.changeObjects = {}
+    ObjectChangeUtil.loadObjectChangeFromXML(xmlFile, key, entry.changeObjects, self.components, self)
+    ObjectChangeUtil.setObjectChanges(entry.changeObjects, false, self, self.setMovingToolDirty, true)
 
     return true
 end
@@ -654,10 +688,10 @@ function InteractiveControl:updateInteractiveControls(isIndoor, isOutdoor, hasIn
 
     for _, interactiveControl in pairs(spec.interactiveControls) do
         if interactiveControl.isEnabled then
-            local isEnabledByFunctions = self:isControlEnabledByFunction(interactiveControl)
+            local isCurrentlyEnabled = not self:isControlBlocked(interactiveControl) and self:isControlEnabledByFunction(interactiveControl)
 
             for _, clickPoint in pairs(interactiveControl.clickPoints) do
-                if clickPoint:isActivatable() and isEnabledByFunctions then
+                if clickPoint:isActivatable() and isCurrentlyEnabled then
                     local indoor = isIndoor and self:getState() and hasInput and clickPoint:isIndoorActive()
                     local outdoor = isOutdoor and not hasInput and clickPoint:isOutdoorActive()
 
@@ -689,7 +723,7 @@ function InteractiveControl:updateInteractiveControls(isIndoor, isOutdoor, hasIn
                 local indoor = isIndoor and self:getState() and hasInput and button:isIndoorActive()
                 local outdoor = isOutdoor and not hasInput and button:isOutdoorActive()
 
-                if button:isActivatable() and isEnabledByFunctions and (indoor or outdoor)
+                if button:isActivatable() and isCurrentlyEnabled and (indoor or outdoor)
                     and (activeController == nil or activeController:isa(InteractiveButton)) then
 
                     button:updateDistance(self.currentUpdateDistance)
@@ -715,7 +749,6 @@ function InteractiveControl:updateInteractiveControls(isIndoor, isOutdoor, hasIn
                     end
                 end
             end
-
         end
     end
 
@@ -850,6 +883,19 @@ function InteractiveControl:setControlState(interactiveControl, state, doAction,
         if self.setDashboardsDirty ~= nil then
             self:setDashboardsDirty()
         end
+
+        -- update depending controls
+        for _, dependingControl in ipairs(interactiveControl.dependingControls) do
+            local control = self:getInteractiveControlByIndex(dependingControl.index)
+
+            if control ~= nil then
+                control.isBlocked = dependingControl.blockState == interactiveControl.state
+
+                if dependingControl.forcedBlockedState ~= nil then
+                    self:setControlState(control, dependingControl.forcedBlockedState, doAction, true)
+                end
+            end
+        end
     end
 end
 
@@ -891,6 +937,12 @@ function InteractiveControl:isControlEnabledByFunction(interactiveControl)
     end
 
     return true
+end
+
+---Returns true if given interactiveControl is blocked
+---@param interactiveControl table
+function InteractiveControl:isControlBlocked(interactiveControl)
+    return interactiveControl.isBlocked
 end
 
 ---Called by entering trigger node
