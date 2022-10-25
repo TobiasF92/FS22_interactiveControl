@@ -42,15 +42,20 @@ If you are in need of some extra help, take a look into the demonstration mods:
             
                 <!-- Add a new Interactive Control -->
                 <interactiveControl negText="$l10n_actionIC_deactivate" posText="$l10n_actionIC_activate">
-                    <!-- Animation to be played on IC event -->
-                    <animation initTime="float" name="string" speedScale="float" />
-                    
-                    <!-- Add a button to toggle the event -->
-                    <button animMaxLimit="1" animMinLimit="0" animName="string" foldMaxLimit="1" foldMinLimit="0" forcedState="boolean" input="string" range="5" refNode="node" type="UNKNOWN"/>
-                    
                     <!-- Add a clickPoint to toggle the event -->
                     <clickPoint alignToCamera="true" animMaxLimit="1" animMinLimit="0" animName="string" blinkSpeedScale="1" foldMaxLimit="1" foldMinLimit="0" forcedState="boolean" iconType="CROSS" invertX="false" invertZ="false" node="node" scaleOffset="float" size="0.04" type="UNKNOWN"/>
-                    
+                 
+                    <!-- Add a button to toggle the event -->
+                    <button animMaxLimit="1" animMinLimit="0" animName="string" foldMaxLimit="1" foldMinLimit="0" forcedState="boolean" input="string" range="5" refNode="node" type="UNKNOWN"/>
+
+                    <!-- Animation to be played on IC event -->
+                    <animation initTime="float" name="string" speedScale="float" />
+
+                    <!-- Add a function to your control, if you want to control a attached vehicle function, define an attacher joint index -->
+                    <function name="string">
+                        <attacherJoint index="integer" indicies="1 2 .. n"/>
+                    </function>
+
                     <!-- This control should not be functional all the time? Add a configuration restriction -->
                     <configurationsRestrictions>
                         <restriction indicies="1 2 .. n" name="string"/>
@@ -67,16 +72,15 @@ If you are in need of some extra help, take a look into the demonstration mods:
 
                     <!-- You can block unused moving tools here -->
                     <dependingMovingTool isInactive="true" node="node"/>
+
+                    <!-- You can block depending interactive controls here -->
+                    <dependingInteractiveControl index="int" blockState="boolean" forcedBlockedState="boolean"/>
                     
-                    <!-- Add a function to your control, if you want to control a attached vehicle function, define an attacher joint index -->
-                    <function name="string">
-                        <attacherJoint index="integer"/>
-                    </function>
-                    
-                    <objectChange centerOfMassActive="x y z" centerOfMassInactive="x y z" compoundChildActive="boolean" compoundChildInactive="boolean" interpolation="false" interpolationTime="1" massActive="float" massInactive="float" node="node" parentNodeActive="node" parentNodeInactive="node" rigidBodyTypeActive="string" rigidBodyTypeInactive="string" rotationActive="x y z" rotationInactive="x y z" scaleActive="x y z" scaleInactive="x y z" shaderParameter="string" shaderParameterActive="x y z w" shaderParameterInactive="x y z w" sharedShaderParameter="false" translationActive="x y z" translationInactive="x y z" visibilityActive="boolean" visibilityInactive="boolean"/>
                     <!-- Modify sound here, 'indoorFactor' is the sound percentage factor if control is active -->
                     <!-- Set 'delayedSoundAnimationTime' if the sound should be changed on specific animation time (first animation or 'name') -->
                     <soundModifier indoorFactor="float" delayedSoundAnimationTime="float" name="string"/>
+                 
+                    <objectChange centerOfMassActive="x y z" centerOfMassInactive="x y z" compoundChildActive="boolean" compoundChildInactive="boolean" interpolation="false" interpolationTime="1" massActive="float" massInactive="float" node="node" parentNodeActive="node" parentNodeInactive="node" rigidBodyTypeActive="string" rigidBodyTypeInactive="string" rotationActive="x y z" rotationInactive="x y z" scaleActive="x y z" scaleInactive="x y z" shaderParameter="string" shaderParameterActive="x y z w" shaderParameterInactive="x y z w" sharedShaderParameter="false" translationActive="x y z" translationInactive="x y z" visibilityActive="boolean" visibilityInactive="boolean"/>
                 </interactiveControl>
                 
                 <!-- The outdoor trigger is important, if you want to use IC from the outside of a vehicle -->
