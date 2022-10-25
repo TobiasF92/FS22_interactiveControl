@@ -43,6 +43,8 @@ If you are in need of some extra help, take a look into the demonstration mods:
                 <!-- Add a new Interactive Control -->
                 <interactiveControl negText="$l10n_actionIC_deactivate" posText="$l10n_actionIC_activate">
                     <!-- Add a clickPoint to toggle the event -->
+                    <!-- Possible iconTypes: -->
+                    <!-- CROSS, IGNITIONKEY, CRUISE_CONTROL, GPS, TURN_ON, ATTACHERJOINT_LOWER, ATTACHERJOINT_LIFT, ATTACHERJOINT, LIGHT_HIGH, LIGHT, TURNLIGHT_LEFT, TURNLIGHT_RIGHT, BEACON_LIGHT, ARROW -->
                     <clickPoint alignToCamera="true" animMaxLimit="1" animMinLimit="0" animName="string" blinkSpeedScale="1" foldMaxLimit="1" foldMinLimit="0" forcedState="boolean" iconType="CROSS" invertX="false" invertZ="false" node="node" scaleOffset="float" size="0.04" type="UNKNOWN"/>
                  
                     <!-- Add a button to toggle the event -->
@@ -51,7 +53,7 @@ If you are in need of some extra help, take a look into the demonstration mods:
                     <!-- Animation to be played on IC event -->
                     <animation initTime="float" name="string" speedScale="float" />
 
-                    <!-- Add a function to your control, if you want to control a attached vehicle function, define an attacher joint index -->
+                    <!-- Add a function to your control, dont forget to add a attacherJoint index (or indicies) if required! -->
                     <function name="string">
                         <attacherJoint index="integer" indicies="1 2 .. n"/>
                     </function>
