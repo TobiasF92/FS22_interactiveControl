@@ -39,7 +39,9 @@ If you are in need of some extra help, take a look into the demonstration mods:
         <!-- If needed, you can define different configurations -->
         <interactiveControlConfiguration>
             <interactiveControls>
-            
+                <!-- The outdoor trigger is important, if you want to use IC from the outside of a vehicle -->
+                <outdoorTrigger node="node"/>
+                
                 <!-- Add a new Interactive Control -->
                 <interactiveControl negText="$l10n_actionIC_deactivate" posText="$l10n_actionIC_activate">
                     <!-- Add a clickPoint to toggle the event -->
@@ -84,9 +86,6 @@ If you are in need of some extra help, take a look into the demonstration mods:
                  
                     <objectChange centerOfMassActive="x y z" centerOfMassInactive="x y z" compoundChildActive="boolean" compoundChildInactive="boolean" interpolation="false" interpolationTime="1" massActive="float" massInactive="float" node="node" parentNodeActive="node" parentNodeInactive="node" rigidBodyTypeActive="string" rigidBodyTypeInactive="string" rotationActive="x y z" rotationInactive="x y z" scaleActive="x y z" scaleInactive="x y z" shaderParameter="string" shaderParameterActive="x y z w" shaderParameterInactive="x y z w" sharedShaderParameter="false" translationActive="x y z" translationInactive="x y z" visibilityActive="boolean" visibilityInactive="boolean"/>
                 </interactiveControl>
-                
-                <!-- The outdoor trigger is important, if you want to use IC from the outside of a vehicle -->
-                <outdoorTrigger node="node"/>
             </interactiveControls>
             
             <objectChange centerOfMassActive="x y z" centerOfMassInactive="x y z" compoundChildActive="boolean" compoundChildInactive="boolean" interpolation="false" interpolationTime="1" massActive="float" massInactive="float" node="node" parentNodeActive="node" parentNodeInactive="node" rigidBodyTypeActive="string" rigidBodyTypeInactive="string" rotationActive="x y z" rotationInactive="x y z" scaleActive="x y z" scaleInactive="x y z" shaderParameter="string" shaderParameterActive="x y z w" shaderParameterInactive="x y z w" sharedShaderParameter="false" translationActive="x y z" translationInactive="x y z" visibilityActive="boolean" visibilityInactive="boolean"/>
