@@ -27,7 +27,7 @@ For further informations: <a href="https://github.com/TobiasF92/FS22_interactive
 Mit den Bedienelementen können Sie verschiedene Dinge steuern:
 
 - Animationen abspielen (z.B. Fenster öffnen/schließen, Warntafeln ein-/ausklappen, ...)
-- Aufrufen bestimmter Funktionen (z.B. Motor starten/stoppen, Werkzeug ein-/ausschalten, Gelenke heben/senken, ...)
+- Aufrufen bestimmter Funktionen (z.B. Motor starten/stoppen, Gerät ein-/ausschalten, Gerät heben/senken, ...)
 - ObjectChanges (zum Ändern von Translation/Rotation/Sichtbarkeit/...)
 
 Für mehr Informationen: <a href="https://github.com/TobiasF92/FS22_interactiveControl/blob/develop/README.md">README</a> auf Github.
