@@ -543,6 +543,10 @@ end
 ---Called on delete
 function InteractiveControl:onDelete()
     local spec = self.spec_interactiveControl
+
+    -- reset active controller
+    self:setMissionActiveController(nil)
+
     for _, interactiveControl in pairs(spec.interactiveControls) do
         for _, clickPoint in pairs(interactiveControl.clickPoints) do
             if clickPoint ~= nil then
@@ -795,6 +799,11 @@ function InteractiveControl:setState(state, noEventSend)
         local text = state and g_i18n:getText("action_deactivateIC") or g_i18n:getText("action_activateIC")
         if spec.toggleStateEventId ~= nil then
             g_inputBinding:setActionEventText(spec.toggleStateEventId, text)
+        end
+
+        if not state then
+            -- reset active controller
+            self:setMissionActiveController(nil)
         end
     end
 end
