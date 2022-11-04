@@ -78,11 +78,11 @@ end
 ---@param modifierName string modifier name
 ---@return number modifierFactor factor of modifier
 local function getModifierFactor(soundManager, superFunc, sample, modifierName)
-    if not isLoaded() then
-        return superFunc(soundManager, sample, modifierName)
+    if isLoaded() then
+        return modEnvironment:getModifierFactor(soundManager, superFunc, sample, modifierName)
     end
 
-    return modEnvironment:getModifierFactor(soundManager, superFunc, sample, modifierName)
+    return superFunc(soundManager, sample, modifierName)
 end
 
 ---Initialize the mod
