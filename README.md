@@ -27,9 +27,9 @@ Using the controls you can steer different things:
 The documentation is not finished yet, but should be sufficient for experienced users.
 If you are in need of some extra help, take a look into the demonstration mods:
 * Fendt Vario 900 Gen 6 / Gen 7
-  * Modhub: 
+  * Modhub: https://www.farming-simulator.com/mod.php?lang=de&country=de&mod_id=225936&title=fs2022
 * Kerner Corona Pack
-  * Modhub: 
+  * Modhub: https://www.farming-simulator.com/mod.php?lang=de&country=de&mod_id=251288&title=fs2022
 
 
 ### XML
