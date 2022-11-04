@@ -249,10 +249,15 @@ end
 ---@return table sharedLoadRequestId sharedLoadRequestId table
 function InteractiveClickPoint:loadIconType(iconType, target)
     local clickIcon = InteractiveClickPoint.CLICK_ICONS[iconType]
-    local loadedIcon = {
-        filename = Utils.getFilename(clickIcon.filename, g_currentMission.interactiveControl.modDirectory)
-    }
-    return target:loadSubSharedI3DFile(loadedIcon.filename, false, false, self.onIconTypeLoading, self, { clickIcon })
+    local filename = Utils.getFilename(clickIcon.filename, g_currentMission.interactiveControl.modDirectory)
+
+    -- load external registered icon files
+    if not fileExists(filename) and self.target.getICModDirectory ~= nil then
+        local directory = self.target:getICModDirectory()
+        filename = Utils.getFilename(clickIcon.filename, directory)
+    end
+
+    return target:loadSubSharedI3DFile(filename, false, false, self.onIconTypeLoading, self, { clickIcon })
 end
 
 ---Called on i3d iconType loading

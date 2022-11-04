@@ -12,9 +12,18 @@
 ---@class AddInteractiveControl
 
 AddInteractiveControl = {}
-AddInteractiveControl.MOD_NAME = g_currentModName
 AddInteractiveControl.ADD_INTERACTIVE_CONTROL = true
+
+local modDirectory = g_currentModDirectory
 
 function AddInteractiveControl.prerequisitesPresent(specializations)
     return true
+end
+
+function AddInteractiveControl.registerFunctions(vehicleType)
+    SpecializationUtil.registerFunction(vehicleType, "getICModDirectory", AddInteractiveControl.getICModDirectory)
+end
+
+function AddInteractiveControl:getICModDirectory()
+    return modDirectory
 end
