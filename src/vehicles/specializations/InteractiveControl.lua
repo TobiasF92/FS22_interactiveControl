@@ -962,7 +962,16 @@ end
 ---@param onStay boolean
 function InteractiveControl:interactiveControlTriggerCallback(triggerId, otherId, onEnter, onLeave, onStay)
     local spec = self.spec_interactiveControl
-    if self:getOwnerFarmId() == g_currentMission:getFarmId() and g_currentMission.player ~= nil and otherId == g_currentMission.player.rootNode then
+    local currentFarmId = g_currentMission:getFarmId()
+    local vehicleFarmId = self:getOwnerFarmId()
+    local isFarmAllowed = currentFarmId == vehicleFarmId
+
+    if not isFarmAllowed then
+        local userFarm = g_farmManager:getFarmById(currentFarmId)
+        isFarmAllowed = userFarm:getIsContractingFor(vehicleFarmId)
+    end
+
+    if isFarmAllowed and g_currentMission.player ~= nil and otherId == g_currentMission.player.rootNode then
         if onEnter then
             spec.isPlayerInRange = true
             self:raiseActive()
