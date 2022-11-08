@@ -19,11 +19,3 @@ local modDirectory = g_currentModDirectory
 function AddInteractiveControl.prerequisitesPresent(specializations)
     return true
 end
-
-function AddInteractiveControl.registerFunctions(vehicleType)
-    SpecializationUtil.registerFunction(vehicleType, "getICModDirectory", AddInteractiveControl.getICModDirectory)
-end
-
-function AddInteractiveControl:getICModDirectory()
-    return modDirectory
-end

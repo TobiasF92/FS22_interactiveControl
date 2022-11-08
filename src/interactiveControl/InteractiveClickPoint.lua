@@ -252,9 +252,8 @@ function InteractiveClickPoint:loadIconType(iconType, target)
     local filename = Utils.getFilename(clickIcon.filename, g_currentMission.interactiveControl.modDirectory)
 
     -- load external registered icon files
-    if not fileExists(filename) and self.target.getICModDirectory ~= nil then
-        local directory = self.target:getICModDirectory()
-        filename = Utils.getFilename(clickIcon.filename, directory)
+    if not fileExists(filename) and self.target.baseDirectory ~= nil then
+        filename = Utils.getFilename(clickIcon.filename, self.target.baseDirectory)
     end
 
     return target:loadSubSharedI3DFile(filename, false, false, self.onIconTypeLoading, self, { clickIcon })
