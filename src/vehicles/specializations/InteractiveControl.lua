@@ -12,6 +12,8 @@ InteractiveControl = {}
 InteractiveControl.NUM_BITS = 8
 InteractiveControl.NUM_MAX_CONTROLS = 2 ^ InteractiveControl.NUM_BITS - 1
 
+InteractiveControl.SOUND_FALLBACK = 1.0
+
 InteractiveControl.INTERACTIVE_CONTROLS_CONFIG_XML_KEY = "vehicle.interactiveControl.interactiveControlConfigurations.interactiveControlConfiguration(?)"
 InteractiveControl.INTERACTIVE_CONTROL_XML_KEY = InteractiveControl.INTERACTIVE_CONTROLS_CONFIG_XML_KEY .. ".interactiveControls.interactiveControl(?)"
 
@@ -226,7 +228,7 @@ function InteractiveControl:onLoad(savegame)
     spec.updateTimer = 0
     spec.updateTimerOffset = 1500  -- ms
 
-    spec.indoorSoundModifierFactor = 1.0
+    spec.indoorSoundModifierFactor = InteractiveControl.SOUND_FALLBACK
     spec.pendingSoundControls = {}
 end
 
@@ -1000,7 +1002,7 @@ function InteractiveControl:getIndoorModifiedSoundFactor()
     if g_soundManager:getIsIndoor() then
         return spec.indoorSoundModifierFactor
     else
-        return 1.0
+        return InteractiveControl.SOUND_FALLBACK
     end
 end
 
@@ -1036,7 +1038,7 @@ function InteractiveControl:updateIndoorSoundModifierByControl(interactiveContro
         return
     end
 
-    local indoorFactor = interactiveControl.state and interactiveControl.soundModifier.indoorFactor or 1.0
+    local indoorFactor = interactiveControl.state and interactiveControl.soundModifier.indoorFactor or InteractiveControl.SOUND_FALLBACK
     if spec.indoorSoundModifierFactor < indoorFactor then
         -- apply new highter volume factor
         spec.indoorSoundModifierFactor = math.max(spec.indoorSoundModifierFactor, indoorFactor)
@@ -1050,10 +1052,11 @@ end
 ---@return number
 function InteractiveControl:getMaxIndoorSoundModifier()
     local spec = self.spec_interactiveControl
-    local indoorSoundModifier = 1.0
+    local indoorSoundModifier = InteractiveControl.SOUND_FALLBACK
     for _, interactiveControl in pairs(spec.interactiveControls) do
         if interactiveControl.isEnabled and interactiveControl.soundModifier.indoorFactor ~= nil then
-            indoorSoundModifier = math.max(indoorSoundModifier, interactiveControl.state and interactiveControl.soundModifier.indoorFactor or 1.0)
+            indoorSoundModifier = math.max(indoorSoundModifier, interactiveControl.state and
+                                           interactiveControl.soundModifier.indoorFactor or InteractiveControl.SOUND_FALLBACK)
         end
     end
 
