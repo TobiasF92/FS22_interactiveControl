@@ -227,6 +227,7 @@ function InteractiveControl:onLoad(savegame)
 
     spec.updateTimer = 0
     spec.updateTimerOffset = 1500  -- ms
+    spec.functionUpdateTimeOffset = 2500  -- ms
 
     spec.indoorSoundModifierFactor = InteractiveControl.SOUND_FALLBACK
     spec.pendingSoundControls = {}
@@ -860,11 +861,16 @@ function InteractiveControl:setControlState(interactiveControl, state, doAction,
         g_currentMission.interactiveControl:setClickAction(text, true)
 
         if doAction then
+            local spec = self.spec_interactiveControl
+
             -- play animations
+            local maxUpdateTime = 0
             if self.playAnimation ~= nil and interactiveControl.animations ~= nil then
                 for _, animation in pairs(interactiveControl.animations) do
                     local dir = state and 1 or -1
                     self:playAnimation(animation.name, animation.speedScale * dir, self:getAnimationTime(animation.name), true)
+
+                    maxUpdateTime = math.max(maxUpdateTime, self:getAnimationDuration(animation.name))
                 end
             end
 
@@ -877,12 +883,17 @@ function InteractiveControl:setControlState(interactiveControl, state, doAction,
                         else
                             icFunction.data.negFunc(self, icFunction.loadData, noEventSend)
                         end
+
+                        maxUpdateTime = math.max(maxUpdateTime, spec.functionUpdateTimeOffset)
                     end
                 end
             end
 
             ObjectChangeUtil.setObjectChanges(interactiveControl.changeObjects, state, self, self.setMovingToolDirty)
             interactiveControl.lastChangeTime = g_currentMission.time
+
+            -- update is active time by animations or functions
+            spec.updateTimer = g_currentMission.time + maxUpdateTime + spec.updateTimerOffset
         end
 
         -- update indoor sounds
