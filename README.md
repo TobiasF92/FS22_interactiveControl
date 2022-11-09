@@ -2,7 +2,7 @@
 
 'Interactive Control' is a global script mod for Farming Simulator 22.
 While this mod is active, you are able to use many other mods that support Interactive Control.
-With IC you get the possibility to control many parts of several (prepared) vehicles interacitvly. 
+With IC you have the possibility to interactively control many parts of several (prepared) vehicles.
 
 
 ## Possibilities
@@ -33,6 +33,8 @@ If you are in need of some extra help, take a look into the demonstration mods:
 
 
 ### XML
+
+Explained XML documentation [HTML-file](documentation/interactiveControl.html)
 ```xml
 <interactiveControl>
     <interactiveControlConfigurations>
