@@ -57,7 +57,7 @@ Explained XML documentation [HTML-file](documentation/interactiveControl.html)
                     <!-- Animation to be played on IC event -->
                     <animation initTime="float" name="string" speedScale="float" />
 
-                    <!-- Add a function to your control, dont forget to add a attacherJoint index (or indicies) if required! -->
+                    <!-- Add a function to your control, don't forget to add a attacherJoint index (or indicies) if required! -->
                     <function name="string">
                         <attacherJoint index="integer" indicies="1 2 .. n"/>
                     </function>
@@ -94,7 +94,7 @@ Explained XML documentation [HTML-file](documentation/interactiveControl.html)
         </interactiveControlConfiguration>
     </interactiveControlConfigurations>
     
-    <!-- if you want to use your own click icon, you easily can register it here -->
+    <!-- If you want to use your own click icon, you easily can register it here -->
     <registers>
         <clickIcon blinkSpeed="float" filename="string" name="string" node="string"/>
     </registers>
@@ -105,8 +105,8 @@ Explained XML documentation [HTML-file](documentation/interactiveControl.html)
 
 ### FunctionOverview:
 
-Function | Description
--------- | --------
+Function | Description | Requirements
+-------- | -------- | 
 MOTOR_START_STOPP | Toggle vehicle motor start and stop
 LIGHTS_TOGGLE | Toggle lights on and off
 LIGHTS_WORKBACK_TOGGLE | Toggle worklights back on and off
@@ -120,12 +120,12 @@ GPS_TOGGLE | Toggle [GuidanceSteering](https://www.farming-simulator.com/mod.php
 CRUISE_CONTROL_TOGGLE | Toggle cruise control on and off
 DRIVE_DIRECTION_TOGGLE | Toggle vehicle drive direction
 COVER_TOGGLE | Toggle cover state
-ATTACHERJOINT_LIFT_LOWER | Lift/lower implement on attacherJoint index
-ATTACHERJOINT_TURN_ON_OFF | Turn on/off implement on attacherJoint index
+ATTACHERJOINT_LIFT_LOWER | Lift/lower implement on attacherJoint index | ".attacherJoint#index"
+ATTACHERJOINT_TURN_ON_OFF | Turn on/off implement on attacherJoint index | ".attacherJoint#index"
 TURN_ON_OFF | Turn on/off vehicle
-ATTACHERJOINT_FOLDING_TOGGLE | Fold/unfold implement on attacherJoint index
+ATTACHERJOINT_FOLDING_TOGGLE | Fold/unfold implement on attacherJoint index | ".attacherJoint#index"
 FOLDING_TOGGLE | Fold/unfold vehicle
-ATTACHERJOINTS_TOGGLE_DISCHARGE | Toggle discharging on selected attacherJoint if in 'indices'
+ATTACHERJOINTS_TOGGLE_DISCHARGE | Toggle discharging on selected attacherJoint if in 'indices' | ".attacherJoint#indicies"
 DISCHARGE_TOGGLE | Toggle discharging on vehicle
 CRABSTEERING_TOGGLE | Toggle crab steering mode to next mode
 RADIO_TOGGLE | Toggle radio on/off
