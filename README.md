@@ -106,7 +106,7 @@ Explained XML documentation [HTML-file](documentation/interactiveControl.html)
 ### FunctionOverview:
 
 Function | Description | Requirements
--------- | -------- | 
+-------- | -------- | --------
 MOTOR_START_STOPP | Toggle vehicle motor start and stop
 LIGHTS_TOGGLE | Toggle lights on and off
 LIGHTS_WORKBACK_TOGGLE | Toggle worklights back on and off
