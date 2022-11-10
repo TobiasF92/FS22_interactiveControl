@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<i3D name="ic_clickIcons" version="1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://i3d.giants.ch/schema/i3d-1.6.xsd">
+
+  <Files>
+    <File fileId="1" filename="ic_clickIcons_emissive.png" />
+    <File fileId="2" filename="$data/shaders/glowShader.xml" />
+  </Files>
+
+  <Materials>
+    <Material name="clickPoint_mat" materialId="1" specularColor="0.5 0.5 0.5" alphaBlending="true" customShaderId="2" customShaderVariation="additive_colorScale">
+      <CustomParameter name="pulseSpeed" value="3"/>
+      <CustomParameter name="lightControl" value="1.0"/>
+      <Texture fileId="1"/>
+    </Material>
+  </Materials>
+
+
+  <Shapes externalShapesFile="ic_clickIcons.i3d.shapes">
+  </Shapes>
+
+  <Scene>
+    <Shape name="CROSS" shapeId="1" castsShadows="true" receiveShadows="true" materialIds="1" clipDistance="15" nodeId="1"/>
+    <Shape name="IGNITIONKEY" shapeId="2" castsShadows="true" receiveShadows="true" materialIds="1" clipDistance="15" nodeId="2"/>
+    <Shape name="CRUISE_CONTROL" shapeId="3" castsShadows="true" receiveShadows="true" materialIds="1" clipDistance="15" nodeId="3"/>
+    <Shape name="GPS" shapeId="4" castsShadows="true" receiveShadows="true" materialIds="1" clipDistance="15" nodeId="4"/>
+    <Shape name="TURN_ON" shapeId="5" castsShadows="true" receiveShadows="true" materialIds="1" clipDistance="15" nodeId="5"/>
+    <Shape name="ATTACHERJOINT_LOWER" shapeId="6" castsShadows="true" receiveShadows="true" materialIds="1" clipDistance="15" nodeId="6"/>
+    <Shape name="ATTACHERJOINT_LIFT" shapeId="7" castsShadows="true" receiveShadows="true" materialIds="1" clipDistance="15" nodeId="7"/>
+    <Shape name="ATTACHERJOINT" shapeId="8" castsShadows="true" receiveShadows="true" materialIds="1" clipDistance="15" nodeId="8"/>
+    <Shape name="LIGHT_HIGH" shapeId="9" castsShadows="true" receiveShadows="true" materialIds="1" clipDistance="15" nodeId="9"/>
+    <Shape name="LIGHT" shapeId="10" castsShadows="true" receiveShadows="true" materialIds="1" clipDistance="15" nodeId="10"/>
+    <Shape name="TURNLIGHT_LEFT" shapeId="11" castsShadows="true" receiveShadows="true" materialIds="1" clipDistance="15" nodeId="11"/>
+    <Shape name="TURNLIGHT_RIGHT" shapeId="12" castsShadows="true" receiveShadows="true" materialIds="1" clipDistance="15" nodeId="12"/>
+    <Shape name="BEACON_LIGHT" shapeId="13" castsShadows="true" receiveShadows="true" materialIds="1" clipDistance="15" nodeId="13"/>
+    <Shape name="ARROW" shapeId="14" castsShadows="true" receiveShadows="true" materialIds="1" clipDistance="15" nodeId="14"/>
+  </Scene>
+
+  <UserAttributes>
+  </UserAttributes>
+</i3D>
