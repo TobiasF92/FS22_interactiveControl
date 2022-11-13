@@ -425,7 +425,7 @@ function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
     xmlFile:iterate(key .. ".dependingMovingTool", function (_, movingToolKey)
         local mNode = xmlFile:getValue(movingToolKey .. "#node", nil, self.components, self.i3dMappings)
         local isInactive = xmlFile:getValue(movingToolKey .. "#isInactive")
-        local movingTool = self:getMovingPartByNode(mNode)
+        local movingTool = self:getMovingToolByNode(mNode)
 
         if movingTool ~= nil and isInactive then
             spec.movingToolsInactive[movingTool] = true
@@ -1191,7 +1191,7 @@ end
 function InteractiveControl:getIsMovingToolActive(superFunc, movingTool)
     local spec = self.spec_interactiveControl
 
-    if spec.movingToolsInactive[movingTool] ~= nil then
+    if spec.movingToolsInactive[movingTool] ~= nil and spec.movingToolsInactive[movingTool] then
         return false
     end
 
@@ -1204,7 +1204,7 @@ end
 function InteractiveControl:getIsMovingPartActive(superFunc, movingPart)
     local spec = self.spec_interactiveControl
 
-    if spec.movingPartsInactive[movingPart] ~= nil then
+    if spec.movingPartsInactive[movingPart] ~= nil and spec.movingPartsInactive[movingPart]then
         return false
     end
 
