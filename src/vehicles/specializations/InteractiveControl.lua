@@ -979,9 +979,12 @@ function InteractiveControl:interactiveControlTriggerCallback(triggerId, otherId
     local vehicleFarmId = self:getOwnerFarmId()
     local isFarmAllowed = currentFarmId == vehicleFarmId
 
-    if not isFarmAllowed then
+    if not isFarmAllowed and currentFarmId ~= FarmManager.SPECTATOR_FARM_ID then
         local userFarm = g_farmManager:getFarmById(currentFarmId)
-        isFarmAllowed = userFarm:getIsContractingFor(vehicleFarmId)
+
+        if userFarm ~= nil then
+            isFarmAllowed = userFarm:getIsContractingFor(vehicleFarmId)
+        end
     end
 
     if isFarmAllowed and g_currentMission.player ~= nil and otherId == g_currentMission.player.rootNode then
