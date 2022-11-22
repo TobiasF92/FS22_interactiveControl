@@ -125,6 +125,7 @@ function InteractiveControl.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "isControlBlocked", InteractiveControl.isControlBlocked)
     SpecializationUtil.registerFunction(vehicleType, "interactiveControlTriggerCallback", InteractiveControl.interactiveControlTriggerCallback)
     SpecializationUtil.registerFunction(vehicleType, "isOutdoorActive", InteractiveControl.isOutdoorActive)
+    SpecializationUtil.registerFunction(vehicleType, "isIndoorActive", InteractiveControl.isIndoorActive)
     SpecializationUtil.registerFunction(vehicleType, "getIndoorModifiedSoundFactor", InteractiveControl.getIndoorModifiedSoundFactor)
     SpecializationUtil.registerFunction(vehicleType, "isSoundAnimationDelayed", InteractiveControl.isSoundAnimationDelayed)
     SpecializationUtil.registerFunction(vehicleType, "updateIndoorSoundModifierByControl", InteractiveControl.updateIndoorSoundModifierByControl)
@@ -596,7 +597,7 @@ end
 function InteractiveControl:onUpdateTick(dt, isActiveForInput, isActiveForInputIgnoreSelection, isSelected)
     if self.isClient then
         local spec = self.spec_interactiveControl
-        local isIndoor = g_soundManager:getIsIndoor()
+        local isIndoor = self:isIndoorActive()
         local isOutdoor = self:isOutdoorActive()
 
         --prefer indoor actions
@@ -652,7 +653,7 @@ function InteractiveControl:onDraw(isActiveForInput, isActiveForInputIgnoreSelec
             g_currentMission.player.aimOverlay:render()
         end
 
-        if g_soundManager:getIsIndoor() then
+        if self:isIndoorActive() then
             self:updateInteractiveControls(true, false, isActiveForInputIgnoreSelection)
         end
     end
@@ -1003,6 +1004,24 @@ end
 function InteractiveControl:isOutdoorActive()
     local spec = self.spec_interactiveControl
     return spec.isPlayerInRange or false
+end
+
+---Returns true if indoor actions should be activated
+---@return boolean
+function InteractiveControl:isIndoorActive()
+    if g_soundManager:getIsIndoor() then
+        return true
+    end
+
+    if self.getActiveCamera ~= nil then
+        local activeCamera = self:getActiveCamera()
+
+        if activeCamera ~= nil then
+            return activeCamera.isInside and self.getIsEntered ~= nil and self:getIsEntered()
+        end
+    end
+
+    return false
 end
 
 -----------
