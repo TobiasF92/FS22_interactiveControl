@@ -23,6 +23,7 @@ For further informations: <a href="https://github.com/TobiasF92/FS22_interactive
 Changelog (1.1.0.0):
 - added translations: italian, russian, polish
 - added mod compatibility with 'FS22_additionalGameSettings'
+- added auto spec insertion to more vehicles
 - fixed not working while indoor cameras use outdoor sounds
 
         ]]></en>
@@ -41,6 +42,7 @@ Für mehr Informationen: <a href="https://github.com/TobiasF92/FS22_interactiveC
 Changelog (1.1.0.0):
 - Übersetzungen hinzugefügt: italienisch, russisch, polnisch
 - Kompatibilität mit 'FS22_additionalGameSettings' hinzugefügt
+- Automatische Installation der Spezialisierung auf mehre Fahrzeuge hinzugefügt
 - Fehler behoben wenn Kamera Außensounds genutzt hat
 
         ]]></de>
