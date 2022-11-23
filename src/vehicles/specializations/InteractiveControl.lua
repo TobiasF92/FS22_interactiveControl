@@ -603,7 +603,7 @@ function InteractiveControl:onUpdateTick(dt, isActiveForInput, isActiveForInputI
         --prefer indoor actions
         if isOutdoor and isIndoor then
             spec.isPlayerInRange = false
-            g_currentMission.interactiveControl:setsetHasPlayerInRange(false)
+            g_currentMission.interactiveControl:setHasPlayerInRange(false)
         end
 
         if isOutdoor then
