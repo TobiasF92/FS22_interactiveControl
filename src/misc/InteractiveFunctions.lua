@@ -225,32 +225,6 @@ InteractiveFunctions.addFunction("LIGHTS_BEACON_TOGGLE", {
     end
 })
 
----FUNCTION_GPS_TOGGLE
-InteractiveFunctions.addFunction("GPS_TOGGLE", {
-    posFunc = function(target, data, noEventSend)
-        if not g_modIsLoaded["FS22_guidanceSteering"] then
-            return
-        end
-
-        local GlobalPositioningSystem = FS22_guidanceSteering.GlobalPositioningSystem
-        if target.spec_globalPositioningSystem ~= nil and GlobalPositioningSystem.actionEventEnableSteering ~= nil then
-            GlobalPositioningSystem.actionEventEnableSteering(target)
-        end
-    end,
-    updateFunc = function(target, data)
-        if target.spec_globalPositioningSystem ~= nil then
-            return target.spec_globalPositioningSystem.guidanceSteeringIsActive
-        end
-        return nil
-    end,
-    isEnabledFunc = function(target, data)
-        if target.spec_globalPositioningSystem ~= nil then
-            return target.spec_globalPositioningSystem.guidanceIsActive
-        end
-        return false
-    end
-})
-
 ---FUNCTION_CRUISE_CONTROL_TOGGLE
 InteractiveFunctions.addFunction("CRUISE_CONTROL_TOGGLE", {
     posFunc = function(target, data, noEventSend)
