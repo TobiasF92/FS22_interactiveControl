@@ -28,6 +28,7 @@ function InteractiveControlManager.new(mission, inputBinding, i18n, modName, mod
 
     self.activeController = nil
     self.actionEventId = nil
+    self.playerInRange = false
 
     return self
 end
@@ -49,6 +50,30 @@ function InteractiveControlManager:setActiveInteractiveControl(target, inputButt
         end
 
         self.activeController = self.actionEventId == nil and nil or target
+    end
+end
+
+---Returns true if manager has active control, false otherwise
+---@return boolean hasActiveController
+function InteractiveControlManager:isICActive()
+    local controlledVehicle = self.mission.controlledVehicle
+
+    if controlledVehicle == nil then
+        return self.playerInRange
+    end
+
+    if controlledVehicle.getState ~= nil then
+        return controlledVehicle:getState()
+    end
+
+    return false
+end
+
+---Sets has player in range state
+---@param playerInRange boolean player is in range
+function InteractiveControlManager:setHasPlayerInRange(playerInRange)
+    if playerInRange ~= self.playerInRange then
+        self.playerInRange = playerInRange
     end
 end
 
@@ -147,5 +172,35 @@ function InteractiveControlManager:mergeModTranslations(i18n)
     local global = env.g_i18n.texts
     for key, text in pairs(i18n.texts) do
         global[key] = text
+    end
+end
+
+---Overwrite FS22_additionalGameSettings functions
+function InteractiveControlManager.overwrite_additionalGameSettings()
+
+    if not g_modIsLoaded["FS22_additionalGameSettings"] then
+        return
+    end
+
+    ---Overwritten function: FS22_additionalGameSettings.CrosshairSetting.getIsICActive
+    ---Injects the InteractiveControl is active state for crosshair rendering
+    ---@param static nil
+    ---@param superFunc function original function
+    ---@return boolean isICActive
+    local function inject_getIsICActive(static, superFunc)
+        if superFunc() then
+            return true
+        end
+
+        if g_currentMission.interactiveControl ~= nil then
+            return g_currentMission.interactiveControl:isICActive()
+        end
+
+        return false
+    end
+
+    if FS22_additionalGameSettings ~= nil and FS22_additionalGameSettings.CrosshairSetting ~= nil then
+        local settings = FS22_additionalGameSettings.CrosshairSetting
+        settings.getIsICActive = Utils.overwrittenFunction(settings.getIsICActive, inject_getIsICActive)
     end
 end

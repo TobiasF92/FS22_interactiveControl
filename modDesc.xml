@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="72">
     <author>Vertex Dezign</author>
-    <version>1.0.1.0</version>
+    <version>1.1.0.0-beta1</version>
 
     <title>
         <en>Interactive Control</en>
@@ -22,6 +22,7 @@ For further informations: <a href="https://github.com/TobiasF92/FS22_interactive
 
 Changelog (1.1.0.0):
 - added translations: italian, russian, polish
+- added mod compatibility with 'FS22_additionalGameSettings'
 - fixed not working while indoor cameras use outdoor sounds
 
         ]]></en>
@@ -39,6 +40,7 @@ Für mehr Informationen: <a href="https://github.com/TobiasF92/FS22_interactiveC
 
 Changelog (1.1.0.0):
 - Übersetzungen hinzugefügt: italienisch, russisch, polnisch
+- Kompatibilität mit 'FS22_additionalGameSettings' hinzugefügt
 - Fehler behoben wenn Kamera Außensounds genutzt hat
 
         ]]></de>

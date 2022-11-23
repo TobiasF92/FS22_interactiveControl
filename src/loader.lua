@@ -45,6 +45,8 @@ local function load(mission)
     modEnvironment = InteractiveControlManager.new(mission, g_inputBinding, g_i18n, modName, modDirectory)
 
     mission.interactiveControl = modEnvironment
+
+    InteractiveControlManager.overwrite_additionalGameSettings()
 end
 
 ---Unload the mod when the mod is unselected and savegame is (re)loaded or game is closed.

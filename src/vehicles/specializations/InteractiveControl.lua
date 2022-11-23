@@ -603,6 +603,7 @@ function InteractiveControl:onUpdateTick(dt, isActiveForInput, isActiveForInputI
         --prefer indoor actions
         if isOutdoor and isIndoor then
             spec.isPlayerInRange = false
+            g_currentMission.interactiveControl:setsetHasPlayerInRange(false)
         end
 
         if isOutdoor then
@@ -996,6 +997,8 @@ function InteractiveControl:interactiveControlTriggerCallback(triggerId, otherId
             spec.isPlayerInRange = false
             spec.updateTimer = g_currentMission.time + spec.updateTimerOffset
         end
+
+        g_currentMission.interactiveControl:setHasPlayerInRange(spec.isPlayerInRange)
     end
 end
 

@@ -8,6 +8,7 @@
 
 ---@tablelib InteractiveFunctions addition
 
+---FS22_guidanceSteering
 ---FUNCTION_GPS_TOGGLE
 InteractiveFunctions.addFunction("GPS_TOGGLE", {
     posFunc = function(target, data, noEventSend)
