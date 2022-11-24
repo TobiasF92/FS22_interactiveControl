@@ -30,6 +30,8 @@ If you are in need of some extra help, take a look into the demonstration mods:
   * Modhub: https://www.farming-simulator.com/mod.php?lang=de&country=de&mod_id=225936&title=fs2022
 * Kerner Corona Pack
   * Modhub: https://www.farming-simulator.com/mod.php?lang=de&country=de&mod_id=251288&title=fs2022
+* Faresin 6.26
+  * Modhub: https://www.farming-simulator.com/mod.php?lang=en&country=us&mod_id=258842&title=fs2022
 
 
 ### XML
