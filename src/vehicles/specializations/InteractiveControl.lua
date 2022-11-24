@@ -46,7 +46,7 @@ function InteractiveControl.initSpecialization()
 
         -- register animations
         schema:register(XMLValueType.STRING, interactiveControlPath .. ".animation(?)#name", "Animation name")
-        schema:register(XMLValueType.FLOAT, interactiveControlPath .. ".animation(?)#speedScale", "Speed factor animation is played")
+        schema:register(XMLValueType.FLOAT, interactiveControlPath .. ".animation(?)#speedScale", "Speed factor animation is played", 1.0)
         schema:register(XMLValueType.FLOAT, interactiveControlPath .. ".animation(?)#initTime", "Start animation time")
 
         -- register functions
@@ -513,7 +513,7 @@ function InteractiveControl:loadAnimationFromXML(xmlFile, animationKey, animatio
     end
 
     animation.name = name
-    animation.speedScale = xmlFile:getValue(animationKey .. "#speedScale")
+    animation.speedScale = xmlFile:getValue(animationKey .. "#speedScale", 1.0)
     animation.initTime = xmlFile:getValue(animationKey .. "#initTime")
 
     return true
