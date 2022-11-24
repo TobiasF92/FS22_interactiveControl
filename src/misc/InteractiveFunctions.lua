@@ -265,6 +265,27 @@ InteractiveFunctions.addFunction("COVER_TOGGLE", {
     end
 })
 
+---Shared function to register attacherJoint schematics
+---@param schema XMLSchema schema to register attacherJoint
+---@param path string path to register attacherJoint
+function InteractiveFunctions.attacherJointSchema(schema, path)
+    schema:register(XMLValueType.INT, path .. ".attacherJoint#index", "Attacher joint index to be controlled")
+end
+
+---Shared function to load attacherJoint
+---@param xmlFile XMLFile xml file to load data from
+---@param key string path key to load attacherJoint
+---@param data table table to store loaded attacherJoint
+---@return boolean loaded
+function InteractiveFunctions.attacherJointLoad(xmlFile, key, data, errorMsg)
+    data.attacherJointIndex = xmlFile:getValue(key .. ".attacherJoint#index")
+    if data.attacherJointIndex == nil then
+        Logging.xmlWarning(xmlFile, "Failed to load attacherJoint index, ignoring control\nSet value '%s.attacherJoint#index' to use function: %s", key, errorMsg)
+        return false
+    end
+    return true
+end
+
 ---FUNCTION_ATTACHERJOINT_LIFT_LOWER
 InteractiveFunctions.addFunction("ATTACHERJOINT_LIFT_LOWER", {
     posFunc = function(target, data, noEventSend)
@@ -289,16 +310,9 @@ InteractiveFunctions.addFunction("ATTACHERJOINT_LIFT_LOWER", {
         end
         return nil
     end,
-    schemaFunc = function(schema, path)
-        schema:register(XMLValueType.INT, path .. ".attacherJoint#index", "Attacher joint index to be controlled")
-    end,
+    schemaFunc = InteractiveFunctions.attacherJointSchema,
     loadFunc = function(xmlFile, key, data)
-        data.attacherJointIndex = xmlFile:getValue(key .. ".attacherJoint#index")
-        if data.attacherJointIndex == nil then
-            Logging.xmlWarning(xmlFile, "Failed to load attacherJoint index, ignoring control\nSet value '%s.attacherJoint#index' to use function: ATTACHERJOINT_LIFT_LOWER", key)
-            return false
-        end
-        return true
+        return InteractiveFunctions.attacherJointLoad(xmlFile, key, data, "ATTACHERJOINT_LIFT_LOWER")
     end,
     isEnabledFunc = function(target, data)
         if target.getImplementByJointDescIndex ~= nil then
@@ -345,16 +359,9 @@ InteractiveFunctions.addFunction("ATTACHERJOINT_TURN_ON_OFF", {
         end
         return nil
     end,
-    schemaFunc = function(schema, path)
-        schema:register(XMLValueType.INT, path .. ".attacherJoint#index", "Attacher joint index to be controlled")
-    end,
+    schemaFunc = InteractiveFunctions.attacherJointSchema,
     loadFunc = function(xmlFile, key, data)
-        data.attacherJointIndex = xmlFile:getValue(key .. ".attacherJoint#index")
-        if data.attacherJointIndex == nil then
-            Logging.xmlWarning(xmlFile, "Failed to load attacherJoint index, ignoring control\nSet value '%s.attacherJoint#index' to use function: ATTACHERJOINT_TURN_ON_OFF", key)
-            return false
-        end
-        return true
+        return InteractiveFunctions.attacherJointLoad(xmlFile, key, data, "ATTACHERJOINT_TURN_ON_OFF")
     end,
     isEnabledFunc = function(target, data)
         if target.getImplementByJointDescIndex ~= nil then
@@ -424,24 +431,25 @@ InteractiveFunctions.addFunction("ATTACHERJOINT_FOLDING_TOGGLE", {
         end
         return nil
     end,
-    schemaFunc = function(schema, path)
-        schema:register(XMLValueType.INT, path .. ".attacherJoint#index", "Attacher joint index to be controlled")
-    end,
+    schemaFunc = InteractiveFunctions.attacherJointSchema,
     loadFunc = function(xmlFile, key, data)
-        data.attacherJointIndex = xmlFile:getValue(key .. ".attacherJoint#index")
-        if data.attacherJointIndex == nil then
-            Logging.xmlWarning(xmlFile, "Failed to load attacherJoint index, ignoring control\nSet value '%s.attacherJoint#index' to use function: ATTACHERJOINT_FOLDING_TOGGLE", key)
-            return false
-        end
-        return true
+        return InteractiveFunctions.attacherJointLoad(xmlFile, key, data, "ATTACHERJOINT_FOLDING_TOGGLE")
     end,
     isEnabledFunc = function(target, data)
         if target.getImplementByJointDescIndex ~= nil then
             local implement = target:getImplementByJointDescIndex(data.attacherJointIndex)
 
-            if implement ~= nil then
-                return implement.object.getCanBeTurnedOn ~= nil
+            if implement == nil or implement.object == nil then
+                return false
             end
+
+            local spec_foldable = implement.object.spec_foldable
+
+            if spec_foldable == nil then
+                return false
+            end
+
+            return #spec_foldable.foldingParts > 0 and not spec_foldable.useParentFoldingState
         end
         return false
     end
