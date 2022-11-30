@@ -230,6 +230,9 @@ function InteractiveControl:onLoad(savegame)
     spec.updateTimerOffset = 1500  -- ms
     spec.functionUpdateTimeOffset = 2500  -- ms
 
+    spec.updateControlStateTimer = 0
+    spec.updateControlStateTimerOffset = 750 --ms
+
     spec.indoorSoundModifierFactor = InteractiveControl.SOUND_FALLBACK
     spec.pendingSoundControls = {}
 end
@@ -493,6 +496,7 @@ function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
     entry.isEnabled = isRestricted(xmlFile, key .. ".configurationsRestrictions")
     entry.allowsSaving = #entry.functions == 0
     entry.loadedDirty = false
+    entry.isCurrentlyEnabled = true
 
     entry.changeObjects = {}
     ObjectChangeUtil.loadObjectChangeFromXML(xmlFile, key, entry.changeObjects, self.components, self)
@@ -695,12 +699,21 @@ function InteractiveControl:updateInteractiveControls(isIndoor, isOutdoor, hasIn
     local spec = self.spec_interactiveControl
     local activeController
 
+    -- dont update all controls every time
+    local updateControlStates = false
+    if g_currentMission.time > spec.updateControlStateTimer then
+        spec.updateControlStateTimer = g_currentMission.time + spec.updateControlStateTimerOffset
+        updateControlStates = true
+    end
+
     for _, interactiveControl in pairs(spec.interactiveControls) do
         if interactiveControl.isEnabled then
-            local isCurrentlyEnabled = not self:isControlBlocked(interactiveControl) and self:isControlEnabledByFunction(interactiveControl)
+            if updateControlStates then
+                interactiveControl.isCurrentlyEnabled = not self:isControlBlocked(interactiveControl) and self:isControlEnabledByFunction(interactiveControl)
+            end
 
             for _, clickPoint in pairs(interactiveControl.clickPoints) do
-                if clickPoint:isActivatable() and isCurrentlyEnabled then
+                if clickPoint:isActivatable() and interactiveControl.isCurrentlyEnabled then
                     local indoor = isIndoor and self:getState() and hasInput and clickPoint:isIndoorActive()
                     local outdoor = isOutdoor and not hasInput and clickPoint:isOutdoorActive()
 

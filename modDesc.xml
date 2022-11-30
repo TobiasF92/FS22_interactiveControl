@@ -25,6 +25,7 @@ Changelog (1.1.0.0):
 - added mod compatibility with 'FS22_additionalGameSettings'
 - added auto spec insertion to more vehicles
 - fixed not working while indoor cameras use outdoor sounds
+- fixed various small things
 
         ]]></en>
         <de><![CDATA['Interactive Control' ist ein globaler Skript-Mod für den Landwirtschafts-Simulator 22. Während dieser Mod aktiv ist, sind Sie in der Lage, viele andere Mods zu verwenden, die Interactive Control unterstützen. Mit IC erhalten Sie die Möglichkeit, viele Teile von mehreren (vorbereiteten) Fahrzeugen interaktiv zu steuern.
@@ -44,6 +45,7 @@ Changelog (1.1.0.0):
 - Kompatibilität mit 'FS22_additionalGameSettings' hinzugefügt
 - Automatische Installation der Spezialisierung auf mehre Fahrzeuge hinzugefügt
 - Fehler behoben wenn Kamera Außensounds genutzt hat
+- Einige kleinere Fehler behoben
 
         ]]></de>
     </description>
