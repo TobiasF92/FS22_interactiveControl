@@ -118,7 +118,6 @@ LIGHTS_TURNLIGHT_HAZARD_TOGGLE | Toggle hazard lights on and off
 LIGHTS_TURNLIGHT_LEFT_TOGGLE | Toggle turnlight left on and off
 LIGHTS_TURNLIGHT_RIGHT_TOGGLE | Toggle turnlight right on and off
 LIGHTS_BEACON_TOGGLE | Toggle beaconlight on and off
-GPS_TOGGLE | Toggle [GuidanceSteering](https://www.farming-simulator.com/mod.php?lang=de&country=at&mod_id=228522) on and off
 CRUISE_CONTROL_TOGGLE | Toggle cruise control on and off
 DRIVE_DIRECTION_TOGGLE | Toggle vehicle drive direction
 COVER_TOGGLE | Toggle cover state
@@ -131,7 +130,16 @@ ATTACHERJOINTS_TOGGLE_DISCHARGE | Toggle discharging on selected attacherJoint i
 DISCHARGE_TOGGLE | Toggle discharging on vehicle
 CRABSTEERING_TOGGLE | Toggle crab steering mode to next mode
 RADIO_TOGGLE | Toggle radio on/off
-
+VARIABLE_WORK_WIDTH_LEFT | Switch work width left
+VARIABLE_WORK_WIDTH_RIGHT | Switch work width right
+VARIABLE_WORK_WIDTH_TOGGLE | Toggle work width
+**External Mods**:
+GPS_TOGGLE | Toggle [GuidanceSteering](https://farming-simulator.com/mod.php?mod_id=228522) on and off
+PF_CROP_SENSOR_TOGGLE | Toggle [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) crop sensor mode
+PF_SPRAY_AMOUNT_MODE | Toggle [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) spray amount mode
+PF_SPRAY_AMOUNT | Switch [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) manual spray amount
+PF_SEED_RATE_MODE | Toggle [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) seed rate mode
+PF_SEED_RATE | Switch [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) manual seed rate
 
 ## Copyright
 

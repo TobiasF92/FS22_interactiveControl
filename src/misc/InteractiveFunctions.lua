@@ -478,19 +478,13 @@ InteractiveFunctions.addFunction("ATTACHERJOINTS_TOGGLE_DISCHARGE", {
             local dischargeState = object:getDischargeState()
             local currentDischargeNode = object:getCurrentDischargeNode()
 
-            if dischargeState == Dischargeable.DISCHARGE_STATE_OFF then
-                if object:getIsDischargeNodeActive(currentDischargeNode) then
-                    if object:getCanDischargeToObject(currentDischargeNode) and object:getCanToggleDischargeToObject() then
-                        Dischargeable.actionEventToggleDischarging(object)
+            if object:getIsDischargeNodeActive(currentDischargeNode) then
+                if object:getCanDischargeToObject(currentDischargeNode) and object:getCanToggleDischargeToObject() then
+                    Dischargeable.actionEventToggleDischarging(object)
 
-                    elseif object:getCanDischargeToGround(currentDischargeNode) and
-                        object:getCanToggleDischargeToGround() then
-                        Dischargeable.actionEventToggleDischargeToGround(object)
-
-                    end
+                elseif object:getCanDischargeToGround(currentDischargeNode) and object:getCanToggleDischargeToGround() then
+                    Dischargeable.actionEventToggleDischargeToGround(object)
                 end
-            else
-                Dischargeable.actionEventToggleDischarging(object)
             end
         end
     end,
@@ -517,27 +511,18 @@ InteractiveFunctions.addFunction("ATTACHERJOINTS_TOGGLE_DISCHARGE", {
     end,
     isEnabledFunc = function(target, data)
         if target.getImplementByJointDescIndex ~= nil then
-            if data.selectedObject == nil then
-                for _, index in ipairs(data.attacherJointIndicies) do
-                    local implement = target:getImplementByJointDescIndex(index)
+            for _, index in ipairs(data.attacherJointIndicies) do
+                local implement = target:getImplementByJointDescIndex(index)
 
-                    if implement ~= nil then
-                        local object = implement.object
+                if implement ~= nil then
+                    local object = implement.object
 
-                        if object ~= nil and object:getIsSelected() and object.getCanToggleDischargeToObject ~= nil
-                            and object:getCanToggleDischargeToObject() or object:getCanToggleDischargeToGround() then
-
+                    if object ~= nil and object:getIsSelected() then
+                        if object.getCanToggleDischargeToObject ~= nil and object:getCanToggleDischargeToObject() or
+                                object.getCanToggleDischargeToGround ~= nil and object:getCanToggleDischargeToGround() then
                             data.selectedObject = object
                             return true
                         end
-                    end
-                end
-            else
-                -- check if selectedObject is still valid
-                if data.selectedObject:getIsSelected() then
-                    local implement = target:getImplementByObject(data.selectedObject)
-                    if implement ~= nil and implement.object == data.selectedObject then
-                        return true
                     end
                 end
             end
@@ -614,5 +599,62 @@ InteractiveFunctions.addFunction("RADIO_TOGGLE", {
             return not isVehicleOnly or isVehicleOnly and target ~= nil and target.supportsRadio
         end
         return nil
+    end
+})
+
+---FUNCTION_VARIABLE_WORK_WIDTH_LEFT
+InteractiveFunctions.addFunction("VARIABLE_WORK_WIDTH_LEFT", {
+    posFunc = function(target, data, noEventSend)
+        if target.spec_variableWorkWidth and VariableWorkWidth.actionEventWorkWidthLeft ~= nil then
+            VariableWorkWidth.actionEventWorkWidthLeft(target, nil, 1)
+        end
+    end,
+    negFunc = function(target, data, noEventSend)
+        if target.spec_variableWorkWidth and VariableWorkWidth.actionEventWorkWidthLeft ~= nil then
+            VariableWorkWidth.actionEventWorkWidthLeft(target, nil, -1)
+        end
+    end,
+    isEnabledFunc = function(target, data)
+        if target.spec_variableWorkWidth ~= nil then
+            local spec = target.spec_variableWorkWidth
+            return #spec.sectionNodes > 0 and #spec.sectionNodesLeft > 0
+        end
+        return false
+    end
+})
+
+---FUNCTION_VARIABLE_WORK_WIDTH_RIGHT
+InteractiveFunctions.addFunction("VARIABLE_WORK_WIDTH_RIGHT", {
+    posFunc = function(target, data, noEventSend)
+        if target.spec_variableWorkWidth and VariableWorkWidth.actionEventWorkWidthRight ~= nil then
+            VariableWorkWidth.actionEventWorkWidthRight(target, nil, 1)
+        end
+    end,
+    negFunc = function(target, data, noEventSend)
+        if target.spec_variableWorkWidth and VariableWorkWidth.actionEventWorkWidthRight ~= nil then
+            VariableWorkWidth.actionEventWorkWidthRight(target, nil, -1)
+        end
+    end,
+    isEnabledFunc = function(target, data)
+        if target.spec_variableWorkWidth ~= nil then
+            local spec = target.spec_variableWorkWidth
+            return #spec.sectionNodes > 0 and #spec.sectionNodesRight > 0
+        end
+        return false
+    end
+})
+
+---FUNCTION_VARIABLE_WORK_WIDTH_TOGGLE
+InteractiveFunctions.addFunction("VARIABLE_WORK_WIDTH_TOGGLE", {
+    posFunc = function(target, data, noEventSend)
+        if target.spec_variableWorkWidth and VariableWorkWidth.actionEventWorkWidthToggle ~= nil then
+            VariableWorkWidth.actionEventWorkWidthToggle(target)
+        end
+    end,
+    isEnabledFunc = function(target, data)
+        if target.spec_variableWorkWidth ~= nil then
+            return #target.spec_variableWorkWidth.sectionNodes > 0
+        end
+        return false
     end
 })
