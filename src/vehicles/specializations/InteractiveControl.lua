@@ -231,7 +231,7 @@ function InteractiveControl:onLoad(savegame)
     spec.functionUpdateTimeOffset = 2500  -- ms
 
     spec.updateControlStateTimer = 0
-    spec.updateControlStateTimerOffset = 750 --ms
+    spec.updateControlStateTimerOffset = 500 --ms
 
     spec.indoorSoundModifierFactor = InteractiveControl.SOUND_FALLBACK
     spec.pendingSoundControls = {}
@@ -701,7 +701,7 @@ function InteractiveControl:updateInteractiveControls(isIndoor, isOutdoor, hasIn
 
     -- dont update all controls every time
     local updateControlStates = false
-    if g_currentMission.time > spec.updateControlStateTimer then
+    if g_currentMission.time > spec.updateControlStateTimer and (isIndoor or isOutdoor) then
         spec.updateControlStateTimer = g_currentMission.time + spec.updateControlStateTimerOffset
         updateControlStates = true
     end
