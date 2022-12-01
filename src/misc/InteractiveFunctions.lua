@@ -72,6 +72,69 @@ function InteractiveFunctions.getFunctionData(functionName)
     return InteractiveFunctions.FUNCTIONS[identifier]
 end
 
+---Shared function to register attacherJoint schematics
+---@param schema XMLSchema schema to register attacherJoint
+---@param path string path to register attacherJoint
+function InteractiveFunctions.attacherJointSchema(schema, path)
+    schema:register(XMLValueType.INT, path .. ".attacherJoint#index", "Attacher joint index to be controlled")
+end
+
+---Shared function to load attacherJoint
+---@param xmlFile XMLFile xml file to load data from
+---@param key string path key to load attacherJoint
+---@param data table table to store loaded attacherJoint
+---@param errorMsg string error message name
+---@return boolean loaded
+function InteractiveFunctions.attacherJointLoad(xmlFile, key, data, errorMsg)
+    data.attacherJointIndex = xmlFile:getValue(key .. ".attacherJoint#index")
+    if data.attacherJointIndex == nil then
+        Logging.xmlWarning(xmlFile, "Failed to load attacherJoint index, ignoring control\nSet value '%s.attacherJoint#index' to use function: %s", key, errorMsg)
+        return false
+    end
+    return true
+end
+
+---Shared function to register attacherJoints schematics
+---@param schema XMLSchema schema to register attacherJoint
+---@param path string path to register attacherJoint
+function InteractiveFunctions.attacherJointsSchema(schema, path)
+    schema:register(XMLValueType.VECTOR_N, path .. ".attacherJoint#indicies", "Attacher joint indicies to be controlled", true)
+end
+
+---Shared function to load attacherJoints
+---@param xmlFile XMLFile xml file to load data from
+---@param key string path key to load attacherJoint
+---@param data table table to store loaded attacherJoint
+---@param errorMsg string error message name
+---@return boolean loaded
+function InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, errorMsg)
+    data.attacherJointIndicies = xmlFile:getValue(key .. ".attacherJoint#indicies", nil, true)
+    data.selectedObject = nil
+
+    if data.attacherJointIndicies == nil or table.getn(data.attacherJointIndicies) <= 0 then        
+        Logging.xmlWarning(xmlFile, "Failed to load attacherJoint indicies, ignoring control\nSet value '%s.attacherJoint#indicies' to use function: %s", key, errorMsg)
+        return false
+    end
+    return true
+end
+
+---Shared function to get attached object to vehicle
+---@param vehicle Vehicle instance of vehicle to get attached object
+---@param attacherJointIndex number index of attacher joint
+---@return Vehicle|nil attachedObject
+function InteractiveFunctions.resolveToAttachedObject(vehicle, attacherJointIndex)
+    if vehicle == nil or attacherJointIndex == nil or vehicle.getImplementByJointDescIndex == nil then
+        return nil
+    end
+
+    local implement = vehicle:getImplementByJointDescIndex(attacherJointIndex)
+    if implement == nil then
+        return nil
+    end
+
+    return implement.object
+end
+
 ---FUNCTION_MOTOR_START_STOPP
 InteractiveFunctions.addFunction("MOTOR_START_STOPP", {
     posFunc = function(target, data, noEventSend)
@@ -265,27 +328,6 @@ InteractiveFunctions.addFunction("COVER_TOGGLE", {
     end
 })
 
----Shared function to register attacherJoint schematics
----@param schema XMLSchema schema to register attacherJoint
----@param path string path to register attacherJoint
-function InteractiveFunctions.attacherJointSchema(schema, path)
-    schema:register(XMLValueType.INT, path .. ".attacherJoint#index", "Attacher joint index to be controlled")
-end
-
----Shared function to load attacherJoint
----@param xmlFile XMLFile xml file to load data from
----@param key string path key to load attacherJoint
----@param data table table to store loaded attacherJoint
----@return boolean loaded
-function InteractiveFunctions.attacherJointLoad(xmlFile, key, data, errorMsg)
-    data.attacherJointIndex = xmlFile:getValue(key .. ".attacherJoint#index")
-    if data.attacherJointIndex == nil then
-        Logging.xmlWarning(xmlFile, "Failed to load attacherJoint index, ignoring control\nSet value '%s.attacherJoint#index' to use function: %s", key, errorMsg)
-        return false
-    end
-    return true
-end
-
 ---FUNCTION_ATTACHERJOINT_LIFT_LOWER
 InteractiveFunctions.addFunction("ATTACHERJOINT_LIFT_LOWER", {
     posFunc = function(target, data, noEventSend)
@@ -325,37 +367,17 @@ InteractiveFunctions.addFunction("ATTACHERJOINT_LIFT_LOWER", {
 ---FUNCTION_ATTACHERJOINT_TURN_ON_OFF
 InteractiveFunctions.addFunction("ATTACHERJOINT_TURN_ON_OFF", {
     posFunc = function(target, data, noEventSend)
-        if target.getImplementByJointDescIndex ~= nil then
-            local implement = target:getImplementByJointDescIndex(data.attacherJointIndex)
+        local attachedObject = InteractiveFunctions.resolveToAttachedObject(target, data.attacherJointIndex)
 
-            if implement ~= nil then
-                local object = implement.object
-
-                if object.getCanBeTurnedOn ~= nil then
-                    if object:getCanToggleTurnedOn() and object:getCanBeTurnedOn() then
-                        object:setIsTurnedOn(not object:getIsTurnedOn())
-                    elseif not object:getIsTurnedOn() then
-                        local warning = object:getTurnedOnNotAllowedWarning()
-
-                        if warning ~= nil then
-                            g_currentMission:showBlinkingWarning(warning, 2000)
-                        end
-                    end
-                end
-            end
+        if attachedObject ~= nil and attachedObject.spec_turnOnVehicle ~= nil and TurnOnVehicle.actionEventTurnOn ~= nil then
+            TurnOnVehicle.actionEventTurnOn(attachedObject)
         end
     end,
     updateFunc = function(target, data)
-        if target.getImplementByJointDescIndex ~= nil then
-            local implement = target:getImplementByJointDescIndex(data.attacherJointIndex)
+        local attachedObject = InteractiveFunctions.resolveToAttachedObject(target, data.attacherJointIndex)
 
-            if implement ~= nil then
-                local object = implement.object
-
-                if object.getIsTurnedOn ~= nil then
-                    return object:getIsTurnedOn()
-                end
-            end
+        if attachedObject ~= nil and  attachedObject.spec_turnOnVehicle ~= nil then
+            return attachedObject:getIsTurnedOn()
         end
         return nil
     end,
@@ -364,12 +386,10 @@ InteractiveFunctions.addFunction("ATTACHERJOINT_TURN_ON_OFF", {
         return InteractiveFunctions.attacherJointLoad(xmlFile, key, data, "ATTACHERJOINT_TURN_ON_OFF")
     end,
     isEnabledFunc = function(target, data)
-        if target.getImplementByJointDescIndex ~= nil then
-            local implement = target:getImplementByJointDescIndex(data.attacherJointIndex)
+        local attachedObject = InteractiveFunctions.resolveToAttachedObject(target, data.attacherJointIndex)
 
-            if implement ~= nil then
-                return implement.object.getCanBeTurnedOn ~= nil
-            end
+        if attachedObject ~= nil then
+            return attachedObject.getCanBeTurnedOn ~= nil
         end
         return false
     end
@@ -394,7 +414,6 @@ InteractiveFunctions.addFunction("TURN_ON_OFF", {
         if target.getIsTurnedOn ~= nil then
             return target:getIsTurnedOn()
         end
-
         return nil
     end,
     isEnabledFunc = function(target, data)
@@ -405,29 +424,17 @@ InteractiveFunctions.addFunction("TURN_ON_OFF", {
 ---FUNCTION_ATTACHERJOINT_FOLDING_TOGGLE
 InteractiveFunctions.addFunction("ATTACHERJOINT_FOLDING_TOGGLE", {
     posFunc = function(target, data, noEventSend)
-        if target.getImplementByJointDescIndex ~= nil then
-            local implement = target:getImplementByJointDescIndex(data.attacherJointIndex)
+        local attachedObject = InteractiveFunctions.resolveToAttachedObject(target, data.attacherJointIndex)
 
-            if implement ~= nil then
-                local object = implement.object
-
-                if object.getIsFoldAllowed ~= nil and Foldable.actionEventFold ~= nil then
-                    Foldable.actionEventFold(object)
-                end
-            end
+        if attachedObject ~= nil and attachedObject.spec_foldable ~= nil and Foldable.actionEventFold ~= nil then
+            Foldable.actionEventFold(attachedObject)
         end
     end,
     updateFunc = function(target, data)
-        if target.getImplementByJointDescIndex ~= nil then
-            local implement = target:getImplementByJointDescIndex(data.attacherJointIndex)
+        local attachedObject = InteractiveFunctions.resolveToAttachedObject(target, data.attacherJointIndex)
 
-            if implement ~= nil then
-                local object = implement.object
-
-                if object.getToggledFoldDirection ~= nil then
-                    return object:getToggledFoldDirection() == 1
-                end
-            end
+        if attachedObject ~= nil and attachedObject.spec_foldable ~= nil then
+            return attachedObject:getToggledFoldDirection() == 1
         end
         return nil
     end,
@@ -436,20 +443,10 @@ InteractiveFunctions.addFunction("ATTACHERJOINT_FOLDING_TOGGLE", {
         return InteractiveFunctions.attacherJointLoad(xmlFile, key, data, "ATTACHERJOINT_FOLDING_TOGGLE")
     end,
     isEnabledFunc = function(target, data)
-        if target.getImplementByJointDescIndex ~= nil then
-            local implement = target:getImplementByJointDescIndex(data.attacherJointIndex)
+        local attachedObject = InteractiveFunctions.resolveToAttachedObject(target, data.attacherJointIndex)
 
-            if implement == nil or implement.object == nil then
-                return false
-            end
-
-            local spec_foldable = implement.object.spec_foldable
-
-            if spec_foldable == nil then
-                return false
-            end
-
-            return #spec_foldable.foldingParts > 0 and not spec_foldable.useParentFoldingState
+        if attachedObject ~= nil and attachedObject.spec_foldable ~= nil then
+            return #attachedObject.spec_foldable.foldingParts > 0 and not attachedObject.spec_foldable.useParentFoldingState
         end
         return false
     end
@@ -470,12 +467,11 @@ InteractiveFunctions.addFunction("FOLDING_TOGGLE", {
     end
 })
 
----FUNCTION_ATTACHERJOINT_TOGGLE_DISCHARGE
+---FUNCTION_ATTACHERJOINTS_TOGGLE_DISCHARGE
 InteractiveFunctions.addFunction("ATTACHERJOINTS_TOGGLE_DISCHARGE", {
     posFunc = function(target, data, noEventSend)
         if data.selectedObject ~= nil then
             local object = data.selectedObject
-            local dischargeState = object:getDischargeState()
             local currentDischargeNode = object:getCurrentDischargeNode()
 
             if object:getIsDischargeNodeActive(currentDischargeNode) then
@@ -490,40 +486,23 @@ InteractiveFunctions.addFunction("ATTACHERJOINTS_TOGGLE_DISCHARGE", {
     end,
     updateFunc = function(target, data)
         if data.selectedObject ~= nil then
-            local object = data.selectedObject
-
-            return object:getDischargeState() ~= Dischargeable.DISCHARGE_STATE_OFF
+            return data.selectedObject:getDischargeState() ~= Dischargeable.DISCHARGE_STATE_OFF
         end
         return nil
     end,
-    schemaFunc = function(schema, path)
-        schema:register(XMLValueType.VECTOR_N, path .. ".attacherJoint#indicies", "Attacher joint indicies to be controlled", true)
-    end,
+    schemaFunc = InteractiveFunctions.attacherJointsSchema,
     loadFunc = function(xmlFile, key, data)
-        data.attacherJointIndicies = xmlFile:getValue(key .. ".attacherJoint#indicies", nil, true)
-        data.selectedObject = nil
-
-        if data.attacherJointIndicies == nil or table.getn(data.attacherJointIndicies) <= 0 then
-            Logging.xmlWarning(xmlFile, "Failed to load attacherJoint indicies, ignoring control\nSet value '%s.attacherJoint#indicies' to use function: ATTACHERJOINTS_TOGGLE_DISCHARGE", key)
-            return false
-        end
-        return true
+        return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "ATTACHERJOINTS_TOGGLE_DISCHARGE")
     end,
     isEnabledFunc = function(target, data)
-        if target.getImplementByJointDescIndex ~= nil then
-            for _, index in ipairs(data.attacherJointIndicies) do
-                local implement = target:getImplementByJointDescIndex(index)
+        for _, index in ipairs(data.attacherJointIndicies) do
+            local attachedObject = InteractiveFunctions.resolveToAttachedObject(target, index)
 
-                if implement ~= nil then
-                    local object = implement.object
-
-                    if object ~= nil and object:getIsSelected() then
-                        if object.getCanToggleDischargeToObject ~= nil and object:getCanToggleDischargeToObject() or
-                                object.getCanToggleDischargeToGround ~= nil and object:getCanToggleDischargeToGround() then
-                            data.selectedObject = object
-                            return true
-                        end
-                    end
+            if attachedObject ~= nil and attachedObject:getIsSelected() and attachedObject.spec_dischargeable ~= nil then
+                if attachedObject.getCanToggleDischargeToObject ~= nil and attachedObject:getCanToggleDischargeToObject() or
+                        attachedObject.getCanToggleDischargeToGround ~= nil and attachedObject:getCanToggleDischargeToGround() then
+                    data.selectedObject = attachedObject
+                    return true
                 end
             end
         end
@@ -623,6 +602,40 @@ InteractiveFunctions.addFunction("VARIABLE_WORK_WIDTH_LEFT", {
     end
 })
 
+---FUNCTION_ATTACHERJOINTS_VARIABLE_WORK_WIDTH_LEFT
+InteractiveFunctions.addFunction("ATTACHERJOINTS_VARIABLE_WORK_WIDTH_LEFT", {
+    posFunc = function(target, data, noEventSend)
+        if data.selectedObject ~= nil and VariableWorkWidth.actionEventWorkWidthLeft ~= nil then
+            VariableWorkWidth.actionEventWorkWidthLeft(data.selectedObject, nil, 1)
+        end
+    end,
+    negFunc = function(target, data, noEventSend)
+        if data.selectedObject ~= nil and VariableWorkWidth.actionEventWorkWidthLeft ~= nil then
+            VariableWorkWidth.actionEventWorkWidthLeft(data.selectedObject, nil, -1)
+        end
+    end,
+    schemaFunc = InteractiveFunctions.attacherJointsSchema,
+    loadFunc = function(xmlFile, key, data)
+        return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "ATTACHERJOINTS_VARIABLE_WORK_WIDTH_LEFT")
+    end,
+    isEnabledFunc = function(target, data)
+        for _, index in ipairs(data.attacherJointIndicies) do
+            local attachedObject = InteractiveFunctions.resolveToAttachedObject(target, index)
+
+            if attachedObject ~= nil and attachedObject:getIsSelected() and attachedObject.spec_variableWorkWidth ~= nil then
+                local spec = attachedObject.spec_variableWorkWidth
+                if #spec.sectionNodes > 0 and #spec.sectionNodesLeft > 0 then
+                    data.selectedObject = attachedObject
+                    return true
+                end
+            end
+        end
+
+        data.selectedObject = nil
+        return false
+    end
+})
+
 ---FUNCTION_VARIABLE_WORK_WIDTH_RIGHT
 InteractiveFunctions.addFunction("VARIABLE_WORK_WIDTH_RIGHT", {
     posFunc = function(target, data, noEventSend)
@@ -644,6 +657,40 @@ InteractiveFunctions.addFunction("VARIABLE_WORK_WIDTH_RIGHT", {
     end
 })
 
+---FUNCTION_ATTACHERJOINTS_VARIABLE_WORK_WIDTH_RIGHT
+InteractiveFunctions.addFunction("ATTACHERJOINTS_VARIABLE_WORK_WIDTH_RIGHT", {
+    posFunc = function(target, data, noEventSend)
+        if data.selectedObject ~= nil and VariableWorkWidth.actionEventWorkWidthRight ~= nil then
+            VariableWorkWidth.actionEventWorkWidthRight(data.selectedObject, nil, 1)
+        end
+    end,
+    negFunc = function(target, data, noEventSend)
+        if data.selectedObject ~= nil and VariableWorkWidth.actionEventWorkWidthRight ~= nil then
+            VariableWorkWidth.actionEventWorkWidthRight(data.selectedObject, nil, -1)
+        end
+    end,
+    schemaFunc = InteractiveFunctions.attacherJointsSchema,
+    loadFunc = function(xmlFile, key, data)
+        return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "ATTACHERJOINTS_VARIABLE_WORK_WIDTH_RIGHT")
+    end,
+    isEnabledFunc = function(target, data)
+        for _, index in ipairs(data.attacherJointIndicies) do
+            local attachedObject = InteractiveFunctions.resolveToAttachedObject(target, index)
+
+            if attachedObject ~= nil and attachedObject:getIsSelected() and attachedObject.spec_variableWorkWidth ~= nil then
+                local spec = attachedObject.spec_variableWorkWidth
+                if #spec.sectionNodes > 0 and #spec.sectionNodesRight > 0 then
+                    data.selectedObject = attachedObject
+                    return true
+                end
+            end
+        end
+
+        data.selectedObject = nil
+        return false
+    end
+})
+
 ---FUNCTION_VARIABLE_WORK_WIDTH_TOGGLE
 InteractiveFunctions.addFunction("VARIABLE_WORK_WIDTH_TOGGLE", {
     posFunc = function(target, data, noEventSend)
@@ -655,6 +702,35 @@ InteractiveFunctions.addFunction("VARIABLE_WORK_WIDTH_TOGGLE", {
         if target.spec_variableWorkWidth ~= nil then
             return #target.spec_variableWorkWidth.sectionNodes > 0
         end
+        return false
+    end
+})
+
+---FUNCTION_ATTACHERJOINTS_VARIABLE_WORK_WIDTH_TOGGLE
+InteractiveFunctions.addFunction("ATTACHERJOINTS_VARIABLE_WORK_WIDTH_TOGGLE", {
+    posFunc = function(target, data, noEventSend)
+        if data.selectedObject ~= nil and VariableWorkWidth.actionEventWorkWidthToggle ~= nil then
+            VariableWorkWidth.actionEventWorkWidthToggle(data.selectedObject, nil, 1)
+        end
+    end,
+    schemaFunc = InteractiveFunctions.attacherJointsSchema,
+    loadFunc = function(xmlFile, key, data)
+        return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "ATTACHERJOINTS_VARIABLE_WORK_WIDTH_TOGGLE")
+    end,
+    isEnabledFunc = function(target, data)
+        for _, index in ipairs(data.attacherJointIndicies) do
+            local attachedObject = InteractiveFunctions.resolveToAttachedObject(target, index)
+
+            if attachedObject ~= nil and attachedObject:getIsSelected() and attachedObject.spec_variableWorkWidth ~= nil then
+                local spec = attachedObject.spec_variableWorkWidth
+                if #spec.sectionNodes > 0 then
+                    data.selectedObject = attachedObject
+                    return true
+                end
+            end
+        end
+
+        data.selectedObject = nil
         return false
     end
 })

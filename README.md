@@ -131,15 +131,23 @@ DISCHARGE_TOGGLE | Toggle discharging on vehicle
 CRABSTEERING_TOGGLE | Toggle crab steering mode to next mode
 RADIO_TOGGLE | Toggle radio on/off
 VARIABLE_WORK_WIDTH_LEFT | Switch work width left
+ATTACHERJOINTS_VARIABLE_WORK_WIDTH_LEFT | Switch work width right on selected attacherJoint if in 'indices' | ".attacherJoint#indicies"
 VARIABLE_WORK_WIDTH_RIGHT | Switch work width right
+ATTACHERJOINTS_VARIABLE_WORK_WIDTH_RIGHT | Switch work width right on selected attacherJoint if in 'indices' | ".attacherJoint#indicies"
 VARIABLE_WORK_WIDTH_TOGGLE | Toggle work width
+ATTACHERJOINTS_VARIABLE_WORK_WIDTH_TOGGLE | Toggle work width on selected attacherJoint if in 'indices' | ".attacherJoint#indicies"
 **External Mods**:
 GPS_TOGGLE | Toggle [GuidanceSteering](https://farming-simulator.com/mod.php?mod_id=228522) on and off
 PF_CROP_SENSOR_TOGGLE | Toggle [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) crop sensor mode
+PF_ATTACHERJOINTS_CROP_SENSOR_TOGGLE | Toggle [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) crop sensor mode on selected attacherJoint if in 'indices' | ".attacherJoint#indicies"
 PF_SPRAY_AMOUNT_MODE | Toggle [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) spray amount mode
+PF_ATTACHERJOINTS_PF_SPRAY_AMOUNT_MODE | Toggle [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) spray amount mode on selected attacherJoint if in 'indices' | ".attacherJoint#indicies"
 PF_SPRAY_AMOUNT | Switch [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) manual spray amount
+PF_ATTACHERJOINTS_PF_SPRAY_AMOUNT | Switch [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) manual spray amount on selected attacherJoint if in 'indices' | ".attacherJoint#indicies"
 PF_SEED_RATE_MODE | Toggle [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) seed rate mode
+PF_ATTACHERJOINTS_PF_SEED_RATE_MODE | Toggle [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) seed rate mode on selected attacherJoint if in 'indices' | ".attacherJoint#indicies"
 PF_SEED_RATE | Switch [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) manual seed rate
+PF_ATTACHERJOINTS_PF_SEED_RATE | Switch [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) manual seed rate on selected attacherJoint if in 'indices' | ".attacherJoint#indicies"
 
 ## Copyright
 
