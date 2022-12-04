@@ -118,13 +118,16 @@ LIGHTS_TURNLIGHT_HAZARD_TOGGLE | Toggle hazard lights on and off
 LIGHTS_TURNLIGHT_LEFT_TOGGLE | Toggle turnlight left on and off
 LIGHTS_TURNLIGHT_RIGHT_TOGGLE | Toggle turnlight right on and off
 LIGHTS_BEACON_TOGGLE | Toggle beaconlight on and off
+LIGHTS_PIPE_TOGGLE | Toggle pipelight on and off
 CRUISE_CONTROL_TOGGLE | Toggle cruise control on and off
 DRIVE_DIRECTION_TOGGLE | Toggle vehicle drive direction
 COVER_TOGGLE | Toggle cover state
 ATTACHERJOINT_LIFT_LOWER | Lift/lower implement on attacherJoint index | ".attacherJoint#index"
 ATTACHERJOINT_TURN_ON_OFF | Turn on/off implement on attacherJoint index | ".attacherJoint#index"
+ATTACHERJOINT_TOOL_LOWERING | Lower/Raise implements in attacherJoint indicies | ".attacherJoint#indicies"
 TURN_ON_OFF | Turn on/off vehicle
 ATTACHERJOINT_FOLDING_TOGGLE | Fold/unfold implement on attacherJoint index | ".attacherJoint#index"
+PIPE_FOLDING_TOGGLE | Fold/unfold pipe
 FOLDING_TOGGLE | Fold/unfold vehicle
 ATTACHERJOINTS_TOGGLE_DISCHARGE | Toggle discharging on selected attacherJoint if in 'indices' | ".attacherJoint#indicies"
 DISCHARGE_TOGGLE | Toggle discharging on vehicle

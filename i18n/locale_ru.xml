@@ -20,7 +20,13 @@
 
         <text name="actionIC_foldImplement" text="IC: Сложить оборудование"/>
         <text name="actionIC_unfoldImplement" text="IC: Разложить оборудование"/>
+
+        <text name="actionIC_foldVehicle" text="IC: Сложить автомобиль" />
+		<text name="actionIC_unfoldVehicle" text="IC: Развернуть транспортное средство" />
         
+        <text name="actionIC_foldPipe" text="IC: Сложить трубу" />
+		<text name="actionIC_unfoldPipe" text="IC: Rohr Развернуть трубу" />
+
         <text name="actionIC_openRoof" text="IC: Открыть крышу"/>
         <text name="actionIC_closeRoof" text="IC: Закрыть крышу"/>
         
@@ -50,6 +56,9 @@
 
         <text name="actionIC_hazardLightsOn" text="IC: Включить маячки"/>
         <text name="actionIC_hazardLightsOff" text="IC: Выключить маячки"/>
+                
+        <text name="actionIC_pipeLightsOn" text="IC: Включить свет в трубе"/>
+        <text name="actionIC_pipeLightsOff" text="IC: Выключите свет в трубе"/>
 
         <text name="actionIC_gs_activate" text="IC: Включить GPS"/>
         <text name="actionIC_gs_deactivate" text="IC: Выключить GPS"/>

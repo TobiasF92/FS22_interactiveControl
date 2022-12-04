@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="72">
     <author>Vertex Dezign</author>
     <version>1.1.0.0-beta1</version>
@@ -27,6 +27,10 @@ Changelog (1.1.0.0):
 - fixed not working while indoor cameras use outdoor sounds
 - fixed various small things
 
+Changelog (1.2.0.0):
+- added check and warning message if engine is not turned on before unfolding the vehicle using function FOLDING_TOGGLE
+- added function PIPE_FOLDING_TOGGLE to fold/unfold the pipe
+- added function LIGHTS_PIPE_TOGGLE to toggle the pipe light
         ]]></en>
         <de><![CDATA['Interactive Control' ist ein globaler Skript-Mod für den Landwirtschafts-Simulator 22. Während dieser Mod aktiv ist, sind Sie in der Lage, viele andere Mods zu verwenden, die Interactive Control unterstützen. Mit IC erhalten Sie die Möglichkeit, viele Teile von mehreren (vorbereiteten) Fahrzeugen interaktiv zu steuern.
 
@@ -47,6 +51,10 @@ Changelog (1.1.0.0):
 - Fehler behoben wenn Kamera Außensounds genutzt hat
 - Einige kleinere Fehler behoben
 
+Changelog (1.2.0.0):
+- Vor Ausführung der Funktion FOLDING_TOGGLE wird nun geprüft, ob der Motor gestaret ist und ggf. eine Warnmeldung angezeigt
+- Funktion PIPE_FOLDING_TOGGLE to fold/unfold the pipe
+- Funktion LIGHTS_PIPE_TOGGLE to toggle the pipe light
         ]]></de>
     </description>
 

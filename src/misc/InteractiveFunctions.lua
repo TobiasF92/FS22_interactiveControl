@@ -288,6 +288,19 @@ InteractiveFunctions.addFunction("LIGHTS_BEACON_TOGGLE", {
     end
 })
 
+---FUNCTION_LIGHTS_PIPE_TOGGLE
+InteractiveFunctions.addFunction("LIGHTS_PIPE_TOGGLE", {
+    posFunc = function(target, data, noEventSend)
+        if target.getCanToggleLight ~= nil and target.setLightsTypesMask ~= nil then
+            if target:getCanToggleLight() then
+                -- lighttype for pipe lights is "4"
+                local lightsTypesMask = bitXOR(target.spec_lights.lightsTypesMask, 2 ^ 4)
+                target:setLightsTypesMask(lightsTypesMask, true, noEventSend)
+            end
+        end
+    end
+})
+
 ---FUNCTION_CRUISE_CONTROL_TOGGLE
 InteractiveFunctions.addFunction("CRUISE_CONTROL_TOGGLE", {
     posFunc = function(target, data, noEventSend)
@@ -452,11 +465,52 @@ InteractiveFunctions.addFunction("ATTACHERJOINT_FOLDING_TOGGLE", {
     end
 })
 
+InteractiveFunctions.addFunction("PIPE_FOLDING_TOGGLE", {
+    posFunc = function(target, data, noEventSend)
+        printFunctionCall(2, "PIPE_FOLDING_TOGGLE")
+        printTable(target, "target")
+        printTable(target.spec_pipe, "target.spec_pipe")
+
+        printLog(2, "target.getIsPipeStateChangeAllowed='"..tostring(target.getIsPipeStateChangeAllowed).."'")
+        printLog(2, "Pipe.actionEventTogglePipe='"..tostring(Pipe.actionEventTogglePipe).."'")
+        local result = target.getIsUnfolded
+        printLog(2, "target.getIsUnfolded='"..tostring(result).."'")
+
+        -- Show warning if target is not unfolded
+        if target.getIsUnfolded  ~= nil then
+            local warning = target:getTurnedOnNotAllowedWarning()
+
+            if warning ~= nil then
+                g_currentMission:showBlinkingWarning(warning, 2000)
+                return
+            end
+        end
+
+        if target.getIsPipeStateChangeAllowed ~= nil and Pipe.actionEventTogglePipe ~= nil then
+            Pipe.actionEventTogglePipe(target)
+        end
+    end,
+    updateFunc = function(target, data)
+        if target.spec_pipe.targetState ~= nil then
+            return target.spec_pipe.targetState == 1
+        end
+    end
+})
+
 ---FUNCTION_FOLDING_TOGGLE
 InteractiveFunctions.addFunction("FOLDING_TOGGLE", {
     posFunc = function(target, data, noEventSend)
+        if target:getIsPowered() then
         if target.getIsFoldAllowed ~= nil and Foldable.actionEventFold ~= nil then
             Foldable.actionEventFold(target)
+            end
+        else
+            local warning = g_i18n:getText("warning_motorNotStarted")
+
+            if warning ~= nil then
+                g_currentMission:showBlinkingWarning(warning, 2000)
+                return 
+            end
         end
     end,
     updateFunc = function(target, data)

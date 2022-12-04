@@ -20,6 +20,12 @@
 
         <text name="actionIC_foldImplement" text="IC: Złóż narzędzie"/>
         <text name="actionIC_unfoldImplement" text="IC: Rozłóż narzędzie"/>
+
+        <text name="actionIC_foldVehicle" text="IC: Składanie pojazdu" />
+		<text name="actionIC_unfoldVehicle" text="IC: Rozkładanie pojazdu" />
+        
+        <text name="actionIC_foldPipe" text="IC: Składanie rury" />
+		<text name="actionIC_unfoldPipe" text="IC: Rozłóż rurę" />
         
         <text name="actionIC_openRoof" text="IC: Otwórz dach"/>
         <text name="actionIC_closeRoof" text="IC: Zamknij dach"/>
@@ -50,6 +56,9 @@
 
         <text name="actionIC_hazardLightsOn" text="IC: Włącz światło awaryjne"/>
         <text name="actionIC_hazardLightsOff" text="IC: Wyłącz światło awaryjne"/>
+                
+        <text name="actionIC_pipeLightsOn" text="IC: Włączanie światła rury"/>
+        <text name="actionIC_pipeLightsOff" text="IC: Wyłączenie światła rury"/>
 
         <text name="actionIC_gs_activate" text="IC: GS Aktywuj"/>
         <text name="actionIC_gs_deactivate" text="IC: GS Dezaktywacja"/>

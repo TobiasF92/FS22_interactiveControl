@@ -20,6 +20,12 @@
 
         <text name="actionIC_foldImplement" text="IC: Piega attrezzo"/>
         <text name="actionIC_unfoldImplement" text="IC: Dispiega attrezzo"/>
+
+        <text name="actionIC_foldVehicle" text="IC: Ripiegare veicolo" />
+		<text name="actionIC_unfoldVehicle" text="IC: Dispiegare veicolo" />
+        
+        <text name="actionIC_foldPipe" text="IC: Piegare tubo" />
+		<text name="actionIC_unfoldPipe" text="IC: Dispiegare tubo" />
         
         <text name="actionIC_openRoof" text="IC: Apri tetto"/>
         <text name="actionIC_closeRoof" text="IC: Chiudi tetto"/>
@@ -50,6 +56,9 @@
 
         <text name="actionIC_hazardLightsOn" text="IC: Accendere le luci di emergenza"/>
         <text name="actionIC_hazardLightsOff" text="IC: Spegnere le luci di emergenza"/>
+                
+        <text name="actionIC_pipeLightsOn" text="IC: Accendere la luce del tubo"/>
+        <text name="actionIC_pipeLightsOff" text="IC: Spegnere la luce del tubo"/>
 
         <text name="actionIC_gs_activate" text="IC: GS attiva"/>
         <text name="actionIC_gs_deactivate" text="IC: GS diasttiva"/>
