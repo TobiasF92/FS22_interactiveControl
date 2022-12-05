@@ -20,6 +20,12 @@
 
         <text name="actionIC_foldImplement" text="IC: Fold implement"/>
         <text name="actionIC_unfoldImplement" text="IC: Unfold implement"/>
+
+        <text name="actionIC_foldVehicle" text="IC: Fold vehicle" />
+		<text name="actionIC_unfoldVehicle" text="IC: Unfold vehicle" />
+        
+        <text name="actionIC_foldPipe" text="IC: Fold pipe" />
+		<text name="actionIC_unfoldPipe" text="IC: Unfold pipe" />
         
         <text name="actionIC_openRoof" text="IC: Open roof"/>
         <text name="actionIC_closeRoof" text="IC: Close roof"/>
@@ -50,6 +56,9 @@
 
         <text name="actionIC_hazardLightsOn" text="IC: Turn hazardlights on"/>
         <text name="actionIC_hazardLightsOff" text="IC: Turn hazardlights off"/>
+        
+        <text name="actionIC_pipeLightsOn" text="IC: Turn pipelight on"/>
+        <text name="actionIC_pipeLightsOff" text="IC: Turn pipelight off"/>
 
         <text name="actionIC_gs_activate" text="IC: GS activate"/>
         <text name="actionIC_gs_deactivate" text="IC: GS deactivate"/>

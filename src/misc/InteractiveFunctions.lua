@@ -288,6 +288,19 @@ InteractiveFunctions.addFunction("LIGHTS_BEACON_TOGGLE", {
     end
 })
 
+---FUNCTION_LIGHTS_PIPE_TOGGLE
+InteractiveFunctions.addFunction("LIGHTS_PIPE_TOGGLE", {
+    posFunc = function(target, data, noEventSend)
+        if target.getCanToggleLight ~= nil and target.setLightsTypesMask ~= nil then
+            if target:getCanToggleLight() then
+                -- lighttype for pipe lights is "4"
+                local lightsTypesMask = bitXOR(target.spec_lights.lightsTypesMask, 2 ^ 4)
+                target:setLightsTypesMask(lightsTypesMask, true, noEventSend)
+            end
+        end
+    end
+})
+
 ---FUNCTION_CRUISE_CONTROL_TOGGLE
 InteractiveFunctions.addFunction("CRUISE_CONTROL_TOGGLE", {
     posFunc = function(target, data, noEventSend)
@@ -452,9 +465,46 @@ InteractiveFunctions.addFunction("ATTACHERJOINT_FOLDING_TOGGLE", {
     end
 })
 
+InteractiveFunctions.addFunction("PIPE_FOLDING_TOGGLE", {
+    posFunc = function(target, data, noEventSend)
+        -- Show warning if target is not unfolded
+        if target.getIsUnfolded ~= nil and not target:getIsUnfolded() then
+            local warning = target:getTurnedOnNotAllowedWarning()
+
+            if warning ~= nil then
+                g_currentMission:showBlinkingWarning(warning, 2000)
+                return
+            end
+        end
+
+        if target.getIsPipeStateChangeAllowed ~= nil and Pipe.actionEventTogglePipe ~= nil then
+            Pipe.actionEventTogglePipe(target)
+        end
+    end,
+    updateFunc = function(target, data)
+        if target.spec_pipe.targetState ~= nil then
+            return target.spec_pipe.targetState == 1
+        end
+    end
+})
+
 ---FUNCTION_FOLDING_TOGGLE
 InteractiveFunctions.addFunction("FOLDING_TOGGLE", {
     posFunc = function(target, data, noEventSend)
+        local spec_foldable = target.spec_foldable
+        if spec_foldable == nil then
+            return
+            end
+    
+        if spec_foldable.requiresPower and not target:getIsPowered() then
+            local warning = g_i18n:getText("warning_motorNotStarted")
+
+            if warning ~= nil then
+                g_currentMission:showBlinkingWarning(warning, 2000)
+                return 
+            end
+        end
+    
         if target.getIsFoldAllowed ~= nil and Foldable.actionEventFold ~= nil then
             Foldable.actionEventFold(target)
         end

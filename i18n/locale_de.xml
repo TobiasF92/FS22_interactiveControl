@@ -20,6 +20,12 @@
 
         <text name="actionIC_foldImplement" text="IC: Anbaugerät einklappen"/>
         <text name="actionIC_unfoldImplement" text="IC: Anbaugerät ausklappen"/>
+
+        <text name="actionIC_foldVehicle" text="IC: Fahrzeug zuklappen" />
+		<text name="actionIC_unfoldVehicle" text="IC: Fahrzeug ausklappen" />
+        
+        <text name="actionIC_foldPipe" text="IC: Rohr einklappen" />
+		<text name="actionIC_unfoldPipe" text="IC: Rohr ausklappen" />
         
         <text name="actionIC_openRoof" text="IC: Dach öffnen"/>
         <text name="actionIC_closeRoof" text="IC: Dach schließen"/>
@@ -50,6 +56,9 @@
 
         <text name="actionIC_hazardLightsOn" text="IC: Warnblinker anschalten"/>
         <text name="actionIC_hazardLightsOff" text="IC: Warnblinker ausschalten"/>
+
+        <text name="actionIC_pipeLightsOn" text="IC: Rohrbeleuchtung anschalten"/>
+        <text name="actionIC_pipeLightsOff" text="IC: Rohrbeleuchtung ausschalten"/>
 
         <text name="actionIC_gs_activate" text="IC: GPS aktivieren"/>
         <text name="actionIC_gs_deactivate" text="IC: GPS deaktivieren"/>
