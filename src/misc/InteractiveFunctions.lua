@@ -491,17 +491,22 @@ InteractiveFunctions.addFunction("PIPE_FOLDING_TOGGLE", {
 ---FUNCTION_FOLDING_TOGGLE
 InteractiveFunctions.addFunction("FOLDING_TOGGLE", {
     posFunc = function(target, data, noEventSend)
-        if target:getIsPowered() then
-        if target.getIsFoldAllowed ~= nil and Foldable.actionEventFold ~= nil then
-            Foldable.actionEventFold(target)
+        local spec_foldable = target.spec_foldable
+        if spec_foldable == nil then
+            return
             end
-        else
+    
+        if spec_foldable.requiresPower and not target:getIsPowered() then
             local warning = g_i18n:getText("warning_motorNotStarted")
 
             if warning ~= nil then
                 g_currentMission:showBlinkingWarning(warning, 2000)
                 return 
             end
+        end
+    
+        if target.getIsFoldAllowed ~= nil and Foldable.actionEventFold ~= nil then
+            Foldable.actionEventFold(target)
         end
     end,
     updateFunc = function(target, data)
