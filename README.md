@@ -124,7 +124,6 @@ DRIVE_DIRECTION_TOGGLE | Toggle vehicle drive direction
 COVER_TOGGLE | Toggle cover state
 ATTACHERJOINT_LIFT_LOWER | Lift/lower implement on attacherJoint index | ".attacherJoint#index"
 ATTACHERJOINT_TURN_ON_OFF | Turn on/off implement on attacherJoint index | ".attacherJoint#index"
-ATTACHERJOINT_TOOL_LOWERING | Lower/Raise implements in attacherJoint indicies | ".attacherJoint#indicies"
 TURN_ON_OFF | Turn on/off vehicle
 ATTACHERJOINT_FOLDING_TOGGLE | Fold/unfold implement on attacherJoint index | ".attacherJoint#index"
 PIPE_FOLDING_TOGGLE | Fold/unfold pipe

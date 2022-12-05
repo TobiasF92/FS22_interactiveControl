@@ -467,15 +467,6 @@ InteractiveFunctions.addFunction("ATTACHERJOINT_FOLDING_TOGGLE", {
 
 InteractiveFunctions.addFunction("PIPE_FOLDING_TOGGLE", {
     posFunc = function(target, data, noEventSend)
-        printFunctionCall(2, "PIPE_FOLDING_TOGGLE")
-        printTable(target, "target")
-        printTable(target.spec_pipe, "target.spec_pipe")
-
-        printLog(2, "target.getIsPipeStateChangeAllowed='"..tostring(target.getIsPipeStateChangeAllowed).."'")
-        printLog(2, "Pipe.actionEventTogglePipe='"..tostring(Pipe.actionEventTogglePipe).."'")
-        local result = target.getIsUnfolded
-        printLog(2, "target.getIsUnfolded='"..tostring(result).."'")
-
         -- Show warning if target is not unfolded
         if target.getIsUnfolded  ~= nil then
             local warning = target:getTurnedOnNotAllowedWarning()
