@@ -468,7 +468,7 @@ InteractiveFunctions.addFunction("ATTACHERJOINT_FOLDING_TOGGLE", {
 InteractiveFunctions.addFunction("PIPE_FOLDING_TOGGLE", {
     posFunc = function(target, data, noEventSend)
         -- Show warning if target is not unfolded
-        if target.getIsUnfolded  ~= nil then
+        if target.getIsUnfolded ~= nil and not target:getIsUnfolded() then
             local warning = target:getTurnedOnNotAllowedWarning()
 
             if warning ~= nil then
