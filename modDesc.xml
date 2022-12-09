@@ -31,6 +31,8 @@ Changelog (1.2.0.0):
 - added check and warning message if engine is not turned on before unfolding the vehicle using function FOLDING_TOGGLE
 - added function PIPE_FOLDING_TOGGLE to fold/unfold the pipe
 - added function LIGHTS_PIPE_TOGGLE to toggle the pipe light
+- added function ATTACHERJOINTS_TOOL_LOWERING to lower or raise an attached implement
+
         ]]></en>
         <de><![CDATA['Interactive Control' ist ein globaler Skript-Mod für den Landwirtschafts-Simulator 22. Während dieser Mod aktiv ist, sind Sie in der Lage, viele andere Mods zu verwenden, die Interactive Control unterstützen. Mit IC erhalten Sie die Möglichkeit, viele Teile von mehreren (vorbereiteten) Fahrzeugen interaktiv zu steuern.
 
@@ -55,6 +57,8 @@ Changelog (1.2.0.0):
 - Vor Ausführung der Funktion FOLDING_TOGGLE wird nun geprüft, ob der Motor gestaret ist und ggf. eine Warnmeldung angezeigt
 - Funktion PIPE_FOLDING_TOGGLE to fold/unfold the pipe
 - Funktion LIGHTS_PIPE_TOGGLE to toggle the pipe light
+- Funktion ATTACHERJOINTS_TOOL_LOWERING hinzugefüt, mit der Anbaugeräte abgesenkt bzw. angehoben werden können
+
         ]]></de>
     </description>
 
