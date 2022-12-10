@@ -469,8 +469,8 @@ InteractiveFunctions.addFunction("ATTACHERJOINT_TURN_ON_OFF", {
     end
 })
 
----FUNCTION_ATTACHERJOINT_TOOL_LOWERING
-InteractiveFunctions.addFunction("ATTACHERJOINTS_TOOL_LOWERING", {
+---FUNCTION_ATTACHERJOINTS_IMPLEMENT_LOWERING
+InteractiveFunctions.addFunction("ATTACHERJOINTS_IMPLEMENT_LOWERING", {
     posFunc = function(target, data, noEventSend)
         if target.getImplementByJointDescIndex ~= nil then
             for _, index in ipairs(data.attacherJointIndicies) do
@@ -499,7 +499,7 @@ InteractiveFunctions.addFunction("ATTACHERJOINTS_TOOL_LOWERING", {
     end,
     schemaFunc = InteractiveFunctions.attacherJointsSchema,
     loadFunc = function(xmlFile, key, data)
-        return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "ATTACHERJOINTS_TOOL_LOWERING")
+        return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "ATTACHERJOINTS_IMPLEMENT_LOWERING")
     end,
     isEnabledFunc = function(target, data)
         if target.getImplementByJointDescIndex ~= nil then
