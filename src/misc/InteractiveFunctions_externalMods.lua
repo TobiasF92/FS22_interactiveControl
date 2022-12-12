@@ -6,19 +6,42 @@
 -- @author John Deere 6930 @VertexDezign
 ----------------------------------------------------------------------------------------------------
 
+---Extension of "src/misc/InteractiveFunctions.lua" for external mods
 ---@tablelib InteractiveFunctions for external mods
+
+---Returns modClass in modEnvironment if existing, nil otherwise.
+---If no modClassName is passed, the modEnvironment will be retured.
+---@param modEnvironmentName string name of the mod environment (modName)
+---@param modClassName? string|nil name of the mod class
+---@return Class|nil modClass
+---@return nil|boolean isEnvironment
+local function getExternalModClass(modEnvironmentName, modClassName)
+    if not g_modIsLoaded[modEnvironmentName] then
+        return nil, nil
+    end
+
+    local modEnvironment = _G[modEnvironmentName]
+    if modEnvironment == nil then
+        return nil, nil
+    end
+
+    if modClassName == nil then
+        return modEnvironment, true
+    end
+
+    return modEnvironment[modClassName], false
+end
 
 ---FS22_guidanceSteering
 ---FUNCTION_GPS_TOGGLE
 InteractiveFunctions.addFunction("GPS_TOGGLE", {
     posFunc = function(target, data, noEventSend)
-        if not g_modIsLoaded["FS22_guidanceSteering"] then
-            return
-        end
+        local GlobalPositioningSystem = getExternalModClass("FS22_guidanceSteering", "GlobalPositioningSystem")
 
-        local GlobalPositioningSystem = FS22_guidanceSteering.GlobalPositioningSystem
-        if target.spec_globalPositioningSystem ~= nil and GlobalPositioningSystem.actionEventEnableSteering ~= nil then
-            GlobalPositioningSystem.actionEventEnableSteering(target)
+        if GlobalPositioningSystem ~= nil then
+            if target.spec_globalPositioningSystem ~= nil and GlobalPositioningSystem.actionEventEnableSteering ~= nil then
+                GlobalPositioningSystem.actionEventEnableSteering(target)
+            end
         end
     end,
     updateFunc = function(target, data)
@@ -39,13 +62,12 @@ InteractiveFunctions.addFunction("GPS_TOGGLE", {
 ---FUNCTION_PF_CROP_SENSOR_TOGGLE
 InteractiveFunctions.addFunction("PF_CROP_SENSOR_TOGGLE", {
     posFunc = function(target, data, noEventSend)
-        if not g_modIsLoaded["FS22_precisionFarming"] then
-            return
-        end
+        local CropSensor = getExternalModClass("FS22_precisionFarming", "CropSensor")
 
-        local CropSensor = FS22_precisionFarming.CropSensor
-        if target.spec_cropSensor.isAvailable and CropSensor.actionEventToggle ~= nil then
-            CropSensor.actionEventToggle(target)
+        if CropSensor ~= nil then
+            if target.spec_cropSensor.isAvailable and CropSensor.actionEventToggle ~= nil then
+                CropSensor.actionEventToggle(target)
+            end
         end
     end,
     updateFunc = function(target, data)
@@ -65,18 +87,21 @@ InteractiveFunctions.addFunction("PF_CROP_SENSOR_TOGGLE", {
 ---FUNCTION_PF_ATTACHERJOINTS_CROP_SENSOR_TOGGLE
 InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_CROP_SENSOR_TOGGLE", {
     posFunc = function(target, data, noEventSend)
-        if not g_modIsLoaded["FS22_precisionFarming"] then
-            return
-        end
+        local CropSensor = getExternalModClass("FS22_precisionFarming", "CropSensor")
 
-        local CropSensor = FS22_precisionFarming.CropSensor
-        if data.selectedObject ~= nil and CropSensor.actionEventToggle ~= nil then
-            CropSensor.actionEventToggle(data.selectedObject)
+        if CropSensor ~= nil then
+            local attachedObject = data.currentAttachedObject
+
+            if attachedObject ~= nil and CropSensor.actionEventToggle ~= nil then
+                CropSensor.actionEventToggle(attachedObject)
+            end
         end
     end,
     updateFunc = function(target, data)
-        if data.selectedObject ~= nil then
-            return data.selectedObject.spec_cropSensor.isActive
+        local attachedObject = data.currentAttachedObject
+
+        if attachedObject ~= nil then
+            return attachedObject.spec_cropSensor.isActive
         end
         return nil
     end,
@@ -85,24 +110,15 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_CROP_SENSOR_TOGGLE", {
         return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "PF_ATTACHERJOINTS_CROP_SENSOR_TOGGLE")
     end,
     isEnabledFunc = function(target, data)
-        if not g_modIsLoaded["FS22_precisionFarming"] then
-            data.selectedObject = nil
+        if getExternalModClass("FS22_precisionFarming") == nil then
             return false
         end
 
-        for _, index in ipairs(data.attacherJointIndicies) do
-            local attachedObject = InteractiveFunctions.resolveToAttachedObject(target, index)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+            return object.spec_cropSensor ~= nil and object.spec_cropSensor.isAvailable
+        end)
 
-            if attachedObject ~= nil and attachedObject:getIsSelected() and attachedObject.spec_cropSensor ~= nil then
-                if attachedObject.spec_cropSensor.isAvailable then
-                    data.selectedObject = attachedObject
-                    return true
-                end
-            end
-        end
-
-        data.selectedObject = nil
-        return false
+        return attachedObject ~= nil
     end
 })
 
@@ -110,13 +126,12 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_CROP_SENSOR_TOGGLE", {
 ---FUNCTION_PF_SEED_RATE_MODE
 InteractiveFunctions.addFunction("PF_SEED_RATE_MODE", {
     posFunc = function(target, data, noEventSend)
-        if not g_modIsLoaded["FS22_precisionFarming"] then
-            return
-        end
+        local ExtendedSowingMachine = getExternalModClass("FS22_precisionFarming", "ExtendedSowingMachine")
 
-        local ExtendedSowingMachine = FS22_precisionFarming.ExtendedSowingMachine
-        if target.spec_extendedSowingMachine and ExtendedSowingMachine.actionEventToggleAuto ~= nil then
-            ExtendedSowingMachine.actionEventToggleAuto(target)
+        if ExtendedSowingMachine ~= nil then
+            if target.spec_extendedSowingMachine and ExtendedSowingMachine.actionEventToggleAuto ~= nil then
+                ExtendedSowingMachine.actionEventToggleAuto(target)
+            end
         end
     end,
     updateFunc = function(target, data)
@@ -133,18 +148,21 @@ InteractiveFunctions.addFunction("PF_SEED_RATE_MODE", {
 ---FUNCTION_PF_ATTACHERJOINTS_PF_SEED_RATE_MODE
 InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_PF_SEED_RATE_MODE", {
     posFunc = function(target, data, noEventSend)
-        if not g_modIsLoaded["FS22_precisionFarming"] then
-            return
-        end
+        local ExtendedSowingMachine = getExternalModClass("FS22_precisionFarming", "ExtendedSowingMachine")
 
-        local ExtendedSowingMachine = FS22_precisionFarming.ExtendedSowingMachine
-        if data.selectedObject ~= nil and ExtendedSowingMachine.actionEventToggleAuto ~= nil then
-            ExtendedSowingMachine.actionEventToggleAuto(data.selectedObject)
+        if ExtendedSowingMachine ~= nil then
+            local attachedObject = data.currentAttachedObject
+
+            if attachedObject ~= nil and ExtendedSowingMachine.actionEventToggleAuto ~= nil then
+                ExtendedSowingMachine.actionEventToggleAuto(attachedObject)
+            end
         end
     end,
     updateFunc = function(target, data)
-        if data.selectedObject ~= nil then
-            return data.selectedObject.spec_extendedSowingMachine.seedRateAutoMode
+        local attachedObject = data.currentAttachedObject
+
+        if attachedObject ~= nil then
+            return attachedObject.spec_extendedSowingMachine.seedRateAutoMode
         end
         return nil
     end,
@@ -153,22 +171,15 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_PF_SEED_RATE_MODE", {
         return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "PF_ATTACHERJOINTS_PF_SEED_RATE_MODE")
     end,
     isEnabledFunc = function(target, data)
-        if not g_modIsLoaded["FS22_precisionFarming"] then
-            data.selectedObject = nil
+        if getExternalModClass("FS22_precisionFarming") == nil then
             return false
         end
 
-        for _, index in ipairs(data.attacherJointIndicies) do
-            local attachedObject = InteractiveFunctions.resolveToAttachedObject(target, index)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+            return object.spec_extendedSowingMachine ~= nil
+        end)
 
-            if attachedObject ~= nil and attachedObject:getIsSelected() and attachedObject.spec_extendedSowingMachine ~= nil then
-                data.selectedObject = attachedObject
-                return true
-            end
-        end
-
-        data.selectedObject = nil
-        return false
+        return attachedObject ~= nil
     end
 })
 
@@ -176,23 +187,21 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_PF_SEED_RATE_MODE", {
 ---FUNCTION_PF_SEED_RATE
 InteractiveFunctions.addFunction("PF_SEED_RATE", {
     posFunc = function(target, data, noEventSend)
-        if not g_modIsLoaded["FS22_precisionFarming"] then
-            return
-        end
+        local ExtendedSowingMachine = getExternalModClass("FS22_precisionFarming", "ExtendedSowingMachine")
 
-        local ExtendedSowingMachine = FS22_precisionFarming.ExtendedSowingMachine
-        if target.spec_extendedSowingMachine and ExtendedSowingMachine.actionEventChangeSeedRate ~= nil then
-            ExtendedSowingMachine.actionEventChangeSeedRate(target, nil, 1)
+        if ExtendedSowingMachine ~= nil then
+            if target.spec_extendedSowingMachine and ExtendedSowingMachine.actionEventChangeSeedRate ~= nil then
+                ExtendedSowingMachine.actionEventChangeSeedRate(target, nil, 1)
+            end
         end
     end,
     negFunc = function(target, data, noEventSend)
-        if not g_modIsLoaded["FS22_precisionFarming"] then
-            return
-        end
+        local ExtendedSowingMachine = getExternalModClass("FS22_precisionFarming", "ExtendedSowingMachine")
 
-        local ExtendedSowingMachine = FS22_precisionFarming.ExtendedSowingMachine
-        if target.spec_extendedSowingMachine and ExtendedSowingMachine.actionEventChangeSeedRate ~= nil then
-            ExtendedSowingMachine.actionEventChangeSeedRate(target, nil, -1)
+        if ExtendedSowingMachine ~= nil then
+            if target.spec_extendedSowingMachine and ExtendedSowingMachine.actionEventChangeSeedRate ~= nil then
+                ExtendedSowingMachine.actionEventChangeSeedRate(target, nil, -1)
+            end
         end
     end,
     isEnabledFunc = function(target, data)
@@ -206,23 +215,25 @@ InteractiveFunctions.addFunction("PF_SEED_RATE", {
 ---FUNCTION_PF_ATTACHERJOINTS_PF_SEED_RATE
 InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_PF_SEED_RATE", {
     posFunc = function(target, data, noEventSend)
-        if not g_modIsLoaded["FS22_precisionFarming"] then
-            return
-        end
+        local ExtendedSowingMachine = getExternalModClass("FS22_precisionFarming", "ExtendedSowingMachine")
 
-        local ExtendedSowingMachine = FS22_precisionFarming.ExtendedSowingMachine
-        if data.selectedObject ~= nil and ExtendedSowingMachine.actionEventChangeSeedRate ~= nil then
-            ExtendedSowingMachine.actionEventChangeSeedRate(data.selectedObject, nil, 1)
+        if ExtendedSowingMachine ~= nil then
+            local attachedObject = data.currentAttachedObject
+
+            if attachedObject ~= nil and ExtendedSowingMachine.actionEventChangeSeedRate ~= nil then
+                ExtendedSowingMachine.actionEventChangeSeedRate(attachedObject, nil, 1)
+            end
         end
     end,
     negFunc = function(target, data, noEventSend)
-        if not g_modIsLoaded["FS22_precisionFarming"] then
-            return
-        end
+        local ExtendedSowingMachine = getExternalModClass("FS22_precisionFarming", "ExtendedSowingMachine")
 
-        local ExtendedSowingMachine = FS22_precisionFarming.ExtendedSowingMachine
-        if data.selectedObject ~= nil and ExtendedSowingMachine.actionEventChangeSeedRate ~= nil then
-            ExtendedSowingMachine.actionEventChangeSeedRate(data.selectedObject, nil, -1)
+        if ExtendedSowingMachine ~= nil then
+            local attachedObject = data.currentAttachedObject
+
+            if attachedObject ~= nil and ExtendedSowingMachine.actionEventChangeSeedRate ~= nil then
+                ExtendedSowingMachine.actionEventChangeSeedRate(attachedObject, nil, -1)
+            end
         end
     end,
     schemaFunc = InteractiveFunctions.attacherJointsSchema,
@@ -230,24 +241,15 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_PF_SEED_RATE", {
         return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "PF_ATTACHERJOINTS_PF_SEED_RATE")
     end,
     isEnabledFunc = function(target, data)
-        if not g_modIsLoaded["FS22_precisionFarming"] then
-            data.selectedObject = nil
+        if getExternalModClass("FS22_precisionFarming") == nil then
             return false
         end
 
-        for _, index in ipairs(data.attacherJointIndicies) do
-            local attachedObject = InteractiveFunctions.resolveToAttachedObject(target, index)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+            return object.spec_extendedSowingMachine ~= nil and not object.spec_extendedSowingMachine.seedRateAutoMode
+        end)
 
-            if attachedObject ~= nil and attachedObject:getIsSelected() and attachedObject.spec_extendedSowingMachine ~= nil then
-                if not attachedObject.spec_extendedSowingMachine.seedRateAutoMode then
-                    data.selectedObject = attachedObject
-                    return true
-                end
-            end
-        end
-
-        data.selectedObject = nil
-        return false
+        return attachedObject ~= nil
     end
 })
 
@@ -255,13 +257,12 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_PF_SEED_RATE", {
 ---FUNCTION_PF_SPRAY_AMOUNT_MODE
 InteractiveFunctions.addFunction("PF_SPRAY_AMOUNT_MODE", {
     posFunc = function(target, data, noEventSend)
-        if not g_modIsLoaded["FS22_precisionFarming"] then
-            return
-        end
+        local ExtendedSprayer = getExternalModClass("FS22_precisionFarming", "ExtendedSprayer")
 
-        local ExtendedSprayer = FS22_precisionFarming.ExtendedSprayer
-        if target.spec_extendedSprayer and ExtendedSprayer.actionEventToggleAuto ~= nil then
-            ExtendedSprayer.actionEventToggleAuto(target)
+        if ExtendedSprayer ~= nil then
+            if target.spec_extendedSprayer and ExtendedSprayer.actionEventToggleAuto ~= nil then
+                ExtendedSprayer.actionEventToggleAuto(target)
+            end
         end
     end,
     updateFunc = function(target, data)
@@ -278,18 +279,21 @@ InteractiveFunctions.addFunction("PF_SPRAY_AMOUNT_MODE", {
 ---FUNCTION_PF_ATTACHERJOINTS_PF_SPRAY_AMOUNT_MODE
 InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_PF_SPRAY_AMOUNT_MODE", {
     posFunc = function(target, data, noEventSend)
-        if not g_modIsLoaded["FS22_precisionFarming"] then
-            return
-        end
+        local ExtendedSprayer = getExternalModClass("FS22_precisionFarming", "ExtendedSprayer")
 
-        local ExtendedSprayer = FS22_precisionFarming.ExtendedSprayer
-        if data.selectedObject ~= nil and ExtendedSprayer.actionEventToggleAuto ~= nil then
-            ExtendedSprayer.actionEventToggleAuto(data.selectedObject)
+        if ExtendedSprayer ~= nil then
+            local attachedObject = data.currentAttachedObject
+
+            if attachedObject ~= nil and ExtendedSprayer.actionEventToggleAuto ~= nil then
+                ExtendedSprayer.actionEventToggleAuto(attachedObject)
+            end
         end
     end,
     updateFunc = function(target, data)
-        if data.selectedObject ~= nil then
-            return data.selectedObject.spec_extendedSprayer.sprayAmountAutoMode
+        local attachedObject = data.currentAttachedObject
+
+        if attachedObject ~= nil then
+            return attachedObject.spec_extendedSprayer.sprayAmountAutoMode
         end
         return nil
     end,
@@ -298,22 +302,15 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_PF_SPRAY_AMOUNT_MODE", {
         return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "PF_ATTACHERJOINTS_PF_SPRAY_AMOUNT_MODE")
     end,
     isEnabledFunc = function(target, data)
-        if not g_modIsLoaded["FS22_precisionFarming"] then
-            data.selectedObject = nil
+        if getExternalModClass("FS22_precisionFarming") == nil then
             return false
         end
 
-        for _, index in ipairs(data.attacherJointIndicies) do
-            local attachedObject = InteractiveFunctions.resolveToAttachedObject(target, index)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+            return object.spec_extendedSprayer ~= nil
+        end)
 
-            if attachedObject ~= nil and attachedObject:getIsSelected() and attachedObject.spec_extendedSprayer ~= nil then
-                data.selectedObject = attachedObject
-                return true
-            end
-        end
-
-        data.selectedObject = nil
-        return false
+        return attachedObject ~= nil
     end
 })
 
@@ -321,23 +318,21 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_PF_SPRAY_AMOUNT_MODE", {
 ---FUNCTION_PF_SPRAY_AMOUNT
 InteractiveFunctions.addFunction("PF_SPRAY_AMOUNT", {
     posFunc = function(target, data, noEventSend)
-        if not g_modIsLoaded["FS22_precisionFarming"] then
-            return
-        end
+        local ExtendedSprayer = getExternalModClass("FS22_precisionFarming", "ExtendedSprayer")
 
-        local ExtendedSprayer = FS22_precisionFarming.ExtendedSprayer
-        if target.spec_extendedSprayer and ExtendedSprayer.actionEventToggleAuto ~= nil then
-            ExtendedSprayer.actionEventChangeSprayAmount(target, nil, 1)
+        if ExtendedSprayer ~= nil then
+            if target.spec_extendedSprayer and ExtendedSprayer.actionEventToggleAuto ~= nil then
+                ExtendedSprayer.actionEventChangeSprayAmount(target, nil, 1)
+            end
         end
     end,
     negFunc = function(target, data, noEventSend)
-        if not g_modIsLoaded["FS22_precisionFarming"] then
-            return
-        end
+        local ExtendedSprayer = getExternalModClass("FS22_precisionFarming", "ExtendedSprayer")
 
-        local ExtendedSprayer = FS22_precisionFarming.ExtendedSprayer
-        if target.spec_extendedSprayer and ExtendedSprayer.actionEventToggleAuto ~= nil then
-            ExtendedSprayer.actionEventChangeSprayAmount(target, nil, -1)
+        if ExtendedSprayer ~= nil then
+            if target.spec_extendedSprayer and ExtendedSprayer.actionEventToggleAuto ~= nil then
+                ExtendedSprayer.actionEventChangeSprayAmount(target, nil, -1)
+            end
         end
     end,
     isEnabledFunc = function(target, data)
@@ -351,23 +346,25 @@ InteractiveFunctions.addFunction("PF_SPRAY_AMOUNT", {
 ---FUNCTION_PF_ATTACHERJOINTS_PF_SPRAY_AMOUNT
 InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_PF_SPRAY_AMOUNT", {
     posFunc = function(target, data, noEventSend)
-        if not g_modIsLoaded["FS22_precisionFarming"] then
-            return
-        end
+        local ExtendedSprayer = getExternalModClass("FS22_precisionFarming", "ExtendedSprayer")
 
-        local ExtendedSprayer = FS22_precisionFarming.ExtendedSprayer
-        if data.selectedObject ~= nil and ExtendedSprayer.actionEventChangeSprayAmount ~= nil then
-            ExtendedSprayer.actionEventChangeSprayAmount(data.selectedObject, nil, 1)
+        if ExtendedSprayer ~= nil then
+            local attachedObject = data.currentAttachedObject
+
+            if attachedObject ~= nil and ExtendedSprayer.actionEventChangeSprayAmount ~= nil then
+                ExtendedSprayer.actionEventChangeSprayAmount(attachedObject, nil, 1)
+            end
         end
     end,
     negFunc = function(target, data, noEventSend)
-        if not g_modIsLoaded["FS22_precisionFarming"] then
-            return
-        end
+        local ExtendedSprayer = getExternalModClass("FS22_precisionFarming", "ExtendedSprayer")
 
-        local ExtendedSprayer = FS22_precisionFarming.ExtendedSprayer
-        if data.selectedObject ~= nil and ExtendedSprayer.actionEventChangeSprayAmount ~= nil then
-            ExtendedSprayer.actionEventChangeSprayAmount(data.selectedObject, nil, -1)
+        if ExtendedSprayer ~= nil then
+            local attachedObject = data.currentAttachedObject
+
+            if attachedObject ~= nil and ExtendedSprayer.actionEventChangeSprayAmount ~= nil then
+                ExtendedSprayer.actionEventChangeSprayAmount(attachedObject, nil, -1)
+            end
         end
     end,
     schemaFunc = InteractiveFunctions.attacherJointsSchema,
@@ -375,23 +372,14 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_PF_SPRAY_AMOUNT", {
         return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "PF_ATTACHERJOINTS_PF_SPRAY_AMOUNT")
     end,
     isEnabledFunc = function(target, data)
-        if not g_modIsLoaded["FS22_precisionFarming"] then
-            data.selectedObject = nil
+        if getExternalModClass("FS22_precisionFarming") == nil then
             return false
         end
 
-        for _, index in ipairs(data.attacherJointIndicies) do
-            local attachedObject = InteractiveFunctions.resolveToAttachedObject(target, index)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+            return object.spec_extendedSprayer ~= nil and not object.spec_extendedSprayer.sprayAmountAutoMode
+        end)
 
-            if attachedObject ~= nil and attachedObject:getIsSelected() and attachedObject.spec_extendedSprayer ~= nil then
-                if not attachedObject.spec_extendedSprayer.sprayAmountAutoMode then
-                    data.selectedObject = attachedObject
-                    return true
-                end
-            end
-        end
-
-        data.selectedObject = nil
-        return false
+        return attachedObject ~= nil
     end
 })

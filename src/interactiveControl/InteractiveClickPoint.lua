@@ -297,3 +297,4 @@ InteractiveClickPoint.registerIconType("TURNLIGHT_LEFT", "data/shared/ic_clickIc
 InteractiveClickPoint.registerIconType("TURNLIGHT_RIGHT", "data/shared/ic_clickIcons.i3d", "11", 0.05)
 InteractiveClickPoint.registerIconType("BEACON_LIGHT", "data/shared/ic_clickIcons.i3d", "12", 0.05)
 InteractiveClickPoint.registerIconType("ARROW", "data/shared/ic_clickIcons.i3d", "13", 0.05)
+InteractiveClickPoint.registerIconType("PIPE_FOLDING", "data/shared/ic_clickIcons.i3d", "14", 0.05)

@@ -34,6 +34,7 @@
     <Shape name="TURNLIGHT_RIGHT" shapeId="12" castsShadows="true" receiveShadows="true" materialIds="1" clipDistance="15" nodeId="12"/>
     <Shape name="BEACON_LIGHT" shapeId="13" castsShadows="true" receiveShadows="true" materialIds="1" clipDistance="15" nodeId="13"/>
     <Shape name="ARROW" shapeId="14" castsShadows="true" receiveShadows="true" materialIds="1" clipDistance="15" nodeId="14"/>
+    <Shape name="PIPE_UNFOLD" shapeId="15" castsShadows="true" receiveShadows="true" materialIds="1" clipDistance="15" nodeId="15"/>
   </Scene>
 
   <UserAttributes>
