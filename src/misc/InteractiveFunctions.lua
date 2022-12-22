@@ -120,6 +120,67 @@ function InteractiveFunctions.resolveToAttachedObject(vehicle, attacherJointInde
     return implement.object
 end
 
+---Shared function to handle lowering of an target implement and its child implements
+---@param implement table instance of implement that shall be lowered
+---@param recursive boolean determing if lowering shall be performed recursively for chain of implements
+function InteractiveFunctions.handleImplementLowering(implement, recursive)
+    if implement ~= nil then
+        local object = implement.object
+        local newState = nil
+
+        if  object:getAllowsLowering() 
+        or  object.spec_pickup ~= nil
+        or (object.spec_foldable ~= nil and 
+            object.spec_foldable.foldMiddleAnimTime ~= nil and 
+            object:getIsFoldMiddleAllowed())
+            then 
+            newState = not object:getIsLowered()
+        end 
+
+        if newState ~= nil and object.setLoweredAll ~= nil then 
+            object:setLoweredAll(newState, object.jointDescIndex)
+        end 
+        
+        -- Recursively lower all attached child implements
+        if recursive == true then
+            if object.getAttachedImplements ~= nil and #object:getAttachedImplements() > 0 then
+                for _, attachedImplement in ipairs(object:getAttachedImplements()) do
+                    if attachedImplement.object ~= nil then
+                        InteractiveFunctions.handleImplementLowering(attachedImplement, true)
+                    end
+                end
+            end
+        end
+    end
+end
+
+---Shared function to check if an implement in the chain of implements allows lowering
+---@param implement table instance of implement that shall be lowered
+---@return boolean determing if any implement in chain allows lowering
+function InteractiveFunctions.checkImplementChainAllowsLoweringRecursive(implement)
+    if implement ~= nil then
+        local object = implement.object
+        if object:getAllowsLowering() then
+            return true
+        else
+            -- Recursively check if child implements allow lowering
+            if object.getAttachedImplements ~= nil and #object:getAttachedImplements() > 0 then
+                for _, attachedImplement in ipairs(object:getAttachedImplements()) do
+                    if attachedImplement.object ~= nil then
+                        if InteractiveFunctions.checkImplementChainAllowsLoweringRecursive(attachedImplement) == true then
+                            return true
+                        end
+                    end
+                end
+            else
+                return false
+            end
+        end
+    else
+        return false
+    end
+end
+
 ---Shared function to get attached object and currently used attacher joint index
 ---@param data table function data
 ---@param vehicle Vehicle instance of vehicle to get attached object
@@ -422,7 +483,10 @@ InteractiveFunctions.addFunction("ATTACHERJOINT_LIFT_LOWER", {
     end,
     isEnabledFunc = function(target, data)
         local attacherJointIndex, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target)
-
+        -- Don't enable for mousecontrolled implements on combine harvesters
+        if target.spec_combine ~= nil and attachedObject ~= nil and attachedObject.spec_attacherJointControl ~= nil then
+            return false
+        end
         return attacherJointIndex ~= nil and attachedObject ~= nil
     end
 })
@@ -455,6 +519,50 @@ InteractiveFunctions.addFunction("ATTACHERJOINT_TURN_ON_OFF", {
         end)
 
         return attachedObject ~= nil
+    end
+})
+
+---FUNCTION_ATTACHERJOINTS_IMPLEMENT_LOWERING
+InteractiveFunctions.addFunction("ATTACHERJOINTS_IMPLEMENT_LOWERING", {
+    posFunc = function(target, data, noEventSend)
+        if target.getImplementByJointDescIndex ~= nil then
+            for _, index in ipairs(data.attacherJointIndicies) do
+                local implement = target:getImplementByJointDescIndex(index)
+                if implement ~= nil then
+                    InteractiveFunctions.handleImplementLowering(implement, true)
+                end
+            end
+        end
+    end,
+    updateFunc = function(target, data)
+        if target.getImplementByJointDescIndex ~= nil then
+            for _, index in ipairs(data.attacherJointIndicies) do
+                local implement = target:getImplementByJointDescIndex(index)
+
+                if implement ~= nil then
+                    local object = implement.object
+
+                    if object.getIsLowered ~= nil then
+                        return object:getIsLowered() == 1
+                    end
+                end
+            end
+        end
+        return nil
+    end,
+    schemaFunc = InteractiveFunctions.attacherJointsSchema,
+    loadFunc = function(xmlFile, key, data)
+        return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "ATTACHERJOINTS_IMPLEMENT_LOWERING")
+    end,
+    isEnabledFunc = function(target, data)
+        if target.getImplementByJointDescIndex ~= nil then
+            for _, index in ipairs(data.attacherJointIndicies) do
+                local implement = target:getImplementByJointDescIndex(index)
+                if implement ~= nil then
+                    return InteractiveFunctions.checkImplementChainAllowsLoweringRecursive(implement)
+                end
+            end
+        end
     end
 })
 
