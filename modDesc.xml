@@ -32,6 +32,7 @@ Changelog (1.2.0.0):
 - added function PIPE_FOLDING_TOGGLE to fold/unfold the pipe
 - added function LIGHTS_PIPE_TOGGLE to toggle the pipe light
 - added function ATTACHERJOINTS_IMPLEMENT_LOWERING to lower or raise an attached implement
+- added check for combine harvesters to not enable IC control for attacherJoint lifting, if the attached implement is controlled via mousecontrol
 
         ]]></en>
         <de><![CDATA['Interactive Control' ist ein globaler Skript-Mod für den Landwirtschafts-Simulator 22. Während dieser Mod aktiv ist, sind Sie in der Lage, viele andere Mods zu verwenden, die Interactive Control unterstützen. Mit IC erhalten Sie die Möglichkeit, viele Teile von mehreren (vorbereiteten) Fahrzeugen interaktiv zu steuern.
@@ -58,6 +59,7 @@ Changelog (1.2.0.0):
 - Funktion PIPE_FOLDING_TOGGLE to fold/unfold the pipe
 - Funktion LIGHTS_PIPE_TOGGLE to toggle the pipe light
 - Funktion ATTACHERJOINTS_IMPLEMENT_LOWERING hinzugefüt, mit der Anbaugeräte abgesenkt bzw. angehoben werden können
+- Überprüfung hinzugefügt, sodass kein IC Punkt angezeigt wird, wenn das Anbaugerät eines Dreschers per Mousecontrol bedient wird.
 
         ]]></de>
     </description>

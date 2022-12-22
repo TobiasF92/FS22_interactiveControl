@@ -483,7 +483,10 @@ InteractiveFunctions.addFunction("ATTACHERJOINT_LIFT_LOWER", {
     end,
     isEnabledFunc = function(target, data)
         local attacherJointIndex, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target)
-
+        -- Don't enable for mousecontrolled implements on combine harvesters
+        if target.spec_combine ~= nil and attachedObject ~= nil and attachedObject.spec_attacherJointControl ~= nil then
+            return false
+        end
         return attacherJointIndex ~= nil and attachedObject ~= nil
     end
 })
