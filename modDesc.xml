@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+﻿<?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="72">
     <author>Vertex Dezign</author>
-    <version>1.1.0.0-beta1</version>
+    <version>1.1.0.0-beta2</version>
 
     <title>
         <en>Interactive Control</en>
@@ -18,19 +18,18 @@ Using the controls you can steer different things:
 - Call specific functions (e.g. Start/Stop Motor, TurnOn/Off tool, Lift/Lower attacher joints, ...)
 - ObjectChanges (to change translation/rotation/visibility/...)
 
-For further informations: <a href="https://github.com/TobiasF92/FS22_interactiveControl/blob/develop/README.md">README</a> on Github.
+For further informations: <a href="https://github.com/TobiasF92/FS22_interactiveControl/blob/main/README.md">README</a> on Github.
 
 Changelog (1.1.0.0):
-- added translations: italian, russian, polish
-- added mod compatibility with 'FS22_additionalGameSettings'
-- added auto spec insertion to more vehicles
-- fixed not working while indoor cameras use outdoor sounds
-- fixed various small things
+- Added translations: italian, russian, polish
+- Added mod compatibility with 'FS22_additionalGameSettings'
+- Added auto spec insertion into more vehicleTypes
+- Added various warning messages while functions are called
+- Added various new functions, see README
+- Fixed not working while indoor cameras use outdoor sounds
+- Fixed various small things
+- Optimized function for attacherJoints lift/lower for more functionality
 
-Changelog (1.2.0.0):
-- added check and warning message if engine is not turned on before unfolding the vehicle using function FOLDING_TOGGLE
-- added function PIPE_FOLDING_TOGGLE to fold/unfold the pipe
-- added function LIGHTS_PIPE_TOGGLE to toggle the pipe light
         ]]></en>
         <de><![CDATA['Interactive Control' ist ein globaler Skript-Mod für den Landwirtschafts-Simulator 22. Während dieser Mod aktiv ist, sind Sie in der Lage, viele andere Mods zu verwenden, die Interactive Control unterstützen. Mit IC erhalten Sie die Möglichkeit, viele Teile von mehreren (vorbereiteten) Fahrzeugen interaktiv zu steuern.
 
@@ -42,19 +41,18 @@ Mit den Bedienelementen können Sie verschiedene Dinge steuern:
 - Aufrufen bestimmter Funktionen (z.B. Motor starten/stoppen, Gerät ein-/ausschalten, Gerät heben/senken, ...)
 - ObjectChanges (zum Ändern von Translation/Rotation/Sichtbarkeit/...)
 
-Für mehr Informationen: <a href="https://github.com/TobiasF92/FS22_interactiveControl/blob/develop/README.md">README</a> auf Github.
+Für mehr Informationen: <a href="https://github.com/TobiasF92/FS22_interactiveControl/blob/main/README.md">README</a> auf Github.
 
 Changelog (1.1.0.0):
 - Übersetzungen hinzugefügt: italienisch, russisch, polnisch
 - Kompatibilität mit 'FS22_additionalGameSettings' hinzugefügt
-- Automatische Installation der Spezialisierung auf mehre Fahrzeuge hinzugefügt
-- Fehler behoben wenn Kamera Außensounds genutzt hat
-- Einige kleinere Fehler behoben
+- Automatische Installation der Spezialisierung in mehr Fahrzeugtypen hinzugefügt
+- Verschiedene Warnmeldungen beim Aufruf von Funktionen hinzugefügt
+- Diverse neue Funktionen hinzugefügt, siehe README
+- Behoben, dass Controls nicht funktionierten, wenn Kamera Außensounds genutzt hat
+- Verschiedene kleinere Fehler behoben
+- Optimierte Funktion für AttacherJoints heben/senken für mehr Funktionalität
 
-Changelog (1.2.0.0):
-- Vor Ausführung der Funktion FOLDING_TOGGLE wird nun geprüft, ob der Motor gestaret ist und ggf. eine Warnmeldung angezeigt
-- Funktion PIPE_FOLDING_TOGGLE to fold/unfold the pipe
-- Funktion LIGHTS_PIPE_TOGGLE to toggle the pipe light
         ]]></de>
     </description>
 
