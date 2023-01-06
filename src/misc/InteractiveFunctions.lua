@@ -392,28 +392,70 @@ InteractiveFunctions.addFunction("COVER_TOGGLE", {
     end
 })
 
+---Shared function to lower objects, if required also on all attached vehicles
+---@param index integer|nil jointDesc index of attacher joint
+---@param target Vehicle vehicle to lower implements at
+---@param state boolean is lowered state
+---@param attachedObject? Vehicle|nil root vehicle for chain lowering
+---@param noEventSend? boolean send no event to connection
+function InteractiveFunctions.setLoweredStateRec(index, target, state, attachedObject, noEventSend)
+    if attachedObject ~= nil then
+        if attachedObject.getAttachedImplements ~= nil then
+            local attachedImplements = attachedObject:getAttachedImplements()
+
+            if attachedImplements ~= nil then
+                for _, attachedImplement in ipairs(attachedImplements) do
+                    local object = attachedImplement.object
+                    local jointDescIndex = attachedImplement.jointDescIndex
+
+                    if object ~= nil or jointDescIndex ~= nil then
+                        InteractiveFunctions.setLoweredStateRec(jointDescIndex, attachedObject, state, object, noEventSend)
+                    end
+                end
+            end
+        end
+
+        -- change folding animations
+        if Foldable.actionEventFoldMiddle ~= nil and attachedObject.getIsFoldMiddleAllowed ~= nil and attachedObject:getIsFoldMiddleAllowed() then
+            local dir = state and -1 or 1
+            if attachedObject:getToggledFoldMiddleDirection() == dir then
+                Foldable.actionEventFoldMiddle(attachedObject)
+            end
+
+            return
+        end
+
+        -- change pickup state
+        if attachedObject.spec_pickup ~= nil then
+            attachedObject:setPickupState(state, noEventSend)
+
+            return
+        end
+    end
+
+    -- change attacherJoints state
+    if index ~= nil and target ~= nil then
+        if target.handleLowerImplementByAttacherJointIndex ~= nil then
+            target:handleLowerImplementByAttacherJointIndex(index, state)
+        end
+    end
+end
+
 ---FUNCTION_ATTACHERJOINT_LIFT_LOWER
 InteractiveFunctions.addFunction("ATTACHERJOINT_LIFT_LOWER", {
     posFunc = function(target, data, noEventSend)
-        if data.currentAttacherIndex ~= nil and target.setJointMoveDown ~= nil then
-            if target.spec_attacherJoints.attacherJoints[data.currentAttacherIndex] ~= nil then
-                target:setJointMoveDown(data.currentAttacherIndex, true, noEventSend)
-            end
-        end
+        InteractiveFunctions.setLoweredStateRec(data.currentAttacherIndex, target, true, data.currentAttachedObject, noEventSend)
     end,
     negFunc = function(target, data, noEventSend)
-        if data.currentAttacherIndex ~= nil and target.setJointMoveDown ~= nil then
-            if target.spec_attacherJoints.attacherJoints[data.currentAttacherIndex] ~= nil then
-                target:setJointMoveDown(data.currentAttacherIndex, false, noEventSend)
-            end
-        end
+        InteractiveFunctions.setLoweredStateRec(data.currentAttacherIndex, target, false, data.currentAttachedObject, noEventSend)
     end,
     updateFunc = function(target, data)
-        if data.currentAttacherIndex ~= nil and target.getJointMoveDown ~= nil then
-            if target.spec_attacherJoints.attacherJoints[data.currentAttacherIndex] ~= nil then
-                return target:getJointMoveDown(data.currentAttacherIndex)
+        if data.currentAttachedObject ~= nil then
+            if data.currentAttachedObject.getIsLowered ~= nil then
+                return data.currentAttachedObject:getIsLowered()
             end
         end
+
         return nil
     end,
     schemaFunc = InteractiveFunctions.attacherJointsSchema,
@@ -421,7 +463,35 @@ InteractiveFunctions.addFunction("ATTACHERJOINT_LIFT_LOWER", {
         return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "ATTACHERJOINT_LIFT_LOWER")
     end,
     isEnabledFunc = function(target, data)
-        local attacherJointIndex, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target)
+        ---Returns true if any vehicle in implement chain can be lowered, false otherwise
+        ---@param object Vehicle
+        ---@return boolean isLoweringAllowed
+        local function isLoweringChainedAllowed(object)
+            if object.spec_attacherJointControl ~= nil then
+                return false
+            end
+
+            if object.spec_pickup ~= nil then
+                return true
+            end
+
+            if object.getAllowsLowering ~= nil and object:getAllowsLowering() then
+                return true
+            end
+
+            local chainImplements = object:getAttachedImplements()
+            if chainImplements ~= nil then
+                for _, chainImplement in ipairs(chainImplements) do
+                    if chainImplement.object ~= nil then
+                        return isLoweringChainedAllowed(chainImplement.object)
+                    end
+                end
+            end
+
+            return false
+        end
+
+        local attacherJointIndex, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, isLoweringChainedAllowed)
 
         return attacherJointIndex ~= nil and attachedObject ~= nil
     end
