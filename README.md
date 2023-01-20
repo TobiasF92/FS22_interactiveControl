@@ -82,6 +82,8 @@ Explained XML documentation [HTML-file](documentation/interactiveControl.html)
                     <dependingMovingTool isInactive="true" node="node"/>
 
                     <!-- You can block depending interactive controls here -->
+                    <!-- blockState: Control state to block depending control -->
+                    <!-- forcedBlockedState: Forced state of depending control if blocked -->
                     <dependingInteractiveControl index="int" blockState="boolean" forcedBlockedState="boolean"/>
                     
                     <!-- Modify sound here, 'indoorFactor' is the sound percentage factor if control is active -->
