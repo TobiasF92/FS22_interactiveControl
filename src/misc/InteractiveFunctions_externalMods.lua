@@ -455,7 +455,6 @@ InteractiveFunctions.addFunction("VCA_TOGGLE_DIFFLOCK_BACK", {
     end
 })
 
---_FS22_VehicleControlAddon
 ---FUNCTION_VCA_TOGGLE_PARKINGBRAKE
 InteractiveFunctions.addFunction("VCA_TOGGLE_PARKINGBRAKE", {
     posFunc = function(target, data, noEventSend)
