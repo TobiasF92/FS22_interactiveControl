@@ -73,6 +73,18 @@
     
         <text name="actionIC_crabSteering_toggle" text="IC: Przełączanie trybu sterowania"/>
 
+        <text name="actionIC_parkingbrakeOn" text="IC: Zaciągnięcie hamulca ręcznego" />
+        <text name="actionIC_parkingbrakeOff" text="IC: Zwolnij hamulec ręczny" />
+
+        <text name="actionIC_diffLockFrontOn" text="IC: Blokada przedniego dyferencjału włączona" />
+        <text name="actionIC_diffLockFrontOff" text="IC: Blokada przedniego dyferencjału wyłączona" />
+
+        <text name="actionIC_allWheelDriveOn" text="IC: Włączone wszystkie koła" />
+        <text name="actionIC_allWheelDriveOff" text="IC: Wyłączone wszystkie koła" />
+
+        <text name="actionIC_diffLockBackOn" text="IC: Blokada tylnego dyfuzora włączona" />
+        <text name="actionIC_diffLockBackOff" text="IC: Blokada tylnego dyfuzora wyłączona" />
+        
         <!-- inputs -->
         <text name="input_IC_CLICK" text="IC: Sterowanie interaktywne Punkt kliknięcia"/>
         <text name="input_IC_TOGGLE_STATE" text="IC: Przełączanie sterowania interaktywnego"/>

@@ -73,6 +73,18 @@
     
         <text name="actionIC_crabSteering_toggle" text="IC: toggle steering mode"/>
 
+        <text name="actionIC_parkingbrakeOn" text="IC: Parkingbrake on" />
+        <text name="actionIC_parkingbrakeOff" text="IC: Parkingbrake off" />
+
+        <text name="actionIC_diffLockFrontOn" text="IC: Differential lock front on" />
+        <text name="actionIC_diffLockFrontOff" text="IC: Differential lock front off" />
+
+        <text name="actionIC_allWheelDriveOn" text="IC: All-wheel mode on" />
+        <text name="actionIC_allWheelDriveOff" text="IC: All-wheel mode off" />
+
+        <text name="actionIC_diffLockBackOn" text="IC: Differential lock back on" />
+        <text name="actionIC_diffLockBackOff" text="IC: Differential lock back off" />
+
         <!-- inputs -->
         <text name="input_IC_CLICK" text="IC: Interactive Control ClickPoint"/>
         <text name="input_IC_TOGGLE_STATE" text="IC: Toggle Interactive Control"/>

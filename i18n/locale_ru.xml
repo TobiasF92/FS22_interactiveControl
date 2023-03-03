@@ -73,6 +73,18 @@
     
         <text name="actionIC_crabSteering_toggle" text="IC: Смена режима рулевого управления"/>
 
+        <text name="actionIC_parkingbrakeOn" text="IC: Вытяните ручной тормоз" />
+        <text name="actionIC_parkingbrakeOff" text="IC: Отпустите ручной тормоз" />
+
+        <text name="actionIC_diffLockFrontOn" text="IC: Включение блокировки переднего диффа" />
+        <text name="actionIC_diffLockFrontOff" text="IC: Выключение блокировки переднего диффа" />
+
+        <text name="actionIC_allWheelDriveOn" text="IC: Включить все колеса" />
+        <text name="actionIC_allWheelDriveOff" text="IC: Выключение всех колес" />
+
+        <text name="actionIC_diffLockBackOn" text="IC: Блокировка заднего диффа включена" />
+        <text name="actionIC_diffLockBackOff" text="IC: Блокировка заднего диффа выключена" />
+
         <!-- inputs -->
         <text name="input_IC_CLICK" text="IC: Кнопка действия Интерактивного Контроля"/>
         <text name="input_IC_TOGGLE_STATE" text="IC: Показать/скрыть Интерактивный Контроль"/>

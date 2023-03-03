@@ -383,3 +383,98 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_PF_SPRAY_AMOUNT", {
         return attachedObject ~= nil
     end
 })
+
+---FS22_VehicleControlAddon
+---FUNCTION_VCA_TOGGLE_AWD
+InteractiveFunctions.addFunction("VCA_TOGGLE_AWD", {
+    posFunc = function(target, data, noEventSend)
+        local vehicleControlAddon = getExternalModClass("FS22_VehicleControlAddon", "vehicleControlAddon")
+
+        if vehicleControlAddon ~= nil and target.spec_vca ~= nil then
+            vehicleControlAddon.actionCallback(target, "vcaDiffLockM")
+        end
+    end,
+    updateFunc = function(target, data)
+        if target.spec_vca ~= nil then
+            return target.spec_vca.diffLockAWD
+        end
+        return nil
+    end,
+    isEnabledFunc = function(target, data)
+        if target.spec_vca ~= nil and target.spec_vca.diffHasM and target.spec_vca.diffManual then
+            return true
+        end
+        return false
+    end
+})
+
+
+---FUNCTION_VCA_TOGGLE_DIFFLOCK_FRONT
+InteractiveFunctions.addFunction("VCA_TOGGLE_DIFFLOCK_FRONT", {
+    posFunc = function(target, data, noEventSend)
+        local vehicleControlAddon = getExternalModClass("FS22_VehicleControlAddon", "vehicleControlAddon")
+
+        if vehicleControlAddon ~= nil and target.spec_vca ~= nil then
+            vehicleControlAddon.actionCallback(target, "vcaDiffLockF")
+        end
+    end,
+    updateFunc = function(target, data)
+        if target.spec_vca ~= nil then
+            return target.spec_vca.diffLockFront
+        end
+        return nil
+    end,
+    isEnabledFunc = function(target, data)
+        if target.spec_vca ~= nil and target.spec_vca.diffHasF and target.spec_vca.diffManual then
+            return true
+        end
+        return false
+    end
+})
+
+---FUNCTION_VCA_TOGGLE_DIFFLOCK_BACK
+InteractiveFunctions.addFunction("VCA_TOGGLE_DIFFLOCK_BACK", {
+    posFunc = function(target, data, noEventSend)
+        local vehicleControlAddon = getExternalModClass("FS22_VehicleControlAddon", "vehicleControlAddon")
+
+        if vehicleControlAddon ~= nil and target.spec_vca ~= nil then
+            vehicleControlAddon.actionCallback(target, "vcaDiffLockB")
+        end
+    end,
+    updateFunc = function(target, data)
+        if target.spec_vca ~= nil then
+            return target.spec_vca.diffLockBack
+        end
+        return nil
+    end,
+    isEnabledFunc = function(target, data)
+        if target.spec_vca ~= nil and target.spec_vca.diffHasB and target.spec_vca.diffManual then
+            return true
+        end
+        return false
+    end
+})
+
+---FUNCTION_VCA_TOGGLE_PARKINGBRAKE
+InteractiveFunctions.addFunction("VCA_TOGGLE_PARKINGBRAKE", {
+    posFunc = function(target, data, noEventSend)
+        local vehicleControlAddon = getExternalModClass("FS22_VehicleControlAddon", "vehicleControlAddon")
+
+        if vehicleControlAddon ~= nil and target.spec_vca ~= nil then
+            vehicleControlAddon.actionCallback(target, "vcaHandbrake")
+        end
+    end,
+    updateFunc = function(target, data)
+        if target.spec_vca ~= nil then
+            return target.spec_vca.handbrake
+        end
+        return nil
+    end,
+    isEnabledFunc = function(target, data)
+        if target.spec_vca ~= nil then
+            return true
+        end
+        return false
+    end
+})
+
