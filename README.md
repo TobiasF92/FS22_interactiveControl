@@ -134,8 +134,10 @@ ATTACHERJOINTS_TOGGLE_DISCHARGE | Toggle discharging on selected attacherJoint i
 DISCHARGE_TOGGLE | Toggle discharging on vehicle
 CRABSTEERING_TOGGLE | Toggle crab steering mode to next mode
 RADIO_TOGGLE | Toggle radio on/off
-RADIO_CHANNEL_CHANGE | Change radio channel | | 1.1.0.0
-RADIO_ITEM_CHANGE | Change radio item | | 1.1.0.0
+RADIO_CHANNEL_NEXT | Next radio channel | | 1.1.0.0
+RADIO_CHANNEL_PREVIOUS | Previous radio channel | | 1.1.0.0
+RADIO_ITEM_NEXT | Next radio item | | 1.1.0.0
+RADIO_ITEM_PREVIOUS | Previous radio item | | 1.1.0.0
 VARIABLE_WORK_WIDTH_LEFT | Switch work width left | | 1.1.0.0
 ATTACHERJOINTS_VARIABLE_WORK_WIDTH_LEFT | Switch work width right on selected attacherJoint if in 'indices' | ".attacherJoint#index" or ".attacherJoint#indicies" | 1.1.0.0
 VARIABLE_WORK_WIDTH_RIGHT | Switch work width right | | 1.1.0.0
