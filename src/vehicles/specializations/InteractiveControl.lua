@@ -183,7 +183,7 @@ function InteractiveControl:onLoad(savegame)
             local node = self.xmlFile:getValue(registerIconTypeKey .. "#node")
             local blinkSpeed = self.xmlFile:getValue(registerIconTypeKey .. "#blinkSpeed")
 
-            InteractiveClickPoint.registerIconType(name, filename, node, blinkSpeed)
+            InteractiveClickPoint.registerIconType(name, filename, node, blinkSpeed, self.customEnvironment)
         end
     end)
 
