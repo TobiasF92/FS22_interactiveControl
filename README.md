@@ -27,11 +27,11 @@ Using the controls you can steer different things:
 The documentation is not finished yet, but should be sufficient for experienced users.
 If you are in need of some extra help, take a look into the demonstration mods:
 * Fendt Vario 900 Gen 6 / Gen 7
-  * Modhub: https://www.farming-simulator.com/mod.php?lang=de&country=de&mod_id=225936&title=fs2022
+  * Modhub: https://farming-simulator.com/mod.php?mod_id=225936
 * Kerner Corona Pack
-  * Modhub: https://www.farming-simulator.com/mod.php?lang=de&country=de&mod_id=251288&title=fs2022
+  * Modhub: https://farming-simulator.com/mod.php?mod_id=251288
 * Faresin 6.26
-  * Modhub: https://www.farming-simulator.com/mod.php?lang=en&country=us&mod_id=258842&title=fs2022
+  * Modhub: https://farming-simulator.com/mod.php?mod_id=258842
 
 
 ### XML
@@ -161,6 +161,7 @@ VCA_TOGGLE_AWD | Toggle [VehicleControlAddon](https://farming-simulator.com/mod.
 VCA_TOGGLE_DIFFLOCK_FRONT | Toggle [VehicleControlAddon](https://farming-simulator.com/mod.php?mod_id=228601) front differential lock on and off | | 1.1.0.0
 VCA_TOGGLE_DIFFLOCK_BACK | Toggle [VehicleControlAddon](https://farming-simulator.com/mod.php?mod_id=228601) back differential lock on and off | | 1.1.0.0
 VCA_TOGGLE_PARKINGBRAKE | Toggle [VehicleControlAddon](https://farming-simulator.com/mod.php?mod_id=228601) parkingbrake on and off | | 1.1.0.0
+HEADLAND_MANAGEMENT_TOGGLE | Toggle [HeadlandManagement](https://farming-simulator.com/mod.php?mod_id=228759) on and off
 
 ## Copyright
 

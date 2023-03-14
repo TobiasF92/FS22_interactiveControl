@@ -478,3 +478,28 @@ InteractiveFunctions.addFunction("VCA_TOGGLE_PARKINGBRAKE", {
     end
 })
 
+---FS22_HeadlandManagement
+---FUNCTION_HEADLAND_MANAGEMENT_TOGGLE
+InteractiveFunctions.addFunction("HEADLAND_MANAGEMENT_TOGGLE", {
+    posFunc = function(target, data, noEventSend)
+        local HeadlandManagement = getExternalModClass("FS22_HeadlandManagement", "HeadlandManagement")
+
+        if HeadlandManagement ~= nil then
+            if target.spec_HeadlandManagement ~= nil and HeadlandManagement.TOGGLESTATE ~= nil then
+                HeadlandManagement.TOGGLESTATE(target, "HLM_TOGGLESTATE")
+            end
+        end
+    end,
+    updateFunc = function(target, data)
+        if target.spec_HeadlandManagement ~= nil then
+            return target.spec_HeadlandManagement.isActive
+        end
+        return nil
+    end,
+    isEnabledFunc = function(target, data)
+        if target.spec_HeadlandManagement ~= nil then
+            return target.spec_HeadlandManagement.exists
+        end
+        return false
+    end
+})
