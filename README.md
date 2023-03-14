@@ -161,7 +161,7 @@ VCA_TOGGLE_AWD | Toggle [VehicleControlAddon](https://farming-simulator.com/mod.
 VCA_TOGGLE_DIFFLOCK_FRONT | Toggle [VehicleControlAddon](https://farming-simulator.com/mod.php?mod_id=228601) front differential lock on and off | | 1.1.0.0
 VCA_TOGGLE_DIFFLOCK_BACK | Toggle [VehicleControlAddon](https://farming-simulator.com/mod.php?mod_id=228601) back differential lock on and off | | 1.1.0.0
 VCA_TOGGLE_PARKINGBRAKE | Toggle [VehicleControlAddon](https://farming-simulator.com/mod.php?mod_id=228601) parkingbrake on and off | | 1.1.0.0
-HEADLAND_MANAGEMENT_TOGGLE | Toggle [HeadlandManagement](https://farming-simulator.com/mod.php?mod_id=228759) on and off
+HEADLAND_MANAGEMENT_TOGGLE | Toggle [HeadlandManagement](https://farming-simulator.com/mod.php?mod_id=228759) on and off | | 1.1.0.0
 
 ## Copyright
 
