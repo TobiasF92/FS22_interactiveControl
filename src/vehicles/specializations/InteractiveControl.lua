@@ -7,8 +7,8 @@
 ----------------------------------------------------------------------------------------------------
 
 ---@class InteractiveControl
-
 InteractiveControl = {}
+
 InteractiveControl.NUM_BITS = 8
 InteractiveControl.NUM_MAX_CONTROLS = 2 ^ InteractiveControl.NUM_BITS - 1
 
@@ -153,6 +153,7 @@ function InteractiveControl.registerOverwrittenFunctions(vehicleType)
 end
 
 ---Called before load
+---@param savegame table savegame 
 function InteractiveControl:onPreLoad(savegame)
     local name = "spec_interactiveControl"
 
@@ -173,6 +174,7 @@ function InteractiveControl:onPreLoad(savegame)
 end
 
 ---Called on load
+---@param savegame table savegame 
 function InteractiveControl:onLoad(savegame)
     local spec = self.spec_interactiveControl
 
@@ -238,6 +240,7 @@ function InteractiveControl:onLoad(savegame)
 end
 
 ---Called after load
+---@param savegame table savegame 
 function InteractiveControl:onPostLoad(savegame)
     local spec = self.spec_interactiveControl
 
@@ -302,8 +305,8 @@ function InteractiveControl:onPostLoad(savegame)
 end
 
 ---Saves interactive controls state to savegame
----@param xmlFile table
----@param key string
+---@param xmlFile XMLFile xml file class instance
+---@param key string xml key
 ---@param usedModNames boolean
 function InteractiveControl:saveToXMLFile(xmlFile, key, usedModNames)
     local spec = self.spec_interactiveControl
@@ -322,9 +325,9 @@ end
 
 ---Load interactiveControl from XML
 ---@param xmlFile XMLFile xml file class instance
----@param key string xml path
+---@param key string xml key
 ---@param entry table interactive control entry
----@return boolean loaded
+---@return boolean succeeded
 function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
     local spec = self.spec_interactiveControl
 
@@ -506,10 +509,10 @@ function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
 end
 
 ---Loads animation from given XML file
----@param xmlFile table
----@param animationKey string
----@param animation table
----@return boolean
+---@param xmlFile XMLFile xml file class instance
+---@param animationKey string xml path
+---@param animation table animation
+---@return boolean succeeded
 function InteractiveControl:loadAnimationFromXML(xmlFile, animationKey, animation)
     local name = xmlFile:getValue(animationKey .. "#name")
     if name == nil then
@@ -527,7 +530,7 @@ end
 ---@param xmlFile table
 ---@param functionKey string
 ---@param icFunction table
----@return boolean
+---@return boolean succeeded
 function InteractiveControl:loadFunctionFromXML(xmlFile, functionKey, icFunction)
     local functionName = xmlFile:getValue(functionKey .. "#name")
     functionName = functionName:upper()
@@ -681,8 +684,9 @@ end
 ---@param cameraIndex integer
 function InteractiveControl:onCameraChanged(activeCamera, cameraIndex)
     local spec = self.spec_interactiveControl
+	local keepAlive = g_currentMission.interactiveControl.settings:getSetting("IC_KEEP_ALIVE")
 
-    if not activeCamera.isInside then
+    if activeCamera.isInside and not keepAlive then
         self:setState(false)
     end
 
@@ -698,6 +702,7 @@ end
 function InteractiveControl:updateInteractiveControls(isIndoor, isOutdoor, hasInput)
     local spec = self.spec_interactiveControl
     local activeController
+	local icState = self:getState()
 
     -- dont update all controls every time
     local updateControlStates = false
@@ -714,7 +719,7 @@ function InteractiveControl:updateInteractiveControls(isIndoor, isOutdoor, hasIn
 
             for _, clickPoint in pairs(interactiveControl.clickPoints) do
                 if clickPoint:isActivatable() and interactiveControl.isCurrentlyEnabled then
-                    local indoor = isIndoor and self:getState() and hasInput and clickPoint:isIndoorActive()
+                    local indoor = isIndoor and icState and hasInput and clickPoint:isIndoorActive()
                     local outdoor = isOutdoor and not hasInput and clickPoint:isOutdoorActive()
 
                     if activeController == nil and (indoor or outdoor) then
@@ -742,7 +747,7 @@ function InteractiveControl:updateInteractiveControls(isIndoor, isOutdoor, hasIn
             end
 
             for _, button in pairs(interactiveControl.buttons) do
-                local indoor = isIndoor and self:getState() and hasInput and button:isIndoorActive()
+                local indoor = isIndoor and icState and hasInput and button:isIndoorActive()
                 local outdoor = isOutdoor and not hasInput and button:isOutdoorActive()
 
                 if button:isActivatable() and isCurrentlyEnabled and (indoor or outdoor)
@@ -830,6 +835,15 @@ end
 ---@return boolean state
 function InteractiveControl:getState()
     local spec = self.spec_interactiveControl
+
+    local settingState = g_currentMission.interactiveControl.settings:getSetting("IC_STATE")
+    if settingState == InteractiveControlManager.SETTING_STATE_OFF then
+    	return false
+
+    elseif settingState == InteractiveControlManager.SETTING_STATE_ALWAYS_ON then
+    	return true
+    end
+
     return spec.state
 end
 

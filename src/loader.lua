@@ -16,6 +16,9 @@ g_interactiveControlModName = modName
 
 ---load all needed lua files
 local sourceFiles = {
+    -- settings
+    "src/misc/AdditionalSettingsManager.lua",
+
     -- interactiveControl
     "src/misc/InteractiveControlManager.lua",
     "src/misc/InteractiveFunctions.lua",
@@ -88,6 +91,21 @@ local function getModifierFactor(soundManager, superFunc, sample, modifierName)
     return superFunc(soundManager, sample, modifierName)
 end
 
+---Appended function: InGameMenuGeneralSettingsFrame.onFrameOpen
+---Adds initialization of settings gui elements
+---@param settingsFrame InGameMenuGeneralSettingsFrame instance of InGameMenuGeneralSettingsFrame
+---@param element GuiElement gui element
+local function initGui(settingsFrame, element)
+    AdditionalSettingsManager.initGui(settingsFrame, element, modEnvironment)
+end
+
+---Appended function: InGameMenuGeneralSettingsFrame.updateGeneralSettings
+---Adds updating of settings gui elements
+---@param settingsFrame InGameMenuGeneralSettingsFrame instance of InGameMenuGeneralSettingsFrame
+local function updateGui(settingsFrame)
+    AdditionalSettingsManager.updateGui(settingsFrame, modEnvironment)
+end
+
 ---Initialize the mod
 local function init()
     FSBaseMission.delete = Utils.appendedFunction(FSBaseMission.delete, unload)
@@ -95,6 +113,9 @@ local function init()
 
     TypeManager.validateTypes = Utils.prependedFunction(TypeManager.validateTypes, validateTypes)
     SoundManager.getModifierFactor = Utils.overwrittenFunction(SoundManager.getModifierFactor, getModifierFactor)
+
+    InGameMenuGeneralSettingsFrame.onFrameOpen = Utils.appendedFunction(InGameMenuGeneralSettingsFrame.onFrameOpen, initGui)
+    InGameMenuGeneralSettingsFrame.updateGeneralSettings = Utils.appendedFunction(InGameMenuGeneralSettingsFrame.updateGeneralSettings, updateGui)
 end
 
 init()

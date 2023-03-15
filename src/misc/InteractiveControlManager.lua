@@ -9,6 +9,10 @@
 ---@class InteractiveControlManager
 InteractiveControlManager = {}
 
+InteractiveControlManager.SETTING_STATE_TOGGLE = 1
+InteractiveControlManager.SETTING_STATE_ALWAYS_ON = 2
+InteractiveControlManager.SETTING_STATE_OFF = 3
+
 local InteractiveControlManager_mt = Class(InteractiveControlManager)
 
 ---Create new instance of InteractiveControlManager
@@ -29,6 +33,23 @@ function InteractiveControlManager.new(mission, inputBinding, i18n, modName, mod
     self.activeController = nil
     self.actionEventId = nil
     self.playerInRange = false
+
+    local title = g_i18n:getText("settingsIC_title", self.customEnvironment)
+    self.settings = AdditionalSettingsManager.new(title, self, modName, modDirectory)
+
+    local options = {
+        g_i18n:getText("settingsIC_state_option01", self.customEnvironment),
+        g_i18n:getText("settingsIC_state_option02", self.customEnvironment),
+        g_i18n:getText("settingsIC_state_option03", self.customEnvironment),
+    }
+
+    title = g_i18n:getText("settingsIC_state_title", self.customEnvironment)
+    local tooltip = g_i18n:getText("settingsIC_state_tooltip", self.customEnvironment)
+    self.settings:addSetting("IC_STATE", AdditionalSettingsManager.TYPE_MULTIBOX, title, tooltip, 1, options)
+
+    title = g_i18n:getText("settingsIC_keepAlive_title", self.customEnvironment)
+    tooltip = g_i18n:getText("settingsIC_keepAlive_tooltip", self.customEnvironment)
+    self.settings:addSetting("IC_KEEP_ALIVE", AdditionalSettingsManager.TYPE_CHECKBOX, title, tooltip, false)
 
     return self
 end
@@ -68,6 +89,58 @@ function InteractiveControlManager:isICActive()
 
     return false
 end
+
+---Returns modifier factor
+---@param soundManager SoundManager instance of SoundManager
+---@param superFunc function original function
+---@param sample table sound sample
+---@param modifierName string modifier string
+---@return number volume
+function InteractiveControlManager:getModifierFactor(soundManager, superFunc, sample, modifierName)
+    if modifierName == "volume" and self.mission.controlledVehicle ~= nil then
+        local volume = superFunc(soundManager, sample, modifierName)
+
+        if self.mission.controlledVehicle.getIndoorModifiedSoundFactor ~= nil then
+            volume = volume * self.mission.controlledVehicle:getIndoorModifiedSoundFactor()
+        end
+
+        return volume
+    else
+        return superFunc(soundManager, sample, modifierName)
+    end
+end
+
+---Installs InteractiveControl spec in all vehicles
+function InteractiveControlManager.installSpecializations(vehicleTypeManager, specializationManager, modDirectory, modName)
+    specializationManager:addSpecialization("interactiveControl", "InteractiveControl", Utils.getFilename("src/vehicles/specializations/InteractiveControl.lua", modDirectory), nil)
+
+    local function getInteractiveControlForced(specializations)
+        for _, spec in ipairs(specializations) do
+            if spec.ADD_INTERACTIVE_CONTROL then
+                return true
+            end
+        end
+
+        return false
+    end
+
+    for typeName, typeEntry in pairs(vehicleTypeManager:getTypes()) do
+        local add = SpecializationUtil.hasSpecialization(Enterable, typeEntry.specializations)
+                    or SpecializationUtil.hasSpecialization(Attachable, typeEntry.specializations)
+
+        if not add then
+            add = getInteractiveControlForced(typeEntry.specializations)
+        end
+
+        if add then
+            vehicleTypeManager:addSpecialization(typeName, modName .. ".interactiveControl")
+        end
+    end
+end
+
+------------------
+---ActionEvents---
+------------------
 
 ---Sets has player in range state
 ---@param playerInRange boolean player is in range
@@ -115,54 +188,6 @@ function InteractiveControlManager:actionEventExecuteIC()
     end
 end
 
----Returns modifier factor
----@param soundManager table
----@param superFunc function
----@param sample table
----@param modifierName string
----@return number
-function InteractiveControlManager:getModifierFactor(soundManager, superFunc, sample, modifierName)
-    if modifierName == "volume" and self.mission.controlledVehicle ~= nil then
-        local volume = superFunc(soundManager, sample, modifierName)
-
-        if self.mission.controlledVehicle.getIndoorModifiedSoundFactor ~= nil then
-            volume = volume * self.mission.controlledVehicle:getIndoorModifiedSoundFactor()
-        end
-
-        return volume
-    else
-        return superFunc(soundManager, sample, modifierName)
-    end
-end
-
----Installs InteractiveControl spec in all vehicles
-function InteractiveControlManager.installSpecializations(vehicleTypeManager, specializationManager, modDirectory, modName)
-    specializationManager:addSpecialization("interactiveControl", "InteractiveControl", Utils.getFilename("src/vehicles/specializations/InteractiveControl.lua", modDirectory), nil)
-
-    local function getInteractiveControlForced(specializations)
-        for _, spec in ipairs(specializations) do
-            if spec.ADD_INTERACTIVE_CONTROL then
-                return true
-            end
-        end
-
-        return false
-    end
-
-    for typeName, typeEntry in pairs(vehicleTypeManager:getTypes()) do
-        local add = SpecializationUtil.hasSpecialization(Enterable, typeEntry.specializations)
-                    or SpecializationUtil.hasSpecialization(Attachable, typeEntry.specializations)
-
-        if not add then
-            add = getInteractiveControlForced(typeEntry.specializations)
-        end
-
-        if add then
-            vehicleTypeManager:addSpecialization(typeName, modName .. ".interactiveControl")
-        end
-    end
-end
-
 ---Merge local i18n texts into global table
 ---@param i18n table
 function InteractiveControlManager:mergeModTranslations(i18n)
@@ -176,9 +201,12 @@ function InteractiveControlManager:mergeModTranslations(i18n)
     end
 end
 
+----------------
+---Overwrites---
+----------------
+
 ---Overwrite FS22_additionalGameSettings functions
 function InteractiveControlManager.overwrite_additionalGameSettings()
-
     if not g_modIsLoaded["FS22_additionalGameSettings"] then
         return
     end

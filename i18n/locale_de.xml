@@ -88,5 +88,15 @@
         <!-- inputs -->
         <text name="input_IC_CLICK" text="IC: Interactive Control ClickPoint"/>
         <text name="input_IC_TOGGLE_STATE" text="IC: Interactive Control umschalten"/>
+        
+        <!-- settings -->
+        <text name="settingsIC_title" text="Interactive Control"/>
+        <text name="settingsIC_state_title" text="IC Status"/>
+        <text name="settingsIC_state_tooltip" text="Schaltet InteractiveControl ein, aus, oder schaltbar."/>
+        <text name="settingsIC_state_option01" text="Schaltbar"/>
+        <text name="settingsIC_state_option02" text="Immer aktiv"/>
+        <text name="settingsIC_state_option03" text="Aus"/>
+        <text name="settingsIC_keepAlive_title" text="IC Aktiviert lassen"/>
+        <text name="settingsIC_keepAlive_tooltip" text="InteractiveControl bleibt beim verlassen des Fahrzeugs aktiv."/>
     </texts>
 </l10n>

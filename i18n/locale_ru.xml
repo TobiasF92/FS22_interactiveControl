@@ -88,5 +88,15 @@
         <!-- inputs -->
         <text name="input_IC_CLICK" text="IC: Кнопка действия Интерактивного Контроля"/>
         <text name="input_IC_TOGGLE_STATE" text="IC: Показать/скрыть Интерактивный Контроль"/>
+        
+        <!-- settings -->
+        <text name="settingsIC_title" text="Интерактивный контроль"/>
+        <text name="settingsIC_state_title" text="IC Государство"/>
+        <text name="settingsIC_state_tooltip" text="Включает, выключает или переключает Интерактивный контроль."/>
+        <text name="settingsIC_state_option01" text="Переключаемый"/>
+        <text name="settingsIC_state_option02" text="Всегда активен"/>
+        <text name="settingsIC_state_option03" text="Ha сайте"/>
+        <text name="settingsIC_keepAlive_title" text="Держать IC активированным"/>
+        <text name="settingsIC_keepAlive_tooltip" text="Интерактивный контроль остается активным при выходе из автомобиля."/>
     </texts>
 </l10n>
