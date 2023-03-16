@@ -18,6 +18,7 @@ AdditionalSettingsManager.CLONE_REF = {
 }
 
 local AdditionalSettingsManager_mt = Class(AdditionalSettingsManager)
+local settingsDirectory = g_currentModSettingsDirectory
 
 ---Create new instance of AdditionalSettingsManager
 function AdditionalSettingsManager.new(title, target, modName, modDirectory, customMt)
@@ -33,10 +34,67 @@ function AdditionalSettingsManager.new(title, target, modName, modDirectory, cus
     self.settingsByName = {}
     self.settingsCreated = false
 
+    createFolder(settingsDirectory)
+    self.settingsSaveDirectory = settingsDirectory .. "settings.xml"
+
     return self
 end
 
----Todo: add saving and loading of settings
+---Load settings from xml file
+function AdditionalSettingsManager:loadFromXML()
+    local xmlFile = XMLFile.loadIfExists("SettingsXMLFile", self.settingsSaveDirectory, AdditionalSettingsManager.xmlSchema)
+
+    if xmlFile ~= nil then
+        xmlFile:iterate("settings.setting", function (_, settingKey)
+            local name = xmlFile:getValue(settingKey .. "#name")
+
+            local existingSetting = self.settingsByName[name]
+            if existingSetting ~= nil then
+                local value
+                if existingSetting.type == AdditionalSettingsManager.TYPE_CHECKBOX then
+                    value = xmlFile:getValue(settingKey .. "#boolean", false)
+
+                elseif existingSetting.type == AdditionalSettingsManager.TYPE_MULTIBOX then
+                    value = xmlFile:getValue(settingKey .. "#integer", 1)
+                end
+
+                if value ~= nil then
+                    self:setSetting(name, value)
+                end
+            end
+        end)
+
+        xmlFile:delete()
+    end
+end
+
+---Save settings to xml file
+function AdditionalSettingsManager:saveToXMLFile()
+	local xmlFile = XMLFile.create("SettingsXMLFile", self.settingsSaveDirectory, "settings", AdditionalSettingsManager.xmlSchema)
+
+	if xmlFile ~= nil then
+        local baseKey = "settings.setting"
+        local i = 0
+
+        for _, setting in ipairs(self.settings) do
+            local settingKey = ("%s(%d)"):format(baseKey, i)
+
+            xmlFile:setValue(settingKey .. "#name", setting.name)
+
+            if setting.type == AdditionalSettingsManager.TYPE_CHECKBOX then
+                xmlFile:setValue(settingKey .. "#boolean", setting.value)
+
+            elseif setting.type == AdditionalSettingsManager.TYPE_MULTIBOX then
+                xmlFile:setValue(settingKey .. "#integer", setting.value)
+            end
+
+            i = i + 1
+        end
+
+        xmlFile:save()
+        xmlFile:delete()
+    end
+end
 
 ---Sets value of given setting by name
 ---@param name string setting name
@@ -225,3 +283,16 @@ end
 function AdditionalSettingsManager:onSettingChangedMultibox(state, element)
     self:setSetting(element.id, state)
 end
+
+g_xmlManager:addCreateSchemaFunction(function ()
+    AdditionalSettingsManager.xmlSchema = XMLSchema.new("additionalSettingsManager")
+end)
+
+g_xmlManager:addInitSchemaFunction(function ()
+    local schema = AdditionalSettingsManager.xmlSchema
+    local settingKey = "settings.setting(?)"
+
+    schema:register(XMLValueType.STRING, settingKey .. "#name", "Name of setting", nil, true)
+    schema:register(XMLValueType.BOOL, settingKey .. "#boolean", "Boolean value of setting")
+    schema:register(XMLValueType.INT, settingKey .. "#integer", "Integer value of setting")
+end)

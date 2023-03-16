@@ -1004,6 +1004,13 @@ end
 ---@param onStay boolean
 function InteractiveControl:interactiveControlTriggerCallback(triggerId, otherId, onEnter, onLeave, onStay)
     local spec = self.spec_interactiveControl
+
+    local settingState = g_currentMission.interactiveControl.settings:getSetting("IC_STATE")
+    if settingState == InteractiveControlManager.SETTING_STATE_OFF then
+        spec.isPlayerInRange = false
+        return
+    end
+
     local currentFarmId = g_currentMission:getFarmId()
     local vehicleFarmId = self:getOwnerFarmId()
     local isFarmAllowed = currentFarmId == vehicleFarmId

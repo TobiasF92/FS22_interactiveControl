@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<modDesc descVersion="72">
+<modDesc descVersion="73">
     <author>Vertex Dezign</author>
-    <version>1.1.0.0-beta2</version>
+    <version>1.1.0.0-beta3</version>
 
     <title>
         <en>Interactive Control</en>
@@ -26,6 +26,7 @@ Changelog (1.1.0.0):
 - Added auto spec insertion into more vehicleTypes
 - Added various warning messages while functions are called
 - Added various new functions, see README
+- Added various settings in game menu
 - Fixed not working while indoor cameras use outdoor sounds
 - Fixed various small things
 - Optimized function for attacherJoints lift/lower for more functionality
@@ -49,6 +50,7 @@ Changelog (1.1.0.0):
 - Automatische Installation der Spezialisierung in mehr Fahrzeugtypen hinzugefügt
 - Verschiedene Warnmeldungen beim Aufruf von Funktionen hinzugefügt
 - Diverse neue Funktionen hinzugefügt, siehe README
+- Verschiedene Einstellungsoptionen im Spielmenu hinzugefügt
 - Behoben, dass Controls nicht funktionierten, wenn Kamera Außensounds genutzt hat
 - Verschiedene kleinere Fehler behoben
 - Optimierte Funktion für AttacherJoints heben/senken für mehr Funktionalität

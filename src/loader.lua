@@ -50,6 +50,11 @@ local function load(mission)
     mission.interactiveControl = modEnvironment
 
     InteractiveControlManager.overwrite_additionalGameSettings()
+
+    -- load settings
+    if modEnvironment.settings ~= nil then
+        AdditionalSettingsManager.loadFromXML(modEnvironment.settings)
+    end
 end
 
 ---Unload the mod when the mod is unselected and savegame is (re)loaded or game is closed.
@@ -106,6 +111,15 @@ local function updateGui(settingsFrame)
     AdditionalSettingsManager.updateGui(settingsFrame, modEnvironment)
 end
 
+---Appended function: GameSettings.saveToXMLFile
+---Adds saving of additional settings
+---@param xmlFile XMLFile instance of xml file to save settings to
+local function saveSettingsToXML(xmlFile)
+    if modEnvironment.settings ~= nil then
+        AdditionalSettingsManager.saveToXMLFile(modEnvironment.settings)
+    end
+end
+
 ---Initialize the mod
 local function init()
     FSBaseMission.delete = Utils.appendedFunction(FSBaseMission.delete, unload)
@@ -116,6 +130,7 @@ local function init()
 
     InGameMenuGeneralSettingsFrame.onFrameOpen = Utils.appendedFunction(InGameMenuGeneralSettingsFrame.onFrameOpen, initGui)
     InGameMenuGeneralSettingsFrame.updateGeneralSettings = Utils.appendedFunction(InGameMenuGeneralSettingsFrame.updateGeneralSettings, updateGui)
+    GameSettings.saveToXMLFile = Utils.appendedFunction(GameSettings.saveToXMLFile, saveSettingsToXML)
 end
 
 init()
