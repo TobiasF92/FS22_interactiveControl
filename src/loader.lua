@@ -101,6 +101,10 @@ end
 ---@param settingsFrame InGameMenuGeneralSettingsFrame instance of InGameMenuGeneralSettingsFrame
 ---@param element GuiElement gui element
 local function initGui(settingsFrame, element)
+    if not isLoaded() then
+        return
+    end
+
     AdditionalSettingsManager.initGui(settingsFrame, element, modEnvironment)
 end
 
@@ -108,6 +112,10 @@ end
 ---Adds updating of settings gui elements
 ---@param settingsFrame InGameMenuGeneralSettingsFrame instance of InGameMenuGeneralSettingsFrame
 local function updateGui(settingsFrame)
+    if not isLoaded() then
+        return
+    end
+
     AdditionalSettingsManager.updateGui(settingsFrame, modEnvironment)
 end
 
@@ -115,8 +123,12 @@ end
 ---Adds saving of additional settings
 ---@param xmlFile XMLFile instance of xml file to save settings to
 local function saveSettingsToXML(xmlFile)
-    if modEnvironment.settings ~= nil then
-        AdditionalSettingsManager.saveToXMLFile(modEnvironment.settings)
+    if not isLoaded() then
+        return
+    end
+
+    if g_currentMission.interactiveControl ~= nil and g_currentMission.interactiveControl.settings ~= nil then
+        AdditionalSettingsManager.saveToXMLFile(g_currentMission.interactiveControl.settings)
     end
 end
 
