@@ -31,10 +31,10 @@ function InteractiveButton.new(modName, modDirectory, customMt)
 end
 
 ---Loads InteractiveButton data from xmlFile, returns true if loading was successful, false otherwise
----@param xmlFile table
----@param key string
----@param target table
----@return boolean success
+---@param xmlFile table xmlFile handler
+---@param key string xml key
+---@param target table target metatable
+---@return boolean loaded loaded state
 function InteractiveButton:loadFromXML(xmlFile, key, target, interactiveControl)
     if not InteractiveButton:superClass().loadFromXML(self, xmlFile, key, target, interactiveControl) then
         return false
@@ -56,7 +56,7 @@ function InteractiveButton:loadFromXML(xmlFile, key, target, interactiveControl)
 end
 
 ---Updates if interactive object is in range
----@param currentUpdateDistance number
+---@param currentUpdateDistance number current distance to use
 function InteractiveButton:updateDistance(currentUpdateDistance)
     if self.refNode ~= nil then
         self.currentUpdateDistance = calcDistanceFrom(self.refNode, getCamera())

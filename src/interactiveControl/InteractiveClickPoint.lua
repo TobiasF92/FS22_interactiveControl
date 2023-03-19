@@ -17,16 +17,18 @@ InteractiveClickPoint.CLICK_ICON_ID = {
 InteractiveClickPoint.CLICK_ICONS = {}
 
 local lastId = InteractiveClickPoint.CLICK_ICON_ID.UNKNOWN
+---Returns next clickPoint id
+---@return integer id
 local function getNextId()
     lastId = lastId + 1
     return lastId
 end
 
 ---Registers new click icon type
----@param name string
----@param filename string
----@param node string
----@param blinkSpeed number
+---@param name string name of click icon
+---@param filename string filename of i3d file
+---@param node string index string in i3d file
+---@param blinkSpeed number blink speed
 function InteractiveClickPoint.registerIconType(name, filename, node, blinkSpeed, customEnvironment)
     if name == nil or name == "" then
         Logging.warning("InteractiveControl: Unable to register clickIcon, invalid name!")

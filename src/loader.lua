@@ -22,7 +22,7 @@ local sourceFiles = {
     -- interactiveControl
     "src/misc/InteractiveControlManager.lua",
     "src/misc/InteractiveFunctions.lua",
-    "src/misc/InteractiveFunctions_externalMods.lua", 
+    "src/misc/InteractiveFunctions_externalMods.lua",
 
     "src/interactiveControl/InteractiveBase.lua",
     "src/interactiveControl/InteractiveButton.lua",
