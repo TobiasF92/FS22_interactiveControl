@@ -189,6 +189,10 @@ end
 ---FUNCTION_MOTOR_START_STOPP
 InteractiveFunctions.addFunction("MOTOR_START_STOPP", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         if not g_currentMission.missionInfo.automaticMotorStartEnabled and target.getCanMotorRun ~= nil and target.startMotor ~= nil then
             if target:getCanMotorRun() then
                 target:startMotor(noEventSend)
@@ -196,6 +200,10 @@ InteractiveFunctions.addFunction("MOTOR_START_STOPP", {
         end
     end,
     negFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         if not g_currentMission.missionInfo.automaticMotorStartEnabled and target.stopMotor ~= nil then
             target:stopMotor(noEventSend)
         end
@@ -214,6 +222,10 @@ InteractiveFunctions.addFunction("MOTOR_START_STOPP", {
 ---FUNCTION_LIGHTS_TOGGLE
 InteractiveFunctions.addFunction("LIGHTS_TOGGLE", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         if target.getCanToggleLight ~= nil and target.setNextLightsState ~= nil then
             if target:getCanToggleLight() then
                 target:setNextLightsState(1)
@@ -225,6 +237,10 @@ InteractiveFunctions.addFunction("LIGHTS_TOGGLE", {
 ---FUNCTION_LIGHTS_WORKBACK_TOGGLE
 InteractiveFunctions.addFunction("LIGHTS_WORKBACK_TOGGLE", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         if target.getCanToggleLight ~= nil and target.setLightsTypesMask ~= nil then
             if target:getCanToggleLight() then
                 local lightsTypesMask = bitXOR(target.spec_lights.lightsTypesMask, 2 ^ Lights.LIGHT_TYPE_WORK_BACK)
@@ -237,6 +253,10 @@ InteractiveFunctions.addFunction("LIGHTS_WORKBACK_TOGGLE", {
 ---FUNCTION_LIGHTS_WORKFRONT_TOGGLE
 InteractiveFunctions.addFunction("LIGHTS_WORKFRONT_TOGGLE", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         if target.getCanToggleLight ~= nil and target.setLightsTypesMask ~= nil then
             if target:getCanToggleLight() then
                 local lightsTypesMask = bitXOR(target.spec_lights.lightsTypesMask, 2 ^ Lights.LIGHT_TYPE_WORK_FRONT)
@@ -249,6 +269,10 @@ InteractiveFunctions.addFunction("LIGHTS_WORKFRONT_TOGGLE", {
 ---FUNCTION_LIGHTS_HIGHBEAM_TOGGLE
 InteractiveFunctions.addFunction("LIGHTS_HIGHBEAM_TOGGLE", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         if target.getCanToggleLight ~= nil and target.setLightsTypesMask ~= nil then
             if target:getCanToggleLight() then
                 local lightsTypesMask = bitXOR(target.spec_lights.lightsTypesMask, 2 ^ Lights.LIGHT_TYPE_HIGHBEAM)
@@ -261,6 +285,10 @@ InteractiveFunctions.addFunction("LIGHTS_HIGHBEAM_TOGGLE", {
 ---FUNCTION_LIGHTS_TURNLIGHT_HAZARD_TOGGLE
 InteractiveFunctions.addFunction("LIGHTS_TURNLIGHT_HAZARD_TOGGLE", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         if target.getCanToggleLight ~= nil and target.setTurnLightState ~= nil then
             if target:getCanToggleLight() then
                 local state = Lights.TURNLIGHT_OFF
@@ -283,6 +311,10 @@ InteractiveFunctions.addFunction("LIGHTS_TURNLIGHT_HAZARD_TOGGLE", {
 ---FUNCTION_LIGHTS_TURNLIGHT_LEFT_TOGGLE
 InteractiveFunctions.addFunction("LIGHTS_TURNLIGHT_LEFT_TOGGLE", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         if target.getCanToggleLight ~= nil and target.setTurnLightState ~= nil then
             if target:getCanToggleLight() then
                 local state = Lights.TURNLIGHT_OFF
@@ -305,6 +337,10 @@ InteractiveFunctions.addFunction("LIGHTS_TURNLIGHT_LEFT_TOGGLE", {
 ---FUNCTION_LIGHTS_TURNLIGHT_RIGHT_TOGGLE
 InteractiveFunctions.addFunction("LIGHTS_TURNLIGHT_RIGHT_TOGGLE", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         if target.getCanToggleLight ~= nil and target.setTurnLightState ~= nil then
             if target:getCanToggleLight() then
                 local state = Lights.TURNLIGHT_OFF
@@ -327,6 +363,10 @@ InteractiveFunctions.addFunction("LIGHTS_TURNLIGHT_RIGHT_TOGGLE", {
 ---FUNCTION_LIGHTS_BEACON_TOGGLE
 InteractiveFunctions.addFunction("LIGHTS_BEACON_TOGGLE", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         if target.getCanToggleLight ~= nil and target.setBeaconLightsVisibility ~= nil then
             target:setBeaconLightsVisibility(not target.spec_lights.beaconLightsActive, true, noEventSend)
         end
@@ -342,6 +382,10 @@ InteractiveFunctions.addFunction("LIGHTS_BEACON_TOGGLE", {
 ---FUNCTION_LIGHTS_PIPE_TOGGLE
 InteractiveFunctions.addFunction("LIGHTS_PIPE_TOGGLE", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         if target.getCanToggleLight ~= nil and target.setLightsTypesMask ~= nil then
             if target:getCanToggleLight() then
                 -- lighttype for pipe lights is "4"
@@ -366,6 +410,10 @@ InteractiveFunctions.addFunction("CRUISE_CONTROL_TOGGLE", {
 ---FUNCTION_DRIVE_DIRECTION_TOGGLE
 InteractiveFunctions.addFunction("DRIVE_DIRECTION_TOGGLE", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         MotorGearShiftEvent.sendEvent(target, MotorGearShiftEvent.TYPE_DIRECTION_CHANGE)
     end,
     isEnabledFunc = function(target, data)
@@ -380,6 +428,10 @@ InteractiveFunctions.addFunction("DRIVE_DIRECTION_TOGGLE", {
 ---FUNCTION_COVER_TOGGLE
 InteractiveFunctions.addFunction("COVER_TOGGLE", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         if target.playCoverAnimation ~= nil and Cover.actionEventToggleCover ~= nil then
             Cover.actionEventToggleCover(target)
         end
@@ -419,6 +471,10 @@ function InteractiveFunctions.setLoweredStateRec(index, target, state, attachedO
         if Foldable.actionEventFoldMiddle ~= nil and attachedObject.getIsFoldMiddleAllowed ~= nil and attachedObject:getIsFoldMiddleAllowed() then
             local dir = state and -1 or 1
             if attachedObject:getToggledFoldMiddleDirection() == dir then
+                if noEventSend then
+                    return
+                end
+
                 Foldable.actionEventFoldMiddle(attachedObject)
             end
 
@@ -500,6 +556,10 @@ InteractiveFunctions.addFunction("ATTACHERJOINT_LIFT_LOWER", {
 ---FUNCTION_ATTACHERJOINT_TURN_ON_OFF
 InteractiveFunctions.addFunction("ATTACHERJOINT_TURN_ON_OFF", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         local attachedObject = data.currentAttachedObject
 
         if attachedObject ~= nil and TurnOnVehicle.actionEventTurnOn ~= nil then
@@ -531,6 +591,10 @@ InteractiveFunctions.addFunction("ATTACHERJOINT_TURN_ON_OFF", {
 ---FUNCTION_TURN_ON_OFF
 InteractiveFunctions.addFunction("TURN_ON_OFF", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         if target.getCanBeTurnedOn ~= nil then
             if target:getCanToggleTurnedOn() and target:getCanBeTurnedOn() then
                 target:setIsTurnedOn(not target:getIsTurnedOn())
@@ -557,8 +621,11 @@ InteractiveFunctions.addFunction("TURN_ON_OFF", {
 ---FUNCTION_ATTACHERJOINT_FOLDING_TOGGLE
 InteractiveFunctions.addFunction("ATTACHERJOINT_FOLDING_TOGGLE", {
     posFunc = function(target, data, noEventSend)
-        local attachedObject = data.currentAttachedObject
+        if noEventSend then
+            return
+        end
 
+        local attachedObject = data.currentAttachedObject
         if attachedObject ~= nil and Foldable.actionEventFold ~= nil then
             Foldable.actionEventFold(attachedObject)
         end
@@ -586,6 +653,10 @@ InteractiveFunctions.addFunction("ATTACHERJOINT_FOLDING_TOGGLE", {
 
 InteractiveFunctions.addFunction("PIPE_FOLDING_TOGGLE", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         -- Show warning if target is not unfolded
         if target.getIsUnfolded ~= nil and not target:getIsUnfolded() then
             local warning = target:getTurnedOnNotAllowedWarning()
@@ -610,6 +681,10 @@ InteractiveFunctions.addFunction("PIPE_FOLDING_TOGGLE", {
 ---FUNCTION_FOLDING_TOGGLE
 InteractiveFunctions.addFunction("FOLDING_TOGGLE", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         local spec_foldable = target.spec_foldable
         if spec_foldable == nil then
             return
@@ -640,6 +715,10 @@ InteractiveFunctions.addFunction("FOLDING_TOGGLE", {
 ---FUNCTION_ATTACHERJOINTS_TOGGLE_DISCHARGE
 InteractiveFunctions.addFunction("ATTACHERJOINTS_TOGGLE_DISCHARGE", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         local attachedObject = data.currentAttachedObject
 
         if attachedObject ~= nil then
@@ -680,6 +759,10 @@ InteractiveFunctions.addFunction("ATTACHERJOINTS_TOGGLE_DISCHARGE", {
 ---FUNCTION_DISCHARGE_TOGGLE
 InteractiveFunctions.addFunction("DISCHARGE_TOGGLE", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         if target.getDischargeState ~= nil then
             local dischargeState = target:getDischargeState()
             local currentDischargeNode = target:getCurrentDischargeNode()
@@ -711,6 +794,10 @@ InteractiveFunctions.addFunction("DISCHARGE_TOGGLE", {
 ---FUNCTION_CRABSTEERING_TOGGLE
 InteractiveFunctions.addFunction("CRABSTEERING_TOGGLE", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         if target.getCanToggleCrabSteering ~= nil and CrabSteering.actionEventToggleCrabSteeringModes ~= nil then
             CrabSteering.actionEventToggleCrabSteeringModes(target, nil, nil, 1)
         end
@@ -814,14 +901,33 @@ InteractiveFunctions.addFunction("RADIO_ITEM_PREVIOUS", {
     end
 })
 
----FUNCTION_VARIABLE_WORK_WIDTH_LEFT
-InteractiveFunctions.addFunction("VARIABLE_WORK_WIDTH_LEFT", {
+---FUNCTION_VARIABLE_WORK_WIDTH_LEFT_INCREASE
+InteractiveFunctions.addFunction("VARIABLE_WORK_WIDTH_LEFT_INCREASE", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         if target.spec_variableWorkWidth and VariableWorkWidth.actionEventWorkWidthLeft ~= nil then
             VariableWorkWidth.actionEventWorkWidthLeft(target, nil, 1)
         end
     end,
-    negFunc = function(target, data, noEventSend)
+    isEnabledFunc = function(target, data)
+        if target.spec_variableWorkWidth ~= nil then
+            local spec = target.spec_variableWorkWidth
+            return #spec.sectionNodes > 0 and #spec.sectionNodesLeft > 0
+        end
+        return false
+    end
+})
+
+---FUNCTION_VARIABLE_WORK_WIDTH_LEFT_DECREASE
+InteractiveFunctions.addFunction("VARIABLE_WORK_WIDTH_LEFT_DECREASE", {
+    posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         if target.spec_variableWorkWidth and VariableWorkWidth.actionEventWorkWidthLeft ~= nil then
             VariableWorkWidth.actionEventWorkWidthLeft(target, nil, -1)
         end
@@ -835,25 +941,22 @@ InteractiveFunctions.addFunction("VARIABLE_WORK_WIDTH_LEFT", {
     end
 })
 
----FUNCTION_ATTACHERJOINTS_VARIABLE_WORK_WIDTH_LEFT
-InteractiveFunctions.addFunction("ATTACHERJOINTS_VARIABLE_WORK_WIDTH_LEFT", {
+---FUNCTION_ATTACHERJOINTS_VARIABLE_WORK_WIDTH_LEFT_INCREASE
+InteractiveFunctions.addFunction("ATTACHERJOINTS_VARIABLE_WORK_WIDTH_LEFT_INCREASE", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         local attachedObject = data.currentAttachedObject
 
         if attachedObject ~= nil and VariableWorkWidth.actionEventWorkWidthLeft ~= nil then
             VariableWorkWidth.actionEventWorkWidthLeft(attachedObject, nil, 1)
         end
     end,
-    negFunc = function(target, data, noEventSend)
-        local attachedObject = data.currentAttachedObject
-
-        if attachedObject ~= nil and VariableWorkWidth.actionEventWorkWidthLeft ~= nil then
-            VariableWorkWidth.actionEventWorkWidthLeft(attachedObject, nil, -1)
-        end
-    end,
     schemaFunc = InteractiveFunctions.attacherJointsSchema,
     loadFunc = function(xmlFile, key, data)
-        return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "ATTACHERJOINTS_VARIABLE_WORK_WIDTH_LEFT")
+        return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "ATTACHERJOINTS_VARIABLE_WORK_WIDTH_LEFT_INCREASE")
     end,
     isEnabledFunc = function(target, data)
         local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
@@ -869,14 +972,64 @@ InteractiveFunctions.addFunction("ATTACHERJOINTS_VARIABLE_WORK_WIDTH_LEFT", {
     end
 })
 
----FUNCTION_VARIABLE_WORK_WIDTH_RIGHT
-InteractiveFunctions.addFunction("VARIABLE_WORK_WIDTH_RIGHT", {
+---FUNCTION_ATTACHERJOINTS_VARIABLE_WORK_WIDTH_LEFT_DECREASE
+InteractiveFunctions.addFunction("ATTACHERJOINTS_VARIABLE_WORK_WIDTH_LEFT_DECREASE", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
+        local attachedObject = data.currentAttachedObject
+
+        if attachedObject ~= nil and VariableWorkWidth.actionEventWorkWidthLeft ~= nil then
+            VariableWorkWidth.actionEventWorkWidthLeft(attachedObject, nil, -1)
+        end
+    end,
+    schemaFunc = InteractiveFunctions.attacherJointsSchema,
+    loadFunc = function(xmlFile, key, data)
+        return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "ATTACHERJOINTS_VARIABLE_WORK_WIDTH_LEFT_DECREASE")
+    end,
+    isEnabledFunc = function(target, data)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+            if object.spec_variableWorkWidth == nil then
+                return false
+            end
+
+            local spec = object.spec_variableWorkWidth
+            return #spec.sectionNodes > 0 and #spec.sectionNodesLeft > 0
+        end)
+
+        return attachedObject ~= nil
+    end
+})
+
+---FUNCTION_VARIABLE_WORK_WIDTH_RIGHT_INCREASE
+InteractiveFunctions.addFunction("VARIABLE_WORK_WIDTH_RIGHT_INCREASE", {
+    posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         if target.spec_variableWorkWidth and VariableWorkWidth.actionEventWorkWidthRight ~= nil then
             VariableWorkWidth.actionEventWorkWidthRight(target, nil, 1)
         end
     end,
-    negFunc = function(target, data, noEventSend)
+    isEnabledFunc = function(target, data)
+        if target.spec_variableWorkWidth ~= nil then
+            local spec = target.spec_variableWorkWidth
+            return #spec.sectionNodes > 0 and #spec.sectionNodesRight > 0
+        end
+        return false
+    end
+})
+
+---FUNCTION_VARIABLE_WORK_WIDTH_RIGHT_DECREASE
+InteractiveFunctions.addFunction("VARIABLE_WORK_WIDTH_RIGHT_DECREASE", {
+    posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         if target.spec_variableWorkWidth and VariableWorkWidth.actionEventWorkWidthRight ~= nil then
             VariableWorkWidth.actionEventWorkWidthRight(target, nil, -1)
         end
@@ -890,16 +1043,44 @@ InteractiveFunctions.addFunction("VARIABLE_WORK_WIDTH_RIGHT", {
     end
 })
 
----FUNCTION_ATTACHERJOINTS_VARIABLE_WORK_WIDTH_RIGHT
-InteractiveFunctions.addFunction("ATTACHERJOINTS_VARIABLE_WORK_WIDTH_RIGHT", {
+---FUNCTION_ATTACHERJOINTS_VARIABLE_WORK_WIDTH_RIGHT_INCREASE
+InteractiveFunctions.addFunction("ATTACHERJOINTS_VARIABLE_WORK_WIDTH_RIGHT_INCREASE", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         local attachedObject = data.currentAttachedObject
 
         if attachedObject ~= nil and VariableWorkWidth.actionEventWorkWidthRight ~= nil then
             VariableWorkWidth.actionEventWorkWidthRight(attachedObject, nil, 1)
         end
     end,
-    negFunc = function(target, data, noEventSend)
+    schemaFunc = InteractiveFunctions.attacherJointsSchema,
+    loadFunc = function(xmlFile, key, data)
+        return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "ATTACHERJOINTS_VARIABLE_WORK_WIDTH_RIGHT_INCREASE")
+    end,
+    isEnabledFunc = function(target, data)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+            if object.spec_variableWorkWidth == nil then
+                return false
+            end
+
+            local spec = object.spec_variableWorkWidth
+            return #spec.sectionNodes > 0 and #spec.sectionNodesRight > 0
+        end)
+
+        return attachedObject ~= nil
+    end
+})
+
+---FUNCTION_ATTACHERJOINTS_VARIABLE_WORK_WIDTH_RIGHT_DECREASE
+InteractiveFunctions.addFunction("ATTACHERJOINTS_VARIABLE_WORK_WIDTH_RIGHT_DECREASE", {
+    posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         local attachedObject = data.currentAttachedObject
 
         if attachedObject ~= nil and VariableWorkWidth.actionEventWorkWidthRight ~= nil then
@@ -908,7 +1089,7 @@ InteractiveFunctions.addFunction("ATTACHERJOINTS_VARIABLE_WORK_WIDTH_RIGHT", {
     end,
     schemaFunc = InteractiveFunctions.attacherJointsSchema,
     loadFunc = function(xmlFile, key, data)
-        return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "ATTACHERJOINTS_VARIABLE_WORK_WIDTH_RIGHT")
+        return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "ATTACHERJOINTS_VARIABLE_WORK_WIDTH_RIGHT_DECREASE")
     end,
     isEnabledFunc = function(target, data)
         local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
@@ -927,6 +1108,10 @@ InteractiveFunctions.addFunction("ATTACHERJOINTS_VARIABLE_WORK_WIDTH_RIGHT", {
 ---FUNCTION_VARIABLE_WORK_WIDTH_TOGGLE
 InteractiveFunctions.addFunction("VARIABLE_WORK_WIDTH_TOGGLE", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         if target.spec_variableWorkWidth and VariableWorkWidth.actionEventWorkWidthToggle ~= nil then
             VariableWorkWidth.actionEventWorkWidthToggle(target)
         end
@@ -969,6 +1154,10 @@ InteractiveFunctions.addFunction("ATTACHERJOINTS_VARIABLE_WORK_WIDTH_TOGGLE", {
 ---FUNCTION_ATTACHERJOINTS_ATTACH_DETACH
 InteractiveFunctions.addFunction("ATTACHERJOINTS_ATTACH_DETACH", {
     posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         local info = target.spec_attacherJoints.attachableInfo
 
         if info.attachable ~= nil then
@@ -982,6 +1171,10 @@ InteractiveFunctions.addFunction("ATTACHERJOINTS_ATTACH_DETACH", {
         end
     end,
     negFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+
         local detachableObject = data.currentAttachedObject
 
         if detachableObject ~= nil and detachableObject ~= target then
