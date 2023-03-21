@@ -21,7 +21,7 @@ Using the controls you can steer different things:
 For further informations: <a href="https://github.com/TobiasF92/FS22_interactiveControl/blob/main/README.md">README</a> on Github.
 
 Changelog (1.1.0.0):
-- Added translations: italian, russian, polish
+- Added translations: italian, russian, polish, czech
 - Added mod compatibility with 'FS22_additionalGameSettings'
 - Added auto spec insertion into more vehicleTypes
 - Added various warning messages while functions are called
@@ -45,7 +45,7 @@ Mit den Bedienelementen können Sie verschiedene Dinge steuern:
 Für mehr Informationen: <a href="https://github.com/TobiasF92/FS22_interactiveControl/blob/main/README.md">README</a> auf Github.
 
 Changelog (1.1.0.0):
-- Übersetzungen hinzugefügt: italienisch, russisch, polnisch
+- Übersetzungen hinzugefügt: italienisch, russisch, polnisch, tschechisch
 - Kompatibilität mit 'FS22_additionalGameSettings' hinzugefügt
 - Automatische Installation der Spezialisierung in mehr Fahrzeugtypen hinzugefügt
 - Verschiedene Warnmeldungen beim Aufruf von Funktionen hinzugefügt
