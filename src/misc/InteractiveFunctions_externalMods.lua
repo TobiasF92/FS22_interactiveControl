@@ -32,7 +32,10 @@ local function getExternalModClass(modEnvironmentName, modClassName)
     return modEnvironment[modClassName], false
 end
 
----FS22_guidanceSteering
+---------------------------
+---FS22_guidanceSteering---
+---------------------------
+
 ---FUNCTION_GPS_TOGGLE
 InteractiveFunctions.addFunction("GPS_TOGGLE", {
     posFunc = function(target, data, noEventSend)
@@ -58,7 +61,10 @@ InteractiveFunctions.addFunction("GPS_TOGGLE", {
     end
 })
 
----FS22_precisionFarming
+---------------------------
+---FS22_precisionFarming---
+---------------------------
+
 ---FUNCTION_PF_CROP_SENSOR_TOGGLE
 InteractiveFunctions.addFunction("PF_CROP_SENSOR_TOGGLE", {
     posFunc = function(target, data, noEventSend)
@@ -122,7 +128,6 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_CROP_SENSOR_TOGGLE", {
     end
 })
 
----FS22_precisionFarming
 ---FUNCTION_PF_SEED_RATE_MODE
 InteractiveFunctions.addFunction("PF_SEED_RATE_MODE", {
     posFunc = function(target, data, noEventSend)
@@ -145,8 +150,8 @@ InteractiveFunctions.addFunction("PF_SEED_RATE_MODE", {
     end
 })
 
----FUNCTION_PF_ATTACHERJOINTS_PF_SEED_RATE_MODE
-InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_PF_SEED_RATE_MODE", {
+---FUNCTION_PF_ATTACHERJOINTS_SEED_RATE_MODE
+InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_SEED_RATE_MODE", {
     posFunc = function(target, data, noEventSend)
         local ExtendedSowingMachine = getExternalModClass("FS22_precisionFarming", "ExtendedSowingMachine")
 
@@ -168,7 +173,7 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_PF_SEED_RATE_MODE", {
     end,
     schemaFunc = InteractiveFunctions.attacherJointsSchema,
     loadFunc = function(xmlFile, key, data)
-        return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "PF_ATTACHERJOINTS_PF_SEED_RATE_MODE")
+        return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "PF_ATTACHERJOINTS_SEED_RATE_MODE")
     end,
     isEnabledFunc = function(target, data)
         if getExternalModClass("FS22_precisionFarming") == nil then
@@ -183,9 +188,8 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_PF_SEED_RATE_MODE", {
     end
 })
 
----FS22_precisionFarming
----FUNCTION_PF_SEED_RATE
-InteractiveFunctions.addFunction("PF_SEED_RATE", {
+---FUNCTION_PF_SEED_RATE_UP
+InteractiveFunctions.addFunction("PF_SEED_RATE_UP", {
     posFunc = function(target, data, noEventSend)
         local ExtendedSowingMachine = getExternalModClass("FS22_precisionFarming", "ExtendedSowingMachine")
 
@@ -195,7 +199,17 @@ InteractiveFunctions.addFunction("PF_SEED_RATE", {
             end
         end
     end,
-    negFunc = function(target, data, noEventSend)
+    isEnabledFunc = function(target, data)
+        if target.spec_extendedSowingMachine ~= nil then
+            return not target.spec_extendedSowingMachine.seedRateAutoMode
+        end
+        return false
+    end
+})
+
+---FUNCTION_PF_SEED_RATE_DOWN
+InteractiveFunctions.addFunction("PF_SEED_RATE_DOWN", {
+    posFunc = function(target, data, noEventSend)
         local ExtendedSowingMachine = getExternalModClass("FS22_precisionFarming", "ExtendedSowingMachine")
 
         if ExtendedSowingMachine ~= nil then
@@ -212,8 +226,8 @@ InteractiveFunctions.addFunction("PF_SEED_RATE", {
     end
 })
 
----FUNCTION_PF_ATTACHERJOINTS_PF_SEED_RATE
-InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_PF_SEED_RATE", {
+---FUNCTION_PF_ATTACHERJOINTS_SEED_RATE_UP
+InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_SEED_RATE_UP", {
     posFunc = function(target, data, noEventSend)
         local ExtendedSowingMachine = getExternalModClass("FS22_precisionFarming", "ExtendedSowingMachine")
 
@@ -225,20 +239,9 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_PF_SEED_RATE", {
             end
         end
     end,
-    negFunc = function(target, data, noEventSend)
-        local ExtendedSowingMachine = getExternalModClass("FS22_precisionFarming", "ExtendedSowingMachine")
-
-        if ExtendedSowingMachine ~= nil then
-            local attachedObject = data.currentAttachedObject
-
-            if attachedObject ~= nil and ExtendedSowingMachine.actionEventChangeSeedRate ~= nil then
-                ExtendedSowingMachine.actionEventChangeSeedRate(attachedObject, nil, -1)
-            end
-        end
-    end,
     schemaFunc = InteractiveFunctions.attacherJointsSchema,
     loadFunc = function(xmlFile, key, data)
-        return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "PF_ATTACHERJOINTS_PF_SEED_RATE")
+        return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "PF_ATTACHERJOINTS_SEED_RATE_UP")
     end,
     isEnabledFunc = function(target, data)
         if getExternalModClass("FS22_precisionFarming") == nil then
@@ -253,7 +256,36 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_PF_SEED_RATE", {
     end
 })
 
----FS22_precisionFarming
+---FUNCTION_PF_ATTACHERJOINTS_SEED_RATE_DOWN
+InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_SEED_RATE_DOWN", {
+    posFunc = function(target, data, noEventSend)
+        local ExtendedSowingMachine = getExternalModClass("FS22_precisionFarming", "ExtendedSowingMachine")
+
+        if ExtendedSowingMachine ~= nil then
+            local attachedObject = data.currentAttachedObject
+
+            if attachedObject ~= nil and ExtendedSowingMachine.actionEventChangeSeedRate ~= nil then
+                ExtendedSowingMachine.actionEventChangeSeedRate(attachedObject, nil, -1)
+            end
+        end
+    end,
+    schemaFunc = InteractiveFunctions.attacherJointsSchema,
+    loadFunc = function(xmlFile, key, data)
+        return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "PF_ATTACHERJOINTS_SEED_RATE_DOWN")
+    end,
+    isEnabledFunc = function(target, data)
+        if getExternalModClass("FS22_precisionFarming") == nil then
+            return false
+        end
+
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+            return object.spec_extendedSowingMachine ~= nil and not object.spec_extendedSowingMachine.seedRateAutoMode
+        end)
+
+        return attachedObject ~= nil
+    end
+})
+
 ---FUNCTION_PF_SPRAY_AMOUNT_MODE
 InteractiveFunctions.addFunction("PF_SPRAY_AMOUNT_MODE", {
     posFunc = function(target, data, noEventSend)
@@ -276,8 +308,8 @@ InteractiveFunctions.addFunction("PF_SPRAY_AMOUNT_MODE", {
     end
 })
 
----FUNCTION_PF_ATTACHERJOINTS_PF_SPRAY_AMOUNT_MODE
-InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_PF_SPRAY_AMOUNT_MODE", {
+---FUNCTION_PF_ATTACHERJOINTS_SPRAY_AMOUNT_MODE
+InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_SPRAY_AMOUNT_MODE", {
     posFunc = function(target, data, noEventSend)
         local ExtendedSprayer = getExternalModClass("FS22_precisionFarming", "ExtendedSprayer")
 
@@ -299,7 +331,7 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_PF_SPRAY_AMOUNT_MODE", {
     end,
     schemaFunc = InteractiveFunctions.attacherJointsSchema,
     loadFunc = function(xmlFile, key, data)
-        return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "PF_ATTACHERJOINTS_PF_SPRAY_AMOUNT_MODE")
+        return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "PF_ATTACHERJOINTS_SPRAY_AMOUNT_MODE")
     end,
     isEnabledFunc = function(target, data)
         if getExternalModClass("FS22_precisionFarming") == nil then
@@ -314,9 +346,8 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_PF_SPRAY_AMOUNT_MODE", {
     end
 })
 
----FS22_precisionFarming
----FUNCTION_PF_SPRAY_AMOUNT
-InteractiveFunctions.addFunction("PF_SPRAY_AMOUNT", {
+---FUNCTION_PF_SPRAY_AMOUNT_UP
+InteractiveFunctions.addFunction("PF_SPRAY_AMOUNT_UP", {
     posFunc = function(target, data, noEventSend)
         local ExtendedSprayer = getExternalModClass("FS22_precisionFarming", "ExtendedSprayer")
 
@@ -326,7 +357,17 @@ InteractiveFunctions.addFunction("PF_SPRAY_AMOUNT", {
             end
         end
     end,
-    negFunc = function(target, data, noEventSend)
+    isEnabledFunc = function(target, data)
+        if target.spec_extendedSprayer ~= nil then
+            return not target.spec_extendedSprayer.sprayAmountAutoMode
+        end
+        return false
+    end
+})
+
+---FUNCTION_PF_SPRAY_AMOUNT_DOWN
+InteractiveFunctions.addFunction("PF_SPRAY_AMOUNT_DOWN", {
+    posFunc = function(target, data, noEventSend)
         local ExtendedSprayer = getExternalModClass("FS22_precisionFarming", "ExtendedSprayer")
 
         if ExtendedSprayer ~= nil then
@@ -343,8 +384,8 @@ InteractiveFunctions.addFunction("PF_SPRAY_AMOUNT", {
     end
 })
 
----FUNCTION_PF_ATTACHERJOINTS_PF_SPRAY_AMOUNT
-InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_PF_SPRAY_AMOUNT", {
+---FUNCTION_PF_ATTACHERJOINTS_SPRAY_AMOUNT_UP
+InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_SPRAY_AMOUNT_UP", {
     posFunc = function(target, data, noEventSend)
         local ExtendedSprayer = getExternalModClass("FS22_precisionFarming", "ExtendedSprayer")
 
@@ -356,20 +397,9 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_PF_SPRAY_AMOUNT", {
             end
         end
     end,
-    negFunc = function(target, data, noEventSend)
-        local ExtendedSprayer = getExternalModClass("FS22_precisionFarming", "ExtendedSprayer")
-
-        if ExtendedSprayer ~= nil then
-            local attachedObject = data.currentAttachedObject
-
-            if attachedObject ~= nil and ExtendedSprayer.actionEventChangeSprayAmount ~= nil then
-                ExtendedSprayer.actionEventChangeSprayAmount(attachedObject, nil, -1)
-            end
-        end
-    end,
     schemaFunc = InteractiveFunctions.attacherJointsSchema,
     loadFunc = function(xmlFile, key, data)
-        return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "PF_ATTACHERJOINTS_PF_SPRAY_AMOUNT")
+        return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "PF_ATTACHERJOINTS_SPRAY_AMOUNT_UP")
     end,
     isEnabledFunc = function(target, data)
         if getExternalModClass("FS22_precisionFarming") == nil then
@@ -384,7 +414,40 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_PF_SPRAY_AMOUNT", {
     end
 })
 
----FS22_VehicleControlAddon
+---FUNCTION_PF_ATTACHERJOINTS_SPRAY_AMOUNT_DOWN
+InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_SPRAY_AMOUNT_DOWN", {
+    posFunc = function(target, data, noEventSend)
+        local ExtendedSprayer = getExternalModClass("FS22_precisionFarming", "ExtendedSprayer")
+
+        if ExtendedSprayer ~= nil then
+            local attachedObject = data.currentAttachedObject
+
+            if attachedObject ~= nil and ExtendedSprayer.actionEventChangeSprayAmount ~= nil then
+                ExtendedSprayer.actionEventChangeSprayAmount(attachedObject, nil, -1)
+            end
+        end
+    end,
+    schemaFunc = InteractiveFunctions.attacherJointsSchema,
+    loadFunc = function(xmlFile, key, data)
+        return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "PF_ATTACHERJOINTS_SPRAY_AMOUNT_DOWN")
+    end,
+    isEnabledFunc = function(target, data)
+        if getExternalModClass("FS22_precisionFarming") == nil then
+            return false
+        end
+
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+            return object.spec_extendedSprayer ~= nil and not object.spec_extendedSprayer.sprayAmountAutoMode
+        end)
+
+        return attachedObject ~= nil
+    end
+})
+
+------------------------------
+---FS22_VehicleControlAddon---
+------------------------------
+
 ---FUNCTION_VCA_TOGGLE_AWD
 InteractiveFunctions.addFunction("VCA_TOGGLE_AWD", {
     posFunc = function(target, data, noEventSend)
@@ -407,7 +470,6 @@ InteractiveFunctions.addFunction("VCA_TOGGLE_AWD", {
         return false
     end
 })
-
 
 ---FUNCTION_VCA_TOGGLE_DIFFLOCK_FRONT
 InteractiveFunctions.addFunction("VCA_TOGGLE_DIFFLOCK_FRONT", {
@@ -478,7 +540,10 @@ InteractiveFunctions.addFunction("VCA_TOGGLE_PARKINGBRAKE", {
     end
 })
 
----FS22_HeadlandManagement
+-----------------------------
+---FS22_HeadlandManagement---
+-----------------------------
+
 ---FUNCTION_HEADLAND_MANAGEMENT_TOGGLE
 InteractiveFunctions.addFunction("HEADLAND_MANAGEMENT_TOGGLE", {
     posFunc = function(target, data, noEventSend)
