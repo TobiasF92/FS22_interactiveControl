@@ -657,11 +657,11 @@ end
 ---@param isSelected boolean
 function InteractiveControl:onDraw(isActiveForInput, isActiveForInputIgnoreSelection, isSelected)
     if self.isClient and self:getState() then
-        if isActiveForInputIgnoreSelection and g_currentMission.player ~= nil then
-            g_currentMission.player.aimOverlay:render()
-        end
-
         if self:isIndoorActive() then
+            if isActiveForInputIgnoreSelection and g_currentMission.player ~= nil then
+                g_currentMission.player.aimOverlay:render()
+            end
+
             self:updateInteractiveControls(true, false, isActiveForInputIgnoreSelection)
         end
     end
