@@ -20,6 +20,12 @@
 
         <text name="actionIC_foldImplement" text="IC: Anbaugerät einklappen"/>
         <text name="actionIC_unfoldImplement" text="IC: Anbaugerät ausklappen"/>
+
+        <text name="actionIC_foldVehicle" text="IC: Fahrzeug zuklappen" />
+		<text name="actionIC_unfoldVehicle" text="IC: Fahrzeug ausklappen" />
+        
+        <text name="actionIC_foldPipe" text="IC: Rohr einklappen" />
+		<text name="actionIC_unfoldPipe" text="IC: Rohr ausklappen" />
         
         <text name="actionIC_openRoof" text="IC: Dach öffnen"/>
         <text name="actionIC_closeRoof" text="IC: Dach schließen"/>
@@ -51,6 +57,9 @@
         <text name="actionIC_hazardLightsOn" text="IC: Warnblinker anschalten"/>
         <text name="actionIC_hazardLightsOff" text="IC: Warnblinker ausschalten"/>
 
+        <text name="actionIC_pipeLightsOn" text="IC: Rohrbeleuchtung anschalten"/>
+        <text name="actionIC_pipeLightsOff" text="IC: Rohrbeleuchtung ausschalten"/>
+
         <text name="actionIC_gs_activate" text="IC: GPS aktivieren"/>
         <text name="actionIC_gs_deactivate" text="IC: GPS deaktivieren"/>
 
@@ -63,9 +72,31 @@
         <text name="actionIC_radioOff" text="IC: Radio ausschalten"/>
     
         <text name="actionIC_crabSteering_toggle" text="IC: Lenkmodus wechseln"/>
-    
+
+        <text name="actionIC_parkingbrakeOn" text="IC: Handbremse anziehen" />
+        <text name="actionIC_parkingbrakeOff" text="IC: Handbremse lösen" />
+
+        <text name="actionIC_diffLockFrontOn" text="IC: Diffsperre vorne ein" />
+        <text name="actionIC_diffLockFrontOff" text="IC: Diffsperre vorne aus" />
+
+        <text name="actionIC_allWheelDriveOn" text="IC: Allrad ein" />
+        <text name="actionIC_allWheelDriveOff" text="IC: Allrad aus" />
+
+        <text name="actionIC_diffLockBackOn" text="IC: Diffsperre hinten ein" />
+        <text name="actionIC_diffLockBackOff" text="IC: Diffsperre hinten aus" />
+        
         <!-- inputs -->
         <text name="input_IC_CLICK" text="IC: Interactive Control ClickPoint"/>
         <text name="input_IC_TOGGLE_STATE" text="IC: Interactive Control umschalten"/>
+        
+        <!-- settings -->
+        <text name="settingsIC_title" text="Interactive Control"/>
+        <text name="settingsIC_state_title" text="IC Status"/>
+        <text name="settingsIC_state_tooltip" text="Schaltet InteractiveControl ein, aus, oder schaltbar."/>
+        <text name="settingsIC_state_option01" text="Schaltbar"/>
+        <text name="settingsIC_state_option02" text="Immer aktiv"/>
+        <text name="settingsIC_state_option03" text="Aus"/>
+        <text name="settingsIC_keepAlive_title" text="IC Aktiviert lassen"/>
+        <text name="settingsIC_keepAlive_tooltip" text="InteractiveControl bleibt beim verlassen des Fahrzeugs aktiv."/>
     </texts>
 </l10n>

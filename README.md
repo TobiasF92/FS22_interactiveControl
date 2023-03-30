@@ -2,7 +2,9 @@
 
 'Interactive Control' is a global script mod for Farming Simulator 22.
 While this mod is active, you are able to use many other mods that support Interactive Control.
-With IC you have the possibility to interactively control many parts of several (prepared) vehicles.
+With IC you have the possibility to interactively control many parts of several (prepared) vehicles. to use many other mods that support Interactive Control. With IC you have the possibility to interactively control many parts of several (prepared) vehicles.
+
+Possibilities
 
 
 ## Possibilities
@@ -27,9 +29,11 @@ Using the controls you can steer different things:
 The documentation is not finished yet, but should be sufficient for experienced users.
 If you are in need of some extra help, take a look into the demonstration mods:
 * Fendt Vario 900 Gen 6 / Gen 7
-  * Modhub: https://www.farming-simulator.com/mod.php?lang=de&country=de&mod_id=225936&title=fs2022
+  * Modhub: https://farming-simulator.com/mod.php?mod_id=225936
 * Kerner Corona Pack
-  * Modhub: https://www.farming-simulator.com/mod.php?lang=de&country=de&mod_id=251288&title=fs2022
+  * Modhub: https://farming-simulator.com/mod.php?mod_id=251288
+* Faresin 6.26
+  * Modhub: https://farming-simulator.com/mod.php?mod_id=258842
 
 
 ### XML
@@ -80,6 +84,8 @@ Explained XML documentation [HTML-file](documentation/interactiveControl.html)
                     <dependingMovingTool isInactive="true" node="node"/>
 
                     <!-- You can block depending interactive controls here -->
+                    <!-- blockState: Control state to block depending control -->
+                    <!-- forcedBlockedState: Forced state of depending control if blocked -->
                     <dependingInteractiveControl index="int" blockState="boolean" forcedBlockedState="boolean"/>
                     
                     <!-- Modify sound here, 'indoorFactor' is the sound percentage factor if control is active -->
@@ -105,8 +111,8 @@ Explained XML documentation [HTML-file](documentation/interactiveControl.html)
 
 ### FunctionOverview:
 
-Function | Description | Requirements
--------- | -------- | --------
+Function | Description | Requirements | Required Version
+-------- | -------- | -------- | --------
 MOTOR_START_STOPP | Toggle vehicle motor start and stop
 LIGHTS_TOGGLE | Toggle lights on and off
 LIGHTS_WORKBACK_TOGGLE | Toggle worklights back on and off
@@ -116,20 +122,56 @@ LIGHTS_TURNLIGHT_HAZARD_TOGGLE | Toggle hazard lights on and off
 LIGHTS_TURNLIGHT_LEFT_TOGGLE | Toggle turnlight left on and off
 LIGHTS_TURNLIGHT_RIGHT_TOGGLE | Toggle turnlight right on and off
 LIGHTS_BEACON_TOGGLE | Toggle beaconlight on and off
-GPS_TOGGLE | Toggle [GuidanceSteering](https://www.farming-simulator.com/mod.php?lang=de&country=at&mod_id=228522) on and off
+LIGHTS_PIPE_TOGGLE | Toggle pipelight on and off | | 1.1.0.0
 CRUISE_CONTROL_TOGGLE | Toggle cruise control on and off
 DRIVE_DIRECTION_TOGGLE | Toggle vehicle drive direction
 COVER_TOGGLE | Toggle cover state
-ATTACHERJOINT_LIFT_LOWER | Lift/lower implement on attacherJoint index | ".attacherJoint#index"
-ATTACHERJOINT_TURN_ON_OFF | Turn on/off implement on attacherJoint index | ".attacherJoint#index"
+ATTACHERJOINT_LIFT_LOWER | Lift/lower implement on attacherJoint index or first selected one if more indicies | ".attacherJoint#index" or ".attacherJoint#indicies"
+ATTACHERJOINT_TURN_ON_OFF | Turn on/off implement on attacherJoint index or first selected one if more indicies | ".attacherJoint#index"
 TURN_ON_OFF | Turn on/off vehicle
-ATTACHERJOINT_FOLDING_TOGGLE | Fold/unfold implement on attacherJoint index | ".attacherJoint#index"
+ATTACHERJOINT_FOLDING_TOGGLE | Fold/unfold implement on attacherJoint index or first selected one if more indicies | ".attacherJoint#index"
+PIPE_FOLDING_TOGGLE | Fold/unfold pipe | | 1.1.0.0
 FOLDING_TOGGLE | Fold/unfold vehicle
-ATTACHERJOINTS_TOGGLE_DISCHARGE | Toggle discharging on selected attacherJoint if in 'indices' | ".attacherJoint#indicies"
+ATTACHERJOINTS_TOGGLE_DISCHARGE | Toggle discharging on selected attacherJoint if in 'indices' | ".attacherJoint#index" or ".attacherJoint#indicies"
 DISCHARGE_TOGGLE | Toggle discharging on vehicle
 CRABSTEERING_TOGGLE | Toggle crab steering mode to next mode
 RADIO_TOGGLE | Toggle radio on/off
-
+RADIO_CHANNEL_NEXT | Next radio channel | | 1.1.0.0
+RADIO_CHANNEL_PREVIOUS | Previous radio channel | | 1.1.0.0
+RADIO_ITEM_NEXT | Next radio item | | 1.1.0.0
+RADIO_ITEM_PREVIOUS | Previous radio item | | 1.1.0.0
+VARIABLE_WORK_WIDTH_LEFT_INCREASE | Increase work width left | | 1.1.0.0
+VARIABLE_WORK_WIDTH_LEFT_DECREASE | Decrease work width left | | 1.1.0.0
+ATTACHERJOINTS_VARIABLE_WORK_WIDTH_LEFT_INCREASE | Increase work width left on selected attacherJoint if in 'indices' | ".attacherJoint#index" or ".attacherJoint#indicies" | 1.1.0.0
+ATTACHERJOINTS_VARIABLE_WORK_WIDTH_LEFT_DECREASE | Decrease work width left on selected attacherJoint if in 'indices' | ".attacherJoint#index" or ".attacherJoint#indicies" | 1.1.0.0
+VARIABLE_WORK_WIDTH_RIGHT_INCREASE | Increase work width right | | 1.1.0.0
+VARIABLE_WORK_WIDTH_RIGHT_DECREASE | Decrease work width right | | 1.1.0.0
+ATTACHERJOINTS_VARIABLE_WORK_WIDTH_RIGHT_INCREASE | Increase work width right on selected attacherJoint if in 'indices' | ".attacherJoint#index" or ".attacherJoint#indicies" | 1.1.0.0
+ATTACHERJOINTS_VARIABLE_WORK_WIDTH_RIGHT_DECREASE | Decrease work width right on selected attacherJoint if in 'indices' | ".attacherJoint#index" or ".attacherJoint#indicies" | 1.1.0.0
+VARIABLE_WORK_WIDTH_TOGGLE | Toggle work width | | 1.1.0.0
+ATTACHERJOINTS_VARIABLE_WORK_WIDTH_TOGGLE | Toggle work width on selected attacherJoint if in 'indices' | ".attacherJoint#index" or ".attacherJoint#indicies" | 1.1.0.0
+ATTACHERJOINTS_ATTACH_DETACH | Attach or detach vehicle on attacherJoint if in 'indices' | ".attacherJoint#index" or ".attacherJoint#indicies" | 1.1.0.0
+**External Mods**:
+GPS_TOGGLE | Toggle [GuidanceSteering](https://farming-simulator.com/mod.php?mod_id=228522) on and off
+PF_CROP_SENSOR_TOGGLE | Toggle [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) crop sensor mode | | 1.1.0.0
+PF_ATTACHERJOINTS_CROP_SENSOR_TOGGLE | Toggle [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) crop sensor mode on selected attacherJoint if in 'indices' | ".attacherJoint#index" or ".attacherJoint#indicies" | 1.1.0.0
+PF_SEED_RATE_MODE | Toggle [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) seed rate mode | | 1.1.0.0
+PF_ATTACHERJOINTS_SEED_RATE_MODE | Toggle [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) seed rate mode on selected attacherJoint if in 'indices' | ".attacherJoint#index" or ".attacherJoint#indicies" | 1.1.0.0
+PF_SEED_RATE_UP | Increase [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) manual seed rate | | 1.1.0.0
+PF_SEED_RATE_DOWN | Decrease [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) manual seed rate | | 1.1.0.0
+PF_ATTACHERJOINTS_SEED_RATE_UP | Increase [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) manual seed rate on selected attacherJoint if in 'indices' | ".attacherJoint#index" or ".attacherJoint#indicies" | 1.1.0.0
+PF_ATTACHERJOINTS_SEED_RATE_DOWN | Decrease [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) manual seed rate on selected attacherJoint if in 'indices' | ".attacherJoint#index" or ".attacherJoint#indicies" | 1.1.0.0
+PF_SPRAY_AMOUNT_MODE | Toggle [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) spray amount mode | | 1.1.0.0
+PF_ATTACHERJOINTS_SPRAY_AMOUNT_MODE | Toggle [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) spray amount mode on selected attacherJoint if in 'indices' | ".attacherJoint#index" or ".attacherJoint#indicies" | 1.1.0.0
+PF_SPRAY_AMOUNT_UP | Increase [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) manual spray amount | | 1.1.0.0
+PF_SPRAY_AMOUNT_DOWN | Decrease [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) manual spray amount | | 1.1.0.0
+PF_ATTACHERJOINTS_SPRAY_AMOUNT_UP | Increase [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) manual spray amount on selected attacherJoint if in 'indices' | ".attacherJoint#index" or ".attacherJoint#indicies" | 1.1.0.0
+PF_ATTACHERJOINTS_SPRAY_AMOUNT_DOWN | Decrease [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) manual spray amount on selected attacherJoint if in 'indices' | ".attacherJoint#index" or ".attacherJoint#indicies" | 1.1.0.0
+VCA_TOGGLE_AWD | Toggle [VehicleControlAddon](https://farming-simulator.com/mod.php?mod_id=228601) all wheel drive mode on and off | | 1.1.0.0
+VCA_TOGGLE_DIFFLOCK_FRONT | Toggle [VehicleControlAddon](https://farming-simulator.com/mod.php?mod_id=228601) front differential lock on and off | | 1.1.0.0
+VCA_TOGGLE_DIFFLOCK_BACK | Toggle [VehicleControlAddon](https://farming-simulator.com/mod.php?mod_id=228601) back differential lock on and off | | 1.1.0.0
+VCA_TOGGLE_PARKINGBRAKE | Toggle [VehicleControlAddon](https://farming-simulator.com/mod.php?mod_id=228601) parkingbrake on and off | | 1.1.0.0
+HEADLAND_MANAGEMENT_TOGGLE | Toggle [HeadlandManagement](https://farming-simulator.com/mod.php?mod_id=228759) on and off | | 1.1.0.0
 
 ## Copyright
 

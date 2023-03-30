@@ -39,10 +39,11 @@ function InteractiveBase.new(modName, modDirectory, customMt)
 end
 
 ---Loads InteractiveBase data from xmlFile, returns true if loading was successful, false otherwise
----@param xmlFile table
----@param key string
----@param target table
----@return boolean success
+---@param xmlFile table xmlFile handler
+---@param key string xml key
+---@param target table target metatable
+---@param interactiveControl table interactive control table
+---@return boolean loaded loaded state
 function InteractiveBase:loadFromXML(xmlFile, key, target, interactiveControl)
     if target == nil or interactiveControl == nil then
         return false
@@ -82,7 +83,7 @@ function InteractiveBase:delete()
 end
 
 ---Sets isActive state
----@param state boolean
+---@param state boolean is control active
 function InteractiveBase:setIsActive(state)
     if state ~= nil and state ~= self.state then
         self.state = state

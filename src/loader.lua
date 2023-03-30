@@ -16,9 +16,13 @@ g_interactiveControlModName = modName
 
 ---load all needed lua files
 local sourceFiles = {
+    -- settings
+    "src/misc/AdditionalSettingsManager.lua",
+
     -- interactiveControl
     "src/misc/InteractiveControlManager.lua",
     "src/misc/InteractiveFunctions.lua",
+    "src/misc/InteractiveFunctions_externalMods.lua",
 
     "src/interactiveControl/InteractiveBase.lua",
     "src/interactiveControl/InteractiveButton.lua",
@@ -44,6 +48,13 @@ local function load(mission)
     modEnvironment = InteractiveControlManager.new(mission, g_inputBinding, g_i18n, modName, modDirectory)
 
     mission.interactiveControl = modEnvironment
+
+    InteractiveControlManager.overwrite_additionalGameSettings()
+
+    -- load settings
+    if modEnvironment.settings ~= nil then
+        AdditionalSettingsManager.loadFromXML(modEnvironment.settings)
+    end
 end
 
 ---Unload the mod when the mod is unselected and savegame is (re)loaded or game is closed.
@@ -85,6 +96,42 @@ local function getModifierFactor(soundManager, superFunc, sample, modifierName)
     return superFunc(soundManager, sample, modifierName)
 end
 
+---Appended function: InGameMenuGeneralSettingsFrame.onFrameOpen
+---Adds initialization of settings gui elements
+---@param settingsFrame InGameMenuGeneralSettingsFrame instance of InGameMenuGeneralSettingsFrame
+---@param element GuiElement gui element
+local function initGui(settingsFrame, element)
+    if not isLoaded() then
+        return
+    end
+
+    AdditionalSettingsManager.initGui(settingsFrame, element, modEnvironment)
+end
+
+---Appended function: InGameMenuGeneralSettingsFrame.updateGeneralSettings
+---Adds updating of settings gui elements
+---@param settingsFrame InGameMenuGeneralSettingsFrame instance of InGameMenuGeneralSettingsFrame
+local function updateGui(settingsFrame)
+    if not isLoaded() then
+        return
+    end
+
+    AdditionalSettingsManager.updateGui(settingsFrame, modEnvironment)
+end
+
+---Appended function: GameSettings.saveToXMLFile
+---Adds saving of additional settings
+---@param xmlFile XMLFile instance of xml file to save settings to
+local function saveSettingsToXML(xmlFile)
+    if not isLoaded() then
+        return
+    end
+
+    if g_currentMission.interactiveControl ~= nil and g_currentMission.interactiveControl.settings ~= nil then
+        AdditionalSettingsManager.saveToXMLFile(g_currentMission.interactiveControl.settings)
+    end
+end
+
 ---Initialize the mod
 local function init()
     FSBaseMission.delete = Utils.appendedFunction(FSBaseMission.delete, unload)
@@ -92,6 +139,10 @@ local function init()
 
     TypeManager.validateTypes = Utils.prependedFunction(TypeManager.validateTypes, validateTypes)
     SoundManager.getModifierFactor = Utils.overwrittenFunction(SoundManager.getModifierFactor, getModifierFactor)
+
+    InGameMenuGeneralSettingsFrame.onFrameOpen = Utils.appendedFunction(InGameMenuGeneralSettingsFrame.onFrameOpen, initGui)
+    InGameMenuGeneralSettingsFrame.updateGeneralSettings = Utils.appendedFunction(InGameMenuGeneralSettingsFrame.updateGeneralSettings, updateGui)
+    GameSettings.saveToXMLFile = Utils.appendedFunction(GameSettings.saveToXMLFile, saveSettingsToXML)
 end
 
 init()

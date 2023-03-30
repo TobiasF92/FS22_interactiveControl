@@ -17,34 +17,41 @@ InteractiveClickPoint.CLICK_ICON_ID = {
 InteractiveClickPoint.CLICK_ICONS = {}
 
 local lastId = InteractiveClickPoint.CLICK_ICON_ID.UNKNOWN
+---Returns next clickPoint id
+---@return integer id
 local function getNextId()
     lastId = lastId + 1
     return lastId
 end
 
 ---Registers new click icon type
----@param name string
----@param filename string
----@param node string
----@param blinkSpeed number
-function InteractiveClickPoint.registerIconType(name, filename, node, blinkSpeed)
+---@param name string name of click icon
+---@param filename string filename of i3d file
+---@param node string index string in i3d file
+---@param blinkSpeed number blink speed
+function InteractiveClickPoint.registerIconType(name, filename, node, blinkSpeed, customEnvironment)
     if name == nil or name == "" then
         Logging.warning("InteractiveControl: Unable to register clickIcon, invalid name!")
         return false
     end
 
     name = name:upper()
+
+    if customEnvironment ~= nil and customEnvironment ~= "" then
+        name = ("%s.%s"):format(customEnvironment, name)
+    end
+
     if InteractiveClickPoint.CLICK_ICON_ID[name] ~= nil then
         -- clickIcon already registred, but don't write a warning
         return false
     end
 
-    InteractiveClickPoint.CLICK_ICON_ID[name] = getNextId()
     if filename == nil or filename == "" then
         Logging.warning("InteractiveControl: Unable to register clickIcon '%s', invalid filename!", name)
         return false
     end
 
+    InteractiveClickPoint.CLICK_ICON_ID[name] = getNextId()
     local clickIcon = {}
     clickIcon.filename = filename
     clickIcon.node = Utils.getNoNil(node, "0")
@@ -120,6 +127,11 @@ function InteractiveClickPoint:loadFromXML(xmlFile, key, target, interactiveCont
 
     local typeName = xmlFile:getValue(key .. "#iconType", "CROSS")
     local iconType = InteractiveClickPoint.CLICK_ICON_ID[typeName:upper()]
+
+    if iconType == nil and self.target.customEnvironment ~= nil and self.target.customEnvironment ~= "" then
+        local cIconType = ("%s.%s"):format(self.target.customEnvironment, typeName:upper())
+        iconType = InteractiveClickPoint.CLICK_ICON_ID[cIconType]
+    end
     if iconType == nil then
         Logging.xmlWarning(xmlFile, "Unable to find iconType '%s' for clickPoint '%s'", typeName, key)
         return false
@@ -297,3 +309,4 @@ InteractiveClickPoint.registerIconType("TURNLIGHT_LEFT", "data/shared/ic_clickIc
 InteractiveClickPoint.registerIconType("TURNLIGHT_RIGHT", "data/shared/ic_clickIcons.i3d", "11", 0.05)
 InteractiveClickPoint.registerIconType("BEACON_LIGHT", "data/shared/ic_clickIcons.i3d", "12", 0.05)
 InteractiveClickPoint.registerIconType("ARROW", "data/shared/ic_clickIcons.i3d", "13", 0.05)
+InteractiveClickPoint.registerIconType("PIPE_FOLDING", "data/shared/ic_clickIcons.i3d", "14", 0.05)
