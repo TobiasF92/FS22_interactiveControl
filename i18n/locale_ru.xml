@@ -25,7 +25,7 @@
 		<text name="actionIC_unfoldVehicle" text="IC: Развернуть транспортное средство" />
         
         <text name="actionIC_foldPipe" text="IC: Сложить трубу" />
-		<text name="actionIC_unfoldPipe" text="IC: Rohr Развернуть трубу" />
+		<text name="actionIC_unfoldPipe" text="IC: Развернуть трубу" />
 
         <text name="actionIC_openRoof" text="IC: Открыть крышу"/>
         <text name="actionIC_closeRoof" text="IC: Закрыть крышу"/>
@@ -57,8 +57,8 @@
         <text name="actionIC_hazardLightsOn" text="IC: Включить маячки"/>
         <text name="actionIC_hazardLightsOff" text="IC: Выключить маячки"/>
                 
-        <text name="actionIC_pipeLightsOn" text="IC: Включить свет в трубе"/>
-        <text name="actionIC_pipeLightsOff" text="IC: Выключите свет в трубе"/>
+        <text name="actionIC_pipeLightsOn" text="IC: Включить огни на трубе"/>
+        <text name="actionIC_pipeLightsOff" text="IC: Выключите огни на трубе"/>
 
         <text name="actionIC_gs_activate" text="IC: Включить GPS"/>
         <text name="actionIC_gs_deactivate" text="IC: Выключить GPS"/>
@@ -73,17 +73,17 @@
     
         <text name="actionIC_crabSteering_toggle" text="IC: Смена режима рулевого управления"/>
 
-        <text name="actionIC_parkingbrakeOn" text="IC: Вытяните ручной тормоз" />
-        <text name="actionIC_parkingbrakeOff" text="IC: Отпустите ручной тормоз" />
+        <text name="actionIC_parkingbrakeOn" text="IC: Задействовать ручной тормоз" />
+        <text name="actionIC_parkingbrakeOff" text="IC: Отпустить ручной тормоз" />
 
-        <text name="actionIC_diffLockFrontOn" text="IC: Включение блокировки переднего диффа" />
-        <text name="actionIC_diffLockFrontOff" text="IC: Выключение блокировки переднего диффа" />
+        <text name="actionIC_diffLockFrontOn" text="IC: Включение блокировки переднего дифференциала" />
+        <text name="actionIC_diffLockFrontOff" text="IC: Выключение блокировки переднего дифференциала" />
 
         <text name="actionIC_allWheelDriveOn" text="IC: Включить все колеса" />
         <text name="actionIC_allWheelDriveOff" text="IC: Выключение всех колес" />
 
-        <text name="actionIC_diffLockBackOn" text="IC: Блокировка заднего диффа включена" />
-        <text name="actionIC_diffLockBackOff" text="IC: Блокировка заднего диффа выключена" />
+        <text name="actionIC_diffLockBackOn" text="IC: Включение блокировки заднего дифференциала" />
+        <text name="actionIC_diffLockBackOff" text="IC: Выключение блокировки заднего дифференциала" />
 
         <!-- inputs -->
         <text name="input_IC_CLICK" text="IC: Кнопка действия Интерактивного Контроля"/>
@@ -91,12 +91,12 @@
         
         <!-- settings -->
         <text name="settingsIC_title" text="Интерактивный контроль"/>
-        <text name="settingsIC_state_title" text="IC Государство"/>
+        <text name="settingsIC_state_title" text="IC Статус"/>
         <text name="settingsIC_state_tooltip" text="Включает, выключает или переключает Интерактивный контроль."/>
         <text name="settingsIC_state_option01" text="Переключаемый"/>
         <text name="settingsIC_state_option02" text="Всегда активен"/>
-        <text name="settingsIC_state_option03" text="Ha сайте"/>
+        <text name="settingsIC_state_option03" text="Выключен"/>
         <text name="settingsIC_keepAlive_title" text="Держать IC активированным"/>
-        <text name="settingsIC_keepAlive_tooltip" text="Интерактивный контроль остается активным при выходе из автомобиля."/>
+        <text name="settingsIC_keepAlive_tooltip" text="Интерактивный контроль остаётся активным при выходе из транспорта."/>
     </texts>
 </l10n>
