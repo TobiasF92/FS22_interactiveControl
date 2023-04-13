@@ -54,8 +54,8 @@
         <text name="actionIC_turnLightsRightOn" text="IC: Включить правый поворотник"/>
         <text name="actionIC_turnLightsRightOff" text="IC: Выключить правый поворотник"/>
 
-        <text name="actionIC_hazardLightsOn" text="IC: Включить маячки"/>
-        <text name="actionIC_hazardLightsOff" text="IC: Выключить маячки"/>
+        <text name="actionIC_hazardLightsOn" text="IC: Включить аварийную сигнализацию"/>
+        <text name="actionIC_hazardLightsOff" text="IC: Выключить аварийную сигнализацию"/>
                 
         <text name="actionIC_pipeLightsOn" text="IC: Включить огни на трубе"/>
         <text name="actionIC_pipeLightsOff" text="IC: Выключите огни на трубе"/>
@@ -76,14 +76,14 @@
         <text name="actionIC_parkingbrakeOn" text="IC: Задействовать ручной тормоз" />
         <text name="actionIC_parkingbrakeOff" text="IC: Отпустить ручной тормоз" />
 
-        <text name="actionIC_diffLockFrontOn" text="IC: Включение блокировки переднего дифференциала" />
-        <text name="actionIC_diffLockFrontOff" text="IC: Выключение блокировки переднего дифференциала" />
+        <text name="actionIC_diffLockFrontOn" text="IC: Включить блокировку переднего дифференциала" />
+        <text name="actionIC_diffLockFrontOff" text="IC: Выключить блокировку переднего дифференциала" />
 
-        <text name="actionIC_allWheelDriveOn" text="IC: Включить все колеса" />
-        <text name="actionIC_allWheelDriveOff" text="IC: Выключение всех колес" />
+        <text name="actionIC_allWheelDriveOn" text="IC: Включить все колёса" />
+        <text name="actionIC_allWheelDriveOff" text="IC: Выключение всех колёс" />
 
-        <text name="actionIC_diffLockBackOn" text="IC: Включение блокировки заднего дифференциала" />
-        <text name="actionIC_diffLockBackOff" text="IC: Выключение блокировки заднего дифференциала" />
+        <text name="actionIC_diffLockBackOn" text="IC: Включить блокировку заднего дифференциала" />
+        <text name="actionIC_diffLockBackOff" text="IC: Выключить блокировку заднего дифференциала" />
 
         <!-- inputs -->
         <text name="input_IC_CLICK" text="IC: Кнопка действия Интерактивного Контроля"/>
