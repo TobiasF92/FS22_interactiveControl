@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<modDesc descVersion="73">
+<modDesc descVersion="74">
     <author>Vertex Dezign</author>
-    <version>1.1.0.0</version>
+    <version>1.1.1.0</version>
 
     <title>
         <en>Interactive Control</en>
@@ -19,6 +19,10 @@ Using the controls you can steer different things:
 - ObjectChanges (to change translation/rotation/visibility/...)
 
 For further informations: <a href="https://github.com/TobiasF92/FS22_interactiveControl/blob/main/README.md">README</a> on Github.
+
+Changelog (1.1.1.0):
+- Updated translations: russian
+- Fixed InteractiveButtons not working
 
 Changelog (1.1.0.0):
 - Added translations: italian, russian, polish, czech
@@ -43,6 +47,10 @@ Mit den Bedienelementen können Sie verschiedene Dinge steuern:
 - ObjectChanges (zum Ändern von Translation/Rotation/Sichtbarkeit/...)
 
 Für mehr Informationen: <a href="https://github.com/TobiasF92/FS22_interactiveControl/blob/main/README.md">README</a> auf Github.
+
+Changelog (1.1.1.0):
+- Aktualisierte Übersetzungen: russisch
+- Behoben, dass Interactive Buttons nicht mehr funktionierten
 
 Changelog (1.1.0.0):
 - Übersetzungen hinzugefügt: italienisch, russisch, polnisch, tschechisch

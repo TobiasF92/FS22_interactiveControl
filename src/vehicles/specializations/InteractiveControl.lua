@@ -750,7 +750,7 @@ function InteractiveControl:updateInteractiveControls(isIndoor, isOutdoor, hasIn
                 local indoor = isIndoor and icState and hasInput and button:isIndoorActive()
                 local outdoor = isOutdoor and not hasInput and button:isOutdoorActive()
 
-                if button:isActivatable() and isCurrentlyEnabled and (indoor or outdoor)
+                if button:isActivatable() and interactiveControl.isCurrentlyEnabled and (indoor or outdoor)
                     and (activeController == nil or activeController:isa(InteractiveButton)) then
 
                     button:updateDistance(self.currentUpdateDistance)
