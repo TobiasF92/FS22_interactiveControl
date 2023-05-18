@@ -114,8 +114,8 @@ function InteractiveControl.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "loadFunctionFromXML", InteractiveControl.loadFunctionFromXML)
     SpecializationUtil.registerFunction(vehicleType, "updateInteractiveControls", InteractiveControl.updateInteractiveControls)
     SpecializationUtil.registerFunction(vehicleType, "setMissionActiveController", InteractiveControl.setMissionActiveController)
-    SpecializationUtil.registerFunction(vehicleType, "setState", InteractiveControl.setState)
-    SpecializationUtil.registerFunction(vehicleType, "getState", InteractiveControl.getState)
+    SpecializationUtil.registerFunction(vehicleType, "setICState", InteractiveControl.setICState)
+    SpecializationUtil.registerFunction(vehicleType, "getICState", InteractiveControl.getICState)
     SpecializationUtil.registerFunction(vehicleType, "getInteractiveControlByIndex", InteractiveControl.getInteractiveControlByIndex)
     SpecializationUtil.registerFunction(vehicleType, "getControlState", InteractiveControl.getControlState)
     SpecializationUtil.registerFunction(vehicleType, "setControlState", InteractiveControl.setControlState)
@@ -619,7 +619,7 @@ function InteractiveControl:onUpdateTick(dt, isActiveForInput, isActiveForInputI
         elseif g_noHudModeEnabled and isIndoor or isOutdoor then
             self:updateInteractiveControls(isIndoor, isOutdoor, isActiveForInputIgnoreSelection)
 
-        elseif not isOutdoor and not isIndoor or not self:getState() then
+        elseif not isOutdoor and not isIndoor or not self:getICState() then
             self:updateInteractiveControls(false, false, isActiveForInputIgnoreSelection)
         end
 
@@ -656,7 +656,7 @@ end
 ---@param isActiveForInputIgnoreSelection boolean
 ---@param isSelected boolean
 function InteractiveControl:onDraw(isActiveForInput, isActiveForInputIgnoreSelection, isSelected)
-    if self.isClient and self:getState() then
+    if self.isClient and self:getICState() then
         if self:isIndoorActive() then
             if isActiveForInputIgnoreSelection and g_currentMission.player ~= nil then
                 g_currentMission.player.aimOverlay:render()
@@ -687,7 +687,7 @@ function InteractiveControl:onCameraChanged(activeCamera, cameraIndex)
 	local keepAlive = g_currentMission.interactiveControl.settings:getSetting("IC_KEEP_ALIVE")
 
     if activeCamera.isInside and not keepAlive then
-        self:setState(false)
+        self:setICState(false)
     end
 
     if spec.toggleStateEventId ~= nil then
@@ -702,7 +702,7 @@ end
 function InteractiveControl:updateInteractiveControls(isIndoor, isOutdoor, hasInput)
     local spec = self.spec_interactiveControl
     local activeController
-	local icState = self:getState()
+	local icState = self:getICState()
 
     -- dont update all controls every time
     local updateControlStates = false
@@ -812,7 +812,7 @@ end
 
 ---Sets state
 ---@param state boolean
-function InteractiveControl:setState(state, noEventSend)
+function InteractiveControl:setICState(state, noEventSend)
     local spec = self.spec_interactiveControl
     if state ~= nil and state ~= spec.state then
         ICStateEvent.sendEvent(self, state, noEventSend)
@@ -833,7 +833,7 @@ end
 
 ---Returns true if is active, false otherwise
 ---@return boolean state
-function InteractiveControl:getState()
+function InteractiveControl:getICState()
     local spec = self.spec_interactiveControl
 
     local settingState = g_currentMission.interactiveControl.settings:getSetting("IC_STATE")
@@ -1166,7 +1166,7 @@ end
 
 ---Action Event Callback: Toggle interactive control state
 function InteractiveControl:actionEventToggleState()
-    self:setState(not self:getState())
+    self:setICState(not self:getICState())
 end
 
 ----------------

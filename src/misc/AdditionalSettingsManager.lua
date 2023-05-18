@@ -70,9 +70,9 @@ end
 
 ---Save settings to xml file
 function AdditionalSettingsManager:saveToXMLFile()
-	local xmlFile = XMLFile.create("SettingsXMLFile", self.settingsSaveDirectory, "settings", AdditionalSettingsManager.xmlSchema)
+    local xmlFile = XMLFile.create("SettingsXMLFile", self.settingsSaveDirectory, "settings", AdditionalSettingsManager.xmlSchema)
 
-	if xmlFile ~= nil then
+    if xmlFile ~= nil then
         local baseKey = "settings.setting"
         local i = 0
 

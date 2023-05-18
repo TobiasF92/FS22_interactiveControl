@@ -36,7 +36,7 @@ function ICStateEvent:run(connection)
         g_server:broadcastEvent(self, false, connection, self.object)
     end
 
-    self.object:setState(self.state, true)
+    self.object:setICState(self.state, true)
 end
 
 function ICStateEvent.sendEvent(object, state, noEventSend)
