@@ -73,6 +73,8 @@
     
         <text name="actionIC_crabSteering_toggle" text="IC: modalità di sterzata"/>
 
+        <text name="actionIC_reverseDriving_toggle" text="IC: Cambiare la direzione di marcia"/>
+
         <text name="actionIC_parkingbrakeOn" text="IC: tirare il freno a mano" />
         <text name="actionIC_parkingbrakeOff" text="IC: Rilasciare il freno a mano" />
 

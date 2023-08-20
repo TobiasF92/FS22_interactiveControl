@@ -151,6 +151,7 @@ ATTACHERJOINTS_VARIABLE_WORK_WIDTH_RIGHT_DECREASE | Decrease work width right on
 VARIABLE_WORK_WIDTH_TOGGLE | Toggle work width | | 1.1.0.0
 ATTACHERJOINTS_VARIABLE_WORK_WIDTH_TOGGLE | Toggle work width on selected attacherJoint if in 'indices' | ".attacherJoint#index" or ".attacherJoint#indicies" | 1.1.0.0
 ATTACHERJOINTS_ATTACH_DETACH | Attach or detach vehicle on attacherJoint if in 'indices' | ".attacherJoint#index" or ".attacherJoint#indicies" | 1.1.0.0
+REVERSEDRIVING_TOGGLE | Toggle vehicle reverse driving | |
 **External Mods**:
 GPS_TOGGLE | Toggle [GuidanceSteering](https://farming-simulator.com/mod.php?mod_id=228522) on and off
 PF_CROP_SENSOR_TOGGLE | Toggle [PrecisionFarming](https://farming-simulator.com/mod.php?mod_id=238269) crop sensor mode | | 1.1.0.0

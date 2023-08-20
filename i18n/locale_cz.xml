@@ -73,6 +73,8 @@
     
         <text name="actionIC_crabSteering_toggle" text="IC: Přepnout režim řízení"/>
 
+        <text name="actionIC_reverseDriving_toggle" text="IC: Změna směru jízdy"/>
+
         <text name="actionIC_parkingbrakeOn" text="IC: Zatáhnout parkovací brzdu" />
         <text name="actionIC_parkingbrakeOff" text="IC: Uvolnit parkovací brzdu" />
 
