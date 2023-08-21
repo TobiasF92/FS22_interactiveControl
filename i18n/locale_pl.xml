@@ -73,6 +73,8 @@
     
         <text name="actionIC_crabSteering_toggle" text="IC: Przełączanie trybu sterowania"/>
 
+        <text name="actionIC_reverseDriving_toggle" text="IC: Zmiana kierunku jazdy"/>
+
         <text name="actionIC_parkingbrakeOn" text="IC: Zaciągnięcie hamulca ręcznego" />
         <text name="actionIC_parkingbrakeOff" text="IC: Zwolnij hamulec ręczny" />
 

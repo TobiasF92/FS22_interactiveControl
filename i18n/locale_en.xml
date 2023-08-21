@@ -73,6 +73,8 @@
     
         <text name="actionIC_crabSteering_toggle" text="IC: toggle steering mode"/>
 
+        <text name="actionIC_reverseDriving_toggle" text="IC: Toggle reverse driving"/>
+
         <text name="actionIC_parkingbrakeOn" text="IC: Parkingbrake on" />
         <text name="actionIC_parkingbrakeOff" text="IC: Parkingbrake off" />
 

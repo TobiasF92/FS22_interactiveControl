@@ -73,6 +73,8 @@
     
         <text name="actionIC_crabSteering_toggle" text="IC: Смена режима рулевого управления"/>
 
+        <text name="actionIC_reverseDriving_toggle" text="IC: Изменение направления движения"/>
+
         <text name="actionIC_parkingbrakeOn" text="IC: Задействовать ручной тормоз" />
         <text name="actionIC_parkingbrakeOff" text="IC: Отпустить ручной тормоз" />
 

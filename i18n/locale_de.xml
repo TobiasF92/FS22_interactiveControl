@@ -73,6 +73,8 @@
     
         <text name="actionIC_crabSteering_toggle" text="IC: Lenkmodus wechseln"/>
 
+        <text name="actionIC_reverseDriving_toggle" text="IC: Fahrtrichtung wechseln"/>
+
         <text name="actionIC_parkingbrakeOn" text="IC: Handbremse anziehen" />
         <text name="actionIC_parkingbrakeOff" text="IC: Handbremse lösen" />
 

@@ -1231,3 +1231,21 @@ InteractiveFunctions.addFunction("ATTACHERJOINTS_ATTACH_DETACH", {
         return false
     end
 })
+
+---FUNCTION_REVERSEDRIVING_TOGGLE
+InteractiveFunctions.addFunction("REVERSEDRIVING_TOGGLE", {
+    posFunc = function(target, data, noEventSend)
+        if noEventSend then
+            return
+        end
+        if target.spec_reverseDriving ~= nil and target.spec_reverseDriving.hasReverseDriving and target:getIsReverseDrivingAllowed() ~= nil then
+            ReverseDriving.actionEventToggleReverseDriving(target)
+        end
+    end,
+    isEnabledFunc = function(target, data)
+        if target.spec_reverseDriving.hasReverseDriving == true and target.getIsReverseDrivingAllowed ~= nil then
+            return target:getIsReverseDrivingAllowed()
+        end
+        return nil
+    end
+})
