@@ -19,6 +19,9 @@ AdditionalSettingsManager.CLONE_REF = {
 
 local AdditionalSettingsManager_mt = Class(AdditionalSettingsManager)
 local settingsDirectory = g_currentModSettingsDirectory
+if Platform.isConsole then
+    settingsDirectory = getUserProfileAppPath()
+end
 
 ---Create new instance of AdditionalSettingsManager
 function AdditionalSettingsManager.new(title, target, modName, modDirectory, customMt)
@@ -34,8 +37,12 @@ function AdditionalSettingsManager.new(title, target, modName, modDirectory, cus
     self.settingsByName = {}
     self.settingsCreated = false
 
-    createFolder(settingsDirectory)
     self.settingsSaveDirectory = settingsDirectory .. "settings.xml"
+    if Platform.isConsole then
+        registerProfileFile(self.settingsSaveDirectory)
+    else
+        createFolder(settingsDirectory)
+    end
 
     return self
 end
@@ -45,7 +52,7 @@ function AdditionalSettingsManager:loadFromXML()
     local xmlFile = XMLFile.loadIfExists("SettingsXMLFile", self.settingsSaveDirectory, AdditionalSettingsManager.xmlSchema)
 
     if xmlFile ~= nil then
-        xmlFile:iterate("settings.setting", function (_, settingKey)
+        xmlFile:iterate("settings.setting", function(_, settingKey)
             local name = xmlFile:getValue(settingKey .. "#name")
 
             local existingSetting = self.settingsByName[name]
@@ -108,6 +115,11 @@ function AdditionalSettingsManager:setSetting(name, value)
     end
 
     setting.value = value
+
+    local messageType = MessageType.SETTING_CHANGED[name]
+    if messageType ~= nil then
+        g_messageCenter:publish(messageType, value)
+    end
 end
 
 ---Returns value of given setting by name
@@ -175,6 +187,8 @@ function AdditionalSettingsManager:addSetting(name, type, title, toolTip, initVa
 
     table.addElement(self.settings, setting)
     self.settingsByName[name] = self.settings[#self.settings]
+
+    MessageType.SETTING_CHANGED[name] = nextMessageTypeId()
 end
 
 ----------------
@@ -184,7 +198,7 @@ end
 ---Create new Gui setting element by setting
 ---@param settingsFrame table gui element save table
 ---@param setting table setting data
----@param target Class|AdditionalSettingsManager callback target class, AdditionalSettingsManager by default 
+---@param target Class|AdditionalSettingsManager callback target class, AdditionalSettingsManager by default
 ---@return nil|GuiElement element
 function AdditionalSettingsManager.createGuiElement(settingsFrame, setting, target)
     local cloneRef = AdditionalSettingsManager.CLONE_REF[setting.type]
@@ -215,13 +229,15 @@ function AdditionalSettingsManager.createGuiElement(settingsFrame, setting, targ
         element:setState(setting.value, false)
     end
 
+    element:reloadFocusHandling(true)
+
     return element
 end
 
 ---Injects a checkbox in the InGameMenuGameSettingsFrame
 ---@param settingsFrame InGameMenuGeneralSettingsFrame Settings frame gui element
 ---@param element GuiElement gui element
----@param modEnvironment Class mod environment class
+---@param modEnvironment metatable mod environment class
 function AdditionalSettingsManager.initGui(settingsFrame, element, modEnvironment)
     local settingsManager = modEnvironment.settings
     local settingsElements = settingsFrame[settingsManager.title]
@@ -249,7 +265,7 @@ end
 
 ---Updates the checkbox once the InGameMenuGameSettingsFrame is opened
 ---@param settingsFrame InGameMenuGeneralSettingsFrame Settings frame gui element
----@param modEnvironment Class mod environment class
+---@param modEnvironment metatable mod environment class
 function AdditionalSettingsManager.updateGui(settingsFrame, modEnvironment)
     local settingsManager = modEnvironment.settings
     local settingsElements = settingsFrame[settingsManager.title]
@@ -284,11 +300,11 @@ function AdditionalSettingsManager:onSettingChangedMultibox(state, element)
     self:setSetting(element.id, state)
 end
 
-g_xmlManager:addCreateSchemaFunction(function ()
+g_xmlManager:addCreateSchemaFunction(function()
     AdditionalSettingsManager.xmlSchema = XMLSchema.new("additionalSettingsManager")
 end)
 
-g_xmlManager:addInitSchemaFunction(function ()
+g_xmlManager:addInitSchemaFunction(function()
     local schema = AdditionalSettingsManager.xmlSchema
     local settingKey = "settings.setting(?)"
 
