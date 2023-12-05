@@ -568,3 +568,52 @@ InteractiveFunctions.addFunction("HEADLAND_MANAGEMENT_TOGGLE", {
         return false
     end
 })
+
+-----------------------------
+---   FS22_manureSystem   ---
+-----------------------------
+
+---FUNCTION_MS_TOGGLE_PUMP
+InteractiveFunctions.addFunction("MS_TOGGLE_PUMP", {
+    posFunc = function(target, data, noEventSend)
+        local ManureSystemPumpMotor = getExternalModClass("FS22_manureSystem", "ManureSystemPumpMotor")
+
+        if ManureSystemPumpMotor ~= nil then
+            ManureSystemPumpMotor.actionEventTogglePump(target)
+        end
+    end,
+    updateFunc = function(target, data)
+        if target.spec_manureSystemPumpMotor ~= nil then
+            return target.spec_manureSystemPumpMotor.pumpIsRunning
+        end
+        return nil
+    end,
+    isEnabledFunc = function(target, data)
+        if target.spec_manureSystemPumpMotor ~= nil then
+            return true
+        end
+        return false
+    end
+})
+
+InteractiveFunctions.addFunction("MS_TOGGLE_PUMP_DIRECTION", {
+    posFunc = function(target, data, noEventSend)
+        local ManureSystemPumpMotor = getExternalModClass("FS22_manureSystem", "ManureSystemPumpMotor")
+
+        if ManureSystemPumpMotor ~= nil then
+            ManureSystemPumpMotor.actionEventTogglePumpDirection(target)
+        end
+    end,
+    updateFunc = function(target, data)
+        if target.spec_manureSystemPumpMotor.pumpDirection == 1 then
+            return true
+        end
+        return false
+    end,
+    isEnabledFunc = function(target, data)
+        if target.spec_manureSystemPumpMotor ~= nil then
+            return true
+        end
+        return false
+    end
+})
