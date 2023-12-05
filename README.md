@@ -10,7 +10,7 @@ Possibilities
 ## Possibilities
 
 'Interactive Control' provides different possibilities to interact with your vehicles. You can use click icons that appear when you turn on IC or when you are nearby. Another way for interactive handling is a key binding event. The controls are able to be used as switch or to force a state.
-All interactions are generally possible to use from the inside and the outside of a vehicle. 
+All interactions are generally possible to use from the inside and the outside of a vehicle.
 
 Using the controls you can steer different things:
 * Play animations (e.g. to open/close windows, fold/unfold warning signs, ...)
@@ -19,6 +19,7 @@ Using the controls you can steer different things:
 
 ## Thanks goes to:
 ***Wopster, JoPi, SirJoki80 & Flowsen (for the ui elements) and Face (for the initial idea)***
+***& AgrarKadabra for many contributions! ***
 
 ***VertexDezign & SchnibblModding for testing and providing demo mods!***
 
@@ -47,14 +48,14 @@ Explained XML documentation [HTML-file](documentation/interactiveControl.html)
             <interactiveControls>
                 <!-- The outdoor trigger is important, if you want to use IC from the outside of a vehicle -->
                 <outdoorTrigger node="node"/>
-                
+
                 <!-- Add a new Interactive Control -->
                 <interactiveControl negText="$l10n_actionIC_deactivate" posText="$l10n_actionIC_activate">
                     <!-- Add a clickPoint to toggle the event -->
                     <!-- Possible iconTypes: -->
                     <!-- CROSS, IGNITIONKEY, CRUISE_CONTROL, GPS, TURN_ON, ATTACHERJOINT_LOWER, ATTACHERJOINT_LIFT, ATTACHERJOINT, LIGHT_HIGH, LIGHT, TURNLIGHT_LEFT, TURNLIGHT_RIGHT, BEACON_LIGHT, ARROW -->
                     <clickPoint alignToCamera="true" animMaxLimit="1" animMinLimit="0" animName="string" blinkSpeedScale="1" foldMaxLimit="1" foldMinLimit="0" forcedState="boolean" iconType="CROSS" invertX="false" invertZ="false" node="node" scaleOffset="float" size="0.04" type="UNKNOWN"/>
-                 
+
                     <!-- Add a button to toggle the event -->
                     <button animMaxLimit="1" animMinLimit="0" animName="string" foldMaxLimit="1" foldMinLimit="0" forcedState="boolean" input="string" range="5" refNode="node" type="UNKNOWN"/>
 
@@ -70,13 +71,13 @@ Explained XML documentation [HTML-file](documentation/interactiveControl.html)
                     <configurationsRestrictions>
                         <restriction indicies="1 2 .. n" name="string"/>
                     </configurationsRestrictions>
-                    
+
                     <!-- You want to use some extra dashboards for your control? -->
                     <!-- There are three new valueTypes: ic_state (BOOLEAN) | ic_stateValue (FLOAT 0-1) | ic_action (in combination with 'raiseTime', 'activeTime', 'onICActivate', 'onICDeactivate')-->
                     <dashboard activeTime="1" animName="string" baseColor="string" displayType="string" doInterpolation="false" emissiveScale="0.2" emitColor="string"font="DIGIT" fontThickness="1" groups="string" hasNormalMap="false" hiddenColor="string" idleValue="0" intensity="1" interpolationSpeed="0.005" maxRot="string" maxValueAnim="float" maxValueRot="float" maxValueSlider="float" minRot="string" minValueAnim="float" minValueRot="float" minValueSlider="float" node="node" numberColor="string" numbers="node" onICActivate="true" onICDeactivate="true" precision="1" raiseTime="1" rotAxis="float" textAlignment="RIGHT" textColor="string" textMask="00.0" textScaleX="1" textScaleY="1" textSize="0.03" valueType="string">
                         <state rotation="x y z" scale="x y z" translation="x y z" value="1 2 .. n" visibility="boolean"/>
                     </dashboard>
-                    
+
                     <!-- You can block unused moving parts here -->
                     <dependingMovingPart isInactive="true" node="node"/>
 
@@ -87,19 +88,19 @@ Explained XML documentation [HTML-file](documentation/interactiveControl.html)
                     <!-- blockState: Control state to block depending control -->
                     <!-- forcedBlockedState: Forced state of depending control if blocked -->
                     <dependingInteractiveControl index="int" blockState="boolean" forcedBlockedState="boolean"/>
-                    
+
                     <!-- Modify sound here, 'indoorFactor' is the sound percentage factor if control is active -->
                     <!-- Set 'delayedSoundAnimationTime' if the sound should be changed on specific animation time (first animation or 'name') -->
                     <soundModifier indoorFactor="float" delayedSoundAnimationTime="float" name="string"/>
-                 
+
                     <objectChange centerOfMassActive="x y z" centerOfMassInactive="x y z" compoundChildActive="boolean" compoundChildInactive="boolean" interpolation="false" interpolationTime="1" massActive="float" massInactive="float" node="node" parentNodeActive="node" parentNodeInactive="node" rigidBodyTypeActive="string" rigidBodyTypeInactive="string" rotationActive="x y z" rotationInactive="x y z" scaleActive="x y z" scaleInactive="x y z" shaderParameter="string" shaderParameterActive="x y z w" shaderParameterInactive="x y z w" sharedShaderParameter="false" translationActive="x y z" translationInactive="x y z" visibilityActive="boolean" visibilityInactive="boolean"/>
                 </interactiveControl>
             </interactiveControls>
-            
+
             <objectChange centerOfMassActive="x y z" centerOfMassInactive="x y z" compoundChildActive="boolean" compoundChildInactive="boolean" interpolation="false" interpolationTime="1" massActive="float" massInactive="float" node="node" parentNodeActive="node" parentNodeInactive="node" rigidBodyTypeActive="string" rigidBodyTypeInactive="string" rotationActive="x y z" rotationInactive="x y z" scaleActive="x y z" scaleInactive="x y z" shaderParameter="string" shaderParameterActive="x y z w" shaderParameterInactive="x y z w" sharedShaderParameter="false" translationActive="x y z" translationInactive="x y z" visibilityActive="boolean" visibilityInactive="boolean"/>
         </interactiveControlConfiguration>
     </interactiveControlConfigurations>
-    
+
     <!-- If you want to use your own click icon, you easily can register it here -->
     <registers>
         <clickIcon blinkSpeed="float" filename="string" name="string" node="string"/>
@@ -171,7 +172,7 @@ PF_ATTACHERJOINTS_SPRAY_AMOUNT_DOWN | Decrease [PrecisionFarming](https://farmin
 VCA_TOGGLE_AWD | Toggle [VehicleControlAddon](https://farming-simulator.com/mod.php?mod_id=228601) all wheel drive mode on and off | | 1.1.0.0
 VCA_TOGGLE_DIFFLOCK_FRONT | Toggle [VehicleControlAddon](https://farming-simulator.com/mod.php?mod_id=228601) front differential lock on and off | | 1.1.0.0
 VCA_TOGGLE_DIFFLOCK_BACK | Toggle [VehicleControlAddon](https://farming-simulator.com/mod.php?mod_id=228601) back differential lock on and off | | 1.1.0.0
-VCA_TOGGLE_PARKINGBRAKE | Toggle [VehicleControlAddon](https://farming-simulator.com/mod.php?mod_id=228601) parkingbrake on and off | | 1.1.0.0
+VCA_TOGGLE_PARKINGBRAKE | Toggle [VehicleControlAddon](https://farming-simulator.com/mod.php?mod_id=228601) parking brake on and off | | 1.1.0.0
 HEADLAND_MANAGEMENT_TOGGLE | Toggle [HeadlandManagement](https://farming-simulator.com/mod.php?mod_id=228759) on and off | | 1.1.0.0
 MS_TOGGLE_PUMP | Toggle [ManureSystem](https://farming-simulator.com/mod.php?&mod_id=281039) pump on and off | | 1.2.0.0
 MS_TOGGLE_PUMP_DIRECTION | Toggle [ManureSystem](https://farming-simulator.com/mod.php?&mod_id=281039) pump direction | | 1.2.0.0
