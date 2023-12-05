@@ -19,7 +19,8 @@ Using the controls you can steer different things:
 
 ## Thanks goes to:
 ***Wopster, JoPi, SirJoki80 & Flowsen (for the ui elements) and Face (for the initial idea)***
-***& AgrarKadabra for many contributions! ***
+
+***& AgrarKadabra for many contributions!***
 
 ***VertexDezign & SchnibblModding for testing and providing demo mods!***
 
