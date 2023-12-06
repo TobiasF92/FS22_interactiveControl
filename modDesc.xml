@@ -23,6 +23,7 @@ For further informations: <a href="https://github.com/TobiasF92/FS22_interactive
 Changelog (1.2.0.0):
 - Added translations: french, portuguese (BR)
 - Added support for ManureSystem
+- Fixed rare LUA-Error (InteractiveControl.lua:1244: attempt to compare number with nil)
 
 Changelog (1.1.1.0):
 - Updated translations: russian
@@ -55,6 +56,7 @@ Für mehr Informationen: <a href="https://github.com/TobiasF92/FS22_interactiveC
 Changelog (1.2.0.0):
 - Übersetzungen hinzugefügt: französisch, portugiesisch (BR)
 - Untersützung für ManureSystem hinzugefügt
+- Seltener LUA-Fehler behoben (InteractiveControl.lua:1244: attempt to compare number with nil)
 
 Changelog (1.1.1.0):
 - Übersetzungen aktualisiert: russisch

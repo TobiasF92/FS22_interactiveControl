@@ -153,7 +153,7 @@ function InteractiveControl.registerOverwrittenFunctions(vehicleType)
 end
 
 ---Called before load
----@param savegame table savegame 
+---@param savegame table savegame
 function InteractiveControl:onPreLoad(savegame)
     local name = "spec_interactiveControl"
 
@@ -174,7 +174,7 @@ function InteractiveControl:onPreLoad(savegame)
 end
 
 ---Called on load
----@param savegame table savegame 
+---@param savegame table savegame
 function InteractiveControl:onLoad(savegame)
     local spec = self.spec_interactiveControl
 
@@ -240,7 +240,7 @@ function InteractiveControl:onLoad(savegame)
 end
 
 ---Called after load
----@param savegame table savegame 
+---@param savegame table savegame
 function InteractiveControl:onPostLoad(savegame)
     local spec = self.spec_interactiveControl
 
@@ -1241,7 +1241,7 @@ function InteractiveControl:getIsActive(superFunc)
     end
 
     local spec = self.spec_interactiveControl
-    return self:isOutdoorActive() or spec.updateTimer >= g_currentMission.time
+    return self:isOutdoorActive() or (g_currentMission ~= nil and g_currentMission.time ~= nil and spec.updateTimer >= g_currentMission.time)
 end
 
 ---Overwritten function: getIsMovingToolActive
