@@ -615,11 +615,16 @@ function InteractiveControl:onUpdateTick(dt, isActiveForInput, isActiveForInputI
 
         if isOutdoor then
             self:updateInteractiveControls(isIndoor, isOutdoor, isActiveForInputIgnoreSelection)
-
-        elseif g_noHudModeEnabled and isIndoor or isOutdoor then
+			if self:getState() then
+				renderText(0.5, 0.5, 0.018, "+")
+			end
+        -- elseif g_noHudModeEnabled and isIndoor or isOutdoor then
+        elseif isIndoor or isOutdoor then
             self:updateInteractiveControls(isIndoor, isOutdoor, isActiveForInputIgnoreSelection)
-
-        elseif not isOutdoor and not isIndoor or not self:getICState() then
+			if self:getState() then
+				renderText(0.5, 0.5, 0.018, "+")
+			end
+        elseif not isOutdoor and not isIndoor or not self:getState() then
             self:updateInteractiveControls(false, false, isActiveForInputIgnoreSelection)
         end
 
