@@ -93,6 +93,15 @@ function InteractiveControl.initSpecialization()
         schema:register(XMLValueType.INT, interactiveControlPath .. ".dependingInteractiveControl(?)#index", "Index of depending interactive control")
         schema:register(XMLValueType.BOOL, interactiveControlPath .. ".dependingInteractiveControl(?)#blockState", "Interactive control state to block depending control")
         schema:register(XMLValueType.BOOL, interactiveControlPath .. ".dependingInteractiveControl(?)#forcedBlockedState", "Forced state of depending control if blocked")
+
+        -- register depending dashboards
+        schema:register(XMLValueType.NODE_INDEX, interactiveControlPath .. ".dependingDashboards(?)#node", "Dashboard node")
+        schema:register(XMLValueType.NODE_INDEX, interactiveControlPath .. ".dependingDashboards(?)#numbers", "Dashboard numbers")
+        schema:register(XMLValueType.STRING, interactiveControlPath .. ".dependingDashboards(?)#animName", "Dashboard animName")
+        schema:register(XMLValueType.BOOL, interactiveControlPath .. ".dependingDashboards(?)#dashboardActive", "(IC) Dashboard state while control is active", true)
+        schema:register(XMLValueType.BOOL, interactiveControlPath .. ".dependingDashboards(?)#dashboardInactive", "(IC) Dashboard state while control is inactive", true)
+        schema:register(XMLValueType.BOOL, interactiveControlPath .. ".dependingDashboards(?)#dashboardValueActive", "(IC) Dashboard value while control is active")
+        schema:register(XMLValueType.BOOL, interactiveControlPath .. ".dependingDashboards(?)#dashboardValueInactive", "(IC) Dashboard value while control is inactive")
     end
 
     -- add to vehicle schema
@@ -126,6 +135,7 @@ function InteractiveControl.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "interactiveControlTriggerCallback", InteractiveControl.interactiveControlTriggerCallback)
     SpecializationUtil.registerFunction(vehicleType, "isOutdoorActive", InteractiveControl.isOutdoorActive)
     SpecializationUtil.registerFunction(vehicleType, "isIndoorActive", InteractiveControl.isIndoorActive)
+    SpecializationUtil.registerFunction(vehicleType, "getICDashboardByIdentifier", InteractiveControl.getICDashboardByIdentifier)
     SpecializationUtil.registerFunction(vehicleType, "getIndoorModifiedSoundFactor", InteractiveControl.getIndoorModifiedSoundFactor)
     SpecializationUtil.registerFunction(vehicleType, "isSoundAnimationDelayed", InteractiveControl.isSoundAnimationDelayed)
     SpecializationUtil.registerFunction(vehicleType, "updateIndoorSoundModifierByControl", InteractiveControl.updateIndoorSoundModifierByControl)
@@ -199,6 +209,7 @@ function InteractiveControl:onLoad(savegame)
 
     spec.state = false
     spec.interactiveControls = {}
+    spec.interactiveControlDependingDashboards = {}
 
     self.xmlFile:iterate(baseKey .. ".interactiveControl", function (_, interactiveControlKey)
         local entry = {}
@@ -208,6 +219,10 @@ function InteractiveControl:onLoad(savegame)
 
             if entry.index <= InteractiveControl.NUM_MAX_CONTROLS then
                 table.insert(spec.interactiveControls, entry)
+
+                for _, dependingDashboard in ipairs(entry.dependingDashboards) do
+                    spec.interactiveControlDependingDashboards[dependingDashboard.identifier] = dependingDashboard
+                end
             else
                 Logging.xmlWarning(self.xmlFile, "Max number of interactive controls reached, ignoring '%s'", interactiveControlKey)
 
@@ -466,6 +481,60 @@ function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
             table.addElement(entry.dependingControls, depending)
         end
     end)
+
+    -- load depending dashboards from xml
+    entry.dependingDashboards = {}
+    if self.spec_dashboard then
+        local spec_dashboard = self.spec_dashboard
+
+        ---Returns dashboard by possible identifiers
+        ---@param dashboards table dashboard entry
+        ---@param _dNode number dashboard node
+        ---@param _dNumber number dashboard number node
+        ---@param _dAnimName string dashboard animation name
+        ---@return table|nil dashboard
+        ---@return any identifier
+        local function getDashboardByIdentifier(dashboards, _dNode, _dNumber, _dAnimName)
+            for _, dashboardI in ipairs(dashboards) do
+                if _dNode ~= nil and dashboardI.node ~= nil and dashboardI.node == _dNode then
+                    return dashboardI, _dNode
+                end
+                if _dNumber ~= nil and dashboardI.numbers ~= nil and dashboardI.numbers == _dNumber then
+                    return dashboardI, _dNumber
+                end
+                if _dAnimName ~= nil and dashboardI.animName ~= nil and dashboardI.animName == _dAnimName then
+                    return dashboardI, _dAnimName
+                end
+            end
+
+            return nil, nil
+        end
+
+        xmlFile:iterate(key .. ".dependingDashboards", function (_, dashboardKey)
+            local dashboardNode = xmlFile:getValue(dashboardKey .. "#node", nil, self.components, self.i3dMappings)
+            local dashboardNumbers = xmlFile:getValue(dashboardKey .. "#numbers", nil, self.components, self.i3dMappings)
+            local dashboardAnimName = xmlFile:getValue(dashboardKey .. "#animName")
+
+            local dashboard, identifier = getDashboardByIdentifier(spec_dashboard.dashboards, dashboardNode, dashboardNumbers, dashboardAnimName)
+            if dashboard == nil then
+                dashboard, identifier = getDashboardByIdentifier(spec_dashboard.criticalDashboards, dashboardNode, dashboardNumbers, dashboardAnimName)
+            end
+
+            if dashboard ~= nil then
+                local dependingDashboard = {
+                    dashboard = dashboard,
+                    identifier = identifier,
+                    interactiveControl = entry,
+                    dashboardActive = xmlFile:getValue(dashboardKey .. "#dashboardActive", true),
+                    dashboardInactive = xmlFile:getValue(dashboardKey .. "#dashboardInactive", true),
+                    dashboardValueActive = xmlFile:getValue(dashboardKey .. "#dashboardValueActive"),
+                    dashboardValueInactive = xmlFile:getValue(dashboardKey .. "#dashboardValueInactive"),
+                }
+
+                table.addElement(entry.dependingDashboards, dependingDashboard)
+            end
+        end)
+    end
 
     ---Returns true if interactive control is enabled by configuration setup
     ---@param _xmlFile XMLFile xml file class instance
@@ -1059,6 +1128,19 @@ function InteractiveControl:isIndoorActive()
     end
 
     return false
+end
+
+---Returns depending dashboard by identifier
+---@param identifier any dashboard identifier
+---@return table|nil dependingDashboard
+function InteractiveControl:getICDashboardByIdentifier(identifier)
+    local spec = self.spec_interactiveControl
+
+    if identifier == nil or identifier == "" then
+        return nil
+    end
+
+    return spec.interactiveControlDependingDashboards[identifier]
 end
 
 -----------
