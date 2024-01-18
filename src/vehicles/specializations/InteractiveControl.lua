@@ -100,8 +100,8 @@ function InteractiveControl.initSpecialization()
         schema:register(XMLValueType.STRING, interactiveControlPath .. ".dependingDashboards(?)#animName", "Dashboard animName")
         schema:register(XMLValueType.BOOL, interactiveControlPath .. ".dependingDashboards(?)#dashboardActive", "(IC) Dashboard state while control is active", true)
         schema:register(XMLValueType.BOOL, interactiveControlPath .. ".dependingDashboards(?)#dashboardInactive", "(IC) Dashboard state while control is inactive", true)
-        schema:register(XMLValueType.BOOL, interactiveControlPath .. ".dependingDashboards(?)#dashboardValueActive", "(IC) Dashboard value while control is active")
-        schema:register(XMLValueType.BOOL, interactiveControlPath .. ".dependingDashboards(?)#dashboardValueInactive", "(IC) Dashboard value while control is inactive")
+        schema:register(XMLValueType.FLOAT, interactiveControlPath .. ".dependingDashboards(?)#dashboardValueActive", "(IC) Dashboard value while control is active")
+        schema:register(XMLValueType.FLOAT, interactiveControlPath .. ".dependingDashboards(?)#dashboardValueInactive", "(IC) Dashboard value while control is inactive")
     end
 
     -- add to vehicle schema
@@ -530,6 +530,8 @@ function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
                     dashboardValueActive = xmlFile:getValue(dashboardKey .. "#dashboardValueActive"),
                     dashboardValueInactive = xmlFile:getValue(dashboardKey .. "#dashboardValueInactive"),
                 }
+
+                print_r(dependingDashboard, 1)
 
                 table.addElement(entry.dependingDashboards, dependingDashboard)
             end
