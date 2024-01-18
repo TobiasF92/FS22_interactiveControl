@@ -531,8 +531,6 @@ function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
                     dashboardValueInactive = xmlFile:getValue(dashboardKey .. "#dashboardValueInactive"),
                 }
 
-                print_r(dependingDashboard, 1)
-
                 table.addElement(entry.dependingDashboards, dependingDashboard)
             end
         end)
