@@ -165,8 +165,9 @@ function InteractiveClickPoint:updateScreenPosition(mousePosX, mousePosY)
     self.screenPosX = sx
     self.screenPosY = sy
 
+    local nodeIsVisible = getVisibility(self.node)
     local isOnScreen = sx > -1 and sx < 2 and sy > -1 and sy < 2 and sz <= 1
-    self:setIsActive(isOnScreen)
+    self:setIsActive(nodeIsVisible and isOnScreen)
 
     if isOnScreen then
         if self.alignToCamera then
@@ -180,6 +181,7 @@ function InteractiveClickPoint:updateScreenPosition(mousePosX, mousePosY)
                     dirY = -dirY
                     dirZ = -dirZ
                 end
+
                 I3DUtil.setWorldDirection(self.node, dirX, dirY, dirZ, 0, 1, 0)
             end
         else
