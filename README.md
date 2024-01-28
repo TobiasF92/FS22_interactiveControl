@@ -79,6 +79,11 @@ Explained XML documentation [HTML-file](documentation/interactiveControl.html)
                         <state rotation="x y z" scale="x y z" translation="x y z" value="1 2 .. n" visibility="boolean"/>
                     </dashboard>
 
+                    <!-- You can change the active state of dashboards here.-->
+                    <!-- Keep in mind to set an value inactive in most entries, not all dashboards are working with the active state -->
+                    <!-- Keep in mind that only vanilla dashboard types are supported! -->
+                    <dependingDashboards animName="string" dashboardActive="true" dashboardInactive="true" dashboardValueActive="float" dashboardValueInactive="float" node="node" numbers="node"/>
+
                     <!-- You can block unused moving parts here -->
                     <dependingMovingPart isInactive="true" node="node"/>
 

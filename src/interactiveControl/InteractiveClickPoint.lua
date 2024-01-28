@@ -155,6 +155,17 @@ function InteractiveClickPoint:delete()
     InteractiveClickPoint:superClass().delete(self)
 end
 
+---Returns true if is active, false otherwise
+---@return boolean isActivatable
+function InteractiveClickPoint:isActivatable()
+    -- check node visibility
+    if not getVisibility(self.node) then
+        return false
+    end
+
+    return InteractiveClickPoint:superClass().isActivatable(self)
+end
+
 ---Updates screen position of clickPoint
 ---@param mousePosX number x position of mouse
 ---@param mousePosY number y position of mouse
