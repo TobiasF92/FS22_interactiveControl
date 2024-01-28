@@ -112,7 +112,8 @@ end
 
 ---Installs InteractiveControl spec in all vehicles
 function InteractiveControlManager.installSpecializations(vehicleTypeManager, specializationManager, modDirectory, modName)
-    specializationManager:addSpecialization("interactiveControl", "InteractiveControl", Utils.getFilename("src/vehicles/specializations/InteractiveControl.lua", modDirectory), nil)
+    local specFilename = Utils.getFilename("src/vehicles/specializations/InteractiveControl.lua", modDirectory)
+    specializationManager:addSpecialization("interactiveControl", "InteractiveControl", specFilename, nil)
 
     local function getInteractiveControlForced(specializations)
         for _, spec in ipairs(specializations) do

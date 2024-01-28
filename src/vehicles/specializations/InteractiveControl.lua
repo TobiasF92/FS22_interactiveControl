@@ -1241,7 +1241,7 @@ function InteractiveControl:getIsActive(superFunc)
     end
 
     local spec = self.spec_interactiveControl
-    return self:isOutdoorActive() or (g_currentMission ~= nil and g_currentMission.time ~= nil and spec.updateTimer >= g_currentMission.time)
+    return self:isOutdoorActive() or (g_currentMission ~= nil and g_currentMission.time ~= nil and (spec.updateTimer or 0) >= g_currentMission.time)
 end
 
 ---Overwritten function: getIsMovingToolActive

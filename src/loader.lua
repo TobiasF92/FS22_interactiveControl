@@ -5,7 +5,7 @@
 --
 -- @author John Deere 6930 @VertexDezign
 ----------------------------------------------------------------------------------------------------
--- Thanks goes to: Wopster, JoPi, SirJoki80 & Flowsen (for the ui elements) and Face (for the initial idea)
+-- Thanks goes to: Wopster, JoPi, SirJoki80 & Flowsen (for the ui elements) and Face (for the initial idea) & AgrarKadabra for many contributions!
 ----------------------------------------------------------------------------------------------------
 
 local modDirectory = g_currentModDirectory
