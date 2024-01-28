@@ -96,6 +96,55 @@ local function getModifierFactor(soundManager, superFunc, sample, modifierName)
     return superFunc(soundManager, sample, modifierName)
 end
 
+---Overwritten function: Dashboard.defaultDashboardStateFunc
+---Injects InteractiveControl dashboard overwriting
+---@param vehicle Vehicle Instance of vehicle
+---@param superFunc function original function
+---@param dashboard table Dashboard entry
+---@param newValue any
+---@param minValue any
+---@param maxValue any
+---@param isActive any
+local function defaultDashboardStateFunc(vehicle, superFunc, dashboard, newValue, minValue, maxValue, isActive)
+    if vehicle.getICDashboardByIdentifier ~= nil then
+        local dependingDashboard = nil
+
+        if dashboard.node ~= nil then
+            dependingDashboard = vehicle:getICDashboardByIdentifier(dashboard.node)
+        end
+
+        if dependingDashboard == nil and dashboard.numbers ~= nil then
+            dependingDashboard = vehicle:getICDashboardByIdentifier(dashboard.numbers)
+        end
+
+        if dependingDashboard == nil and dashboard.animName ~= nil then
+            dependingDashboard = vehicle:getICDashboardByIdentifier(dashboard.animName)
+        end
+
+        if dependingDashboard ~= nil then
+            local interactiveControl = dependingDashboard.interactiveControl
+
+            if interactiveControl.isEnabled then
+                if interactiveControl.state then
+                    isActive = dependingDashboard.dashboardActive
+
+                    if dependingDashboard.dashboardValueActive ~= nil then
+                        newValue = dependingDashboard.dashboardValueActive
+                    end
+                else
+                    isActive = dependingDashboard.dashboardInactive
+
+                    if dependingDashboard.dashboardValueInactive ~= nil then
+                        newValue = dependingDashboard.dashboardValueInactive
+                    end
+                end
+            end
+        end
+    end
+
+    superFunc(vehicle, dashboard,newValue, minValue, maxValue, isActive)
+end
+
 ---Appended function: InGameMenuGeneralSettingsFrame.onFrameOpen
 ---Adds initialization of settings gui elements
 ---@param settingsFrame InGameMenuGeneralSettingsFrame instance of InGameMenuGeneralSettingsFrame
@@ -139,6 +188,7 @@ local function init()
 
     TypeManager.validateTypes = Utils.prependedFunction(TypeManager.validateTypes, validateTypes)
     SoundManager.getModifierFactor = Utils.overwrittenFunction(SoundManager.getModifierFactor, getModifierFactor)
+    Dashboard.defaultDashboardStateFunc = Utils.overwrittenFunction(Dashboard.defaultDashboardStateFunc, defaultDashboardStateFunc)
 
     InGameMenuGeneralSettingsFrame.onFrameOpen = Utils.appendedFunction(InGameMenuGeneralSettingsFrame.onFrameOpen, initGui)
     InGameMenuGeneralSettingsFrame.updateGeneralSettings = Utils.appendedFunction(InGameMenuGeneralSettingsFrame.updateGeneralSettings, updateGui)
