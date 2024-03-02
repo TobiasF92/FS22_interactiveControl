@@ -6,8 +6,8 @@
         <text name="action_deactivateIC" text="Скрыть Интерактивный Контроль"/>
 
         <!-- interactive control actions -->
-        <text name="actionIC_activate" text="IC: Показать"/>
-        <text name="actionIC_deactivate" text="IC: Скрыть"/>
+        <text name="actionIC_activate" text="IC: Включить"/>
+        <text name="actionIC_deactivate" text="IC: Выключить"/>
         
         <text name="actionIC_startMotor" text="IC: Запустить двигатель"/>
         <text name="actionIC_stopMotor" text="IC: Заглушить двигатель"/>
