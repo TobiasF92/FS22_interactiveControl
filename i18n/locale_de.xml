@@ -68,6 +68,9 @@
         <text name="actionIC_openCover" text="IC: Abdeckung öffnen"/>
         <text name="actionIC_closeCover" text="IC: Abdeckung schließen"/>
 
+        <text name="actionIC_discharge" text="IC: Abladen"/>
+        <text name="actionIC_stop_discharge" text="IC: Abladen beenden"/>
+
         <text name="actionIC_radioOn" text="IC: Radio anschalten"/>
         <text name="actionIC_radioOff" text="IC: Radio ausschalten"/>
     

@@ -68,6 +68,9 @@
         <text name="actionIC_openCover" text="IC: Otevřít kryt"/>
         <text name="actionIC_closeCover" text="IC: Zavřít kryt"/>
 
+        <text name="actionIC_discharge" text="IC: Vykládání"/>
+        <text name="actionIC_stop_discharge" text="IC: Zastavení vykládky"/>
+
         <text name="actionIC_radioOn" text="IC: Zapnout rádio"/>
         <text name="actionIC_radioOff" text="IC: Vypnout rádio"/>
     
