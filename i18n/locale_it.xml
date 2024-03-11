@@ -68,6 +68,9 @@
         <text name="actionIC_openCover" text="IC: Apri copertuna"/>
         <text name="actionIC_closeCover" text="IC: Chiudi copertina"/>
 
+        <text name="actionIC_discharge" text="IC: Scarico"/>
+        <text name="actionIC_stop_discharge" text="IC: Interrompere lo scarico"/>
+
         <text name="actionIC_radioOn" text="IC: Radio on"/>
         <text name="actionIC_radioOff" text="IC: Radio off"/>
     

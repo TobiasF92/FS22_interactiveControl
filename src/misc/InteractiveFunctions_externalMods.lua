@@ -605,7 +605,7 @@ InteractiveFunctions.addFunction("MS_TOGGLE_PUMP_DIRECTION", {
         end
     end,
     updateFunc = function(target, data)
-        if target.spec_manureSystemPumpMotor.pumpDirection == 1 then
+        if target.spec_manureSystemPumpMotor and target.spec_manureSystemPumpMotor.pumpDirection == 1 then
             return true
         end
         return false

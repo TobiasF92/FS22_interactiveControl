@@ -68,6 +68,9 @@
         <text name="actionIC_openCover" text="IC: Otwórz pokrywę"/>
         <text name="actionIC_closeCover" text="IC: Zamknij pokrywę"/>
 
+        <text name="actionIC_discharge" text="IC: Rozładunek"/>
+        <text name="actionIC_stop_discharge" text="IC: Zatrzymaj rozładunek"/>
+
         <text name="actionIC_radioOn" text="IC: Radio on"/>
         <text name="actionIC_radioOff" text="IC: Radio off"/>
     
