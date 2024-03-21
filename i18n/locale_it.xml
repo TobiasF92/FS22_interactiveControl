@@ -8,13 +8,13 @@
         <!-- interactive control actions -->
         <text name="actionIC_activate" text="IC: Attivo"/>
         <text name="actionIC_deactivate" text="IC: Disattiva"/>
-        
+
         <text name="actionIC_startMotor" text="IC: Start motore"/>
         <text name="actionIC_stopMotor" text="IC: Stop motore"/>
-        
+
         <text name="actionIC_liftImplement" text="IC: Solleva attrezzo"/>
         <text name="actionIC_lowerImplement" text="IC: Abbassa attrezzo"/>
-        
+
         <text name="actionIC_turnOnImplement" text="IC: Attiva attrezzo"/>
         <text name="actionIC_turnOffImplement" text="IC: Ferma attrezzo"/>
 
@@ -22,29 +22,29 @@
         <text name="actionIC_unfoldImplement" text="IC: Dispiega attrezzo"/>
 
         <text name="actionIC_foldVehicle" text="IC: Ripiegare veicolo" />
-		<text name="actionIC_unfoldVehicle" text="IC: Dispiegare veicolo" />
-        
+        <text name="actionIC_unfoldVehicle" text="IC: Dispiegare veicolo" />
+
         <text name="actionIC_foldPipe" text="IC: Piegare tubo" />
-		<text name="actionIC_unfoldPipe" text="IC: Dispiegare tubo" />
-        
+        <text name="actionIC_unfoldPipe" text="IC: Dispiegare tubo" />
+
         <text name="actionIC_openRoof" text="IC: Apri tetto"/>
         <text name="actionIC_closeRoof" text="IC: Chiudi tetto"/>
-        
+
         <text name="actionIC_openDoor" text="IC: Apri porta"/>
         <text name="actionIC_closeDoor" text="IC: Chiudi porta"/>
-        
+
         <text name="actionIC_openWindow" text="IC: Apri finestra"/>
         <text name="actionIC_closeWindow" text="IC: Chiudi finestra"/>
-        
+
         <text name="actionIC_lightsOn" text="IC: Attiva luci di svolta"/>
         <text name="actionIC_lightsOff" text="IC: Disattive luci di svolta"/>
-        
+
         <text name="actionIC_highbeamlightsOn" text="IC: Accendere le luci abbaglianti"/>
         <text name="actionIC_highbeamlightsOff" text="IC: Spegnere le luci abbaglianti"/>
-        
+
         <text name="actionIC_workLightsFrontOn" text="IC: Accendere i fari da lavoro anteriori"/>
         <text name="actionIC_workLightsFrontOff" text="IC: Spegnere i fari da lavoro anteriori"/>
-        
+
         <text name="actionIC_workLightsBackOn" text="IC: Accendere i fari di lavoro posteriori"/>
         <text name="actionIC_workLightsBackOff" text="IC: Spegnere i fari di lavoro posteriori"/>
 
@@ -56,7 +56,7 @@
 
         <text name="actionIC_hazardLightsOn" text="IC: Accendere le luci di emergenza"/>
         <text name="actionIC_hazardLightsOff" text="IC: Spegnere le luci di emergenza"/>
-                
+
         <text name="actionIC_pipeLightsOn" text="IC: Accendere la luce del tubo"/>
         <text name="actionIC_pipeLightsOff" text="IC: Spegnere la luce del tubo"/>
 
@@ -64,7 +64,7 @@
         <text name="actionIC_gs_deactivate" text="IC: GS diasttiva"/>
 
         <text name="actionIC_cruiseControl_toggle" text="IC: Alterna il cruise control"/>
-        
+
         <text name="actionIC_openCover" text="IC: Apri copertuna"/>
         <text name="actionIC_closeCover" text="IC: Chiudi copertina"/>
 
@@ -73,7 +73,7 @@
 
         <text name="actionIC_radioOn" text="IC: Radio on"/>
         <text name="actionIC_radioOff" text="IC: Radio off"/>
-    
+
         <text name="actionIC_crabSteering_toggle" text="IC: modalità di sterzata"/>
 
         <text name="actionIC_reverseDriving_toggle" text="IC: Cambiare la direzione di marcia"/>
@@ -99,7 +99,7 @@
         <!-- inputs -->
         <text name="input_IC_CLICK" text="IC: Controllo interattivo ClickPoint"/>
         <text name="input_IC_TOGGLE_STATE" text="IC: Alterna il controllo interattivo"/>
-        
+
         <!-- settings -->
         <text name="settingsIC_title" text="Interactive Control"/>
         <text name="settingsIC_state_title" text="Stato del CI"/>

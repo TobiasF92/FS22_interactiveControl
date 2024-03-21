@@ -210,7 +210,7 @@ function InteractiveClickPoint:updateClickable(mousePosX, mousePosY)
     if mousePosX ~= nil and mousePosY ~= nil then
         local halfSize = self.size / 2
         local isMouseOver = mousePosX > self.screenPosX - halfSize and mousePosX < self.screenPosX + halfSize
-                        and mousePosY > self.screenPosY - halfSize and mousePosY < self.screenPosY + halfSize
+            and mousePosY > self.screenPosY - halfSize and mousePosY < self.screenPosY + halfSize
 
         if self.clickIconNode ~= nil then
             local scale = getScale(self.clickIconNode)

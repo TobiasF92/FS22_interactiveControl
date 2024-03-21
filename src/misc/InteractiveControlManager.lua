@@ -127,7 +127,7 @@ function InteractiveControlManager.installSpecializations(vehicleTypeManager, sp
 
     for typeName, typeEntry in pairs(vehicleTypeManager:getTypes()) do
         local add = SpecializationUtil.hasSpecialization(Enterable, typeEntry.specializations)
-                    or SpecializationUtil.hasSpecialization(Attachable, typeEntry.specializations)
+            or SpecializationUtil.hasSpecialization(Attachable, typeEntry.specializations)
 
         if not add then
             add = getInteractiveControlForced(typeEntry.specializations)

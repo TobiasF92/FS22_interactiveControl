@@ -188,7 +188,7 @@ end
 function InteractiveControl:onLoad(savegame)
     local spec = self.spec_interactiveControl
 
-    self.xmlFile:iterate("vehicle.interactiveControl.registers.clickIcon", function (_, registerIconTypeKey)
+    self.xmlFile:iterate("vehicle.interactiveControl.registers.clickIcon", function(_, registerIconTypeKey)
         local name = self.xmlFile:getValue(registerIconTypeKey .. "#name")
         if name ~= nil and name ~= "" then
             local filename = self.xmlFile:getValue(registerIconTypeKey .. "#filename")
@@ -202,7 +202,8 @@ function InteractiveControl:onLoad(savegame)
     local interactiveControlConfigurationId = Utils.getNoNil(self.configurations.interactiveControl, 1)
     local baseKey = string.format("vehicle.interactiveControl.interactiveControlConfigurations.interactiveControlConfiguration(%d).interactiveControls", interactiveControlConfigurationId - 1)
 
-    ObjectChangeUtil.updateObjectChanges(self.xmlFile, "vehicle.interactiveControl.interactiveControlConfigurations.interactiveControlConfiguration", interactiveControlConfigurationId, self.components, self)
+    ObjectChangeUtil.updateObjectChanges(self.xmlFile, "vehicle.interactiveControl.interactiveControlConfigurations.interactiveControlConfiguration",
+        interactiveControlConfigurationId, self.components, self)
 
     spec.movingToolsInactive = {}
     spec.movingPartsInactive = {}
@@ -211,7 +212,7 @@ function InteractiveControl:onLoad(savegame)
     spec.interactiveControls = {}
     spec.interactiveControlDependingDashboards = {}
 
-    self.xmlFile:iterate(baseKey .. ".interactiveControl", function (_, interactiveControlKey)
+    self.xmlFile:iterate(baseKey .. ".interactiveControl", function(_, interactiveControlKey)
         local entry = {}
 
         if self:loadInteractiveControlFromXML(self.xmlFile, interactiveControlKey, entry) then
@@ -244,8 +245,8 @@ function InteractiveControl:onLoad(savegame)
     end
 
     spec.updateTimer = 0
-    spec.updateTimerOffset = 1500  -- ms
-    spec.functionUpdateTimeOffset = 2500  -- ms
+    spec.updateTimerOffset = 1500        -- ms
+    spec.functionUpdateTimeOffset = 2500 -- ms
 
     spec.updateControlStateTimer = 0
     spec.updateControlStateTimerOffset = 500 --ms
@@ -274,7 +275,7 @@ function InteractiveControl:onPostLoad(savegame)
     if savegame ~= nil then
         local iterationKey = savegame.key .. "." .. g_interactiveControlModName .. ".interactiveControl.control"
 
-        savegame.xmlFile:iterate(iterationKey, function (_, interactiveControlSavegameKey)
+        savegame.xmlFile:iterate(iterationKey, function(_, interactiveControlSavegameKey)
             local index = savegame.xmlFile:getValue(interactiveControlSavegameKey .. "#index")
 
             if index ~= nil then
@@ -353,7 +354,7 @@ function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
     -- load click points from XML
     entry.clickPoints = {}
 
-    xmlFile:iterate(key .. ".clickPoint", function (_, clickPointKey)
+    xmlFile:iterate(key .. ".clickPoint", function(_, clickPointKey)
         local clickPoint = InteractiveClickPoint.new()
 
         if clickPoint:loadFromXML(xmlFile, clickPointKey, self, entry) then
@@ -369,7 +370,7 @@ function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
     -- load buttons from XML
     entry.buttons = {}
 
-    xmlFile:iterate(key .. ".button", function (_, buttonKey)
+    xmlFile:iterate(key .. ".button", function(_, buttonKey)
         local button = InteractiveButton.new()
 
         if button:loadFromXML(xmlFile, buttonKey, self, entry) then
@@ -385,7 +386,7 @@ function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
     -- load animations from XML
     entry.animations = {}
 
-    xmlFile:iterate(key .. ".animation", function (_, animationKey)
+    xmlFile:iterate(key .. ".animation", function(_, animationKey)
         local animation = {}
 
         if self:loadAnimationFromXML(xmlFile, animationKey, animation) then
@@ -400,7 +401,7 @@ function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
     -- load functions from XML
     entry.functions = {}
 
-    xmlFile:iterate(key .. ".function", function (_, functionKey)
+    xmlFile:iterate(key .. ".function", function(_, functionKey)
         local func = {}
 
         if self:loadFunctionFromXML(xmlFile, functionKey, func) then
@@ -427,7 +428,7 @@ function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
             valueObject = entry
         })
         self:loadDashboardsFromXML(xmlFile, key, {
-            valueFunc = function (interactiveControl)
+            valueFunc = function(interactiveControl)
                 return interactiveControl.state and 1 or 0
             end,
             valueTypeToLoad = "ic_stateValue",
@@ -444,7 +445,7 @@ function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
     end
 
     -- load dependingMovingTools from xml
-    xmlFile:iterate(key .. ".dependingMovingTool", function (_, movingToolKey)
+    xmlFile:iterate(key .. ".dependingMovingTool", function(_, movingToolKey)
         local mNode = xmlFile:getValue(movingToolKey .. "#node", nil, self.components, self.i3dMappings)
         local isInactive = xmlFile:getValue(movingToolKey .. "#isInactive")
         local movingTool = self:getMovingToolByNode(mNode)
@@ -455,7 +456,7 @@ function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
     end)
 
     -- load dependingMovingParts from xml
-    xmlFile:iterate(key .. ".dependingMovingPart", function (_, movingPartKey)
+    xmlFile:iterate(key .. ".dependingMovingPart", function(_, movingPartKey)
         local mNode = xmlFile:getValue(movingPartKey .. "#node", nil, self.components, self.i3dMappings)
         local isInactive = xmlFile:getValue(movingPartKey .. "#isInactive")
         local movingPart = self:getMovingPartByNode(mNode)
@@ -468,7 +469,7 @@ function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
     -- load depending interactive controls from xml
     entry.isBlocked = false
     entry.dependingControls = {}
-    xmlFile:iterate(key .. ".dependingInteractiveControl", function (_, dependingControlKey)
+    xmlFile:iterate(key .. ".dependingInteractiveControl", function(_, dependingControlKey)
         local index = xmlFile:getValue(dependingControlKey .. "#index")
 
         local depending = {
@@ -510,7 +511,7 @@ function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
             return nil, nil
         end
 
-        xmlFile:iterate(key .. ".dependingDashboards", function (_, dashboardKey)
+        xmlFile:iterate(key .. ".dependingDashboards", function(_, dashboardKey)
             local dashboardNode = xmlFile:getValue(dashboardKey .. "#node", nil, self.components, self.i3dMappings)
             local dashboardNumbers = xmlFile:getValue(dashboardKey .. "#numbers", nil, self.components, self.i3dMappings)
             local dashboardAnimName = xmlFile:getValue(dashboardKey .. "#animName")
@@ -543,7 +544,7 @@ function InteractiveControl:loadInteractiveControlFromXML(xmlFile, key, entry)
     local function isRestricted(_xmlFile, _key)
         local isEnabled = true
 
-        _xmlFile:iterate(_key .. ".restriction", function (_, restrictionKey)
+        _xmlFile:iterate(_key .. ".restriction", function(_, restrictionKey)
             if isEnabled then
                 local name = _xmlFile:getValue(restrictionKey .. "#name")
 
@@ -684,10 +685,8 @@ function InteractiveControl:onUpdateTick(dt, isActiveForInput, isActiveForInputI
 
         if isOutdoor then
             self:updateInteractiveControls(isIndoor, isOutdoor, isActiveForInputIgnoreSelection)
-
         elseif g_noHudModeEnabled and isIndoor or isOutdoor then
             self:updateInteractiveControls(isIndoor, isOutdoor, isActiveForInputIgnoreSelection)
-
         elseif not isOutdoor and not isIndoor or not self:getICState() then
             self:updateInteractiveControls(false, false, isActiveForInputIgnoreSelection)
         end
@@ -753,7 +752,7 @@ end
 ---@param cameraIndex integer
 function InteractiveControl:onCameraChanged(activeCamera, cameraIndex)
     local spec = self.spec_interactiveControl
-	local keepAlive = g_currentMission.interactiveControl.settings:getSetting("IC_KEEP_ALIVE")
+    local keepAlive = g_currentMission.interactiveControl.settings:getSetting("IC_KEEP_ALIVE")
 
     if activeCamera.isInside and not keepAlive then
         self:setICState(false)
@@ -771,7 +770,7 @@ end
 function InteractiveControl:updateInteractiveControls(isIndoor, isOutdoor, hasInput)
     local spec = self.spec_interactiveControl
     local activeController
-	local icState = self:getICState()
+    local icState = self:getICState()
 
     -- dont update all controls every time
     local updateControlStates = false
@@ -821,7 +820,6 @@ function InteractiveControl:updateInteractiveControls(isIndoor, isOutdoor, hasIn
 
                 if button:isActivatable() and interactiveControl.isCurrentlyEnabled and (indoor or outdoor)
                     and (activeController == nil or activeController:isa(InteractiveButton)) then
-
                     button:updateDistance(self.currentUpdateDistance)
 
                     if button:isInRange() then
@@ -907,10 +905,9 @@ function InteractiveControl:getICState()
 
     local settingState = g_currentMission.interactiveControl.settings:getSetting("IC_STATE")
     if settingState == InteractiveControlManager.SETTING_STATE_OFF then
-    	return false
-
+        return false
     elseif settingState == InteractiveControlManager.SETTING_STATE_ALWAYS_ON then
-    	return true
+        return true
     end
 
     return spec.state
@@ -1207,8 +1204,8 @@ function InteractiveControl:getMaxIndoorSoundModifier()
     local indoorSoundModifier = InteractiveControl.SOUND_FALLBACK
     for _, interactiveControl in pairs(spec.interactiveControls) do
         if interactiveControl.isEnabled and interactiveControl.soundModifier.indoorFactor ~= nil then
-            indoorSoundModifier = math.max(indoorSoundModifier, interactiveControl.state and
-                                           interactiveControl.soundModifier.indoorFactor or InteractiveControl.SOUND_FALLBACK)
+            local max = interactiveControl.state and interactiveControl.soundModifier.indoorFactor or InteractiveControl.SOUND_FALLBACK
+            indoorSoundModifier = math.max(indoorSoundModifier, max)
         end
     end
 
@@ -1292,11 +1289,9 @@ function InteractiveControl:getInteractiveControlDashboardValue(dashboard)
     if time <= raiseTime then
         -- raise time to active
         value = time / raiseTime
-
     elseif time <= (raiseTime + activeTime) then
         -- time active
         value = 1
-
     elseif time <= (2 * raiseTime + activeTime) then
         -- lower time to idle
         value = 1 - (time - raiseTime - activeTime) / raiseTime
@@ -1345,7 +1340,7 @@ end
 function InteractiveControl:getIsMovingPartActive(superFunc, movingPart)
     local spec = self.spec_interactiveControl
 
-    if spec.movingPartsInactive[movingPart] ~= nil and spec.movingPartsInactive[movingPart]then
+    if spec.movingPartsInactive[movingPart] ~= nil and spec.movingPartsInactive[movingPart] then
         return false
     end
 

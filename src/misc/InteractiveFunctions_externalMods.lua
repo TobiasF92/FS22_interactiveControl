@@ -120,7 +120,7 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_CROP_SENSOR_TOGGLE", {
             return false
         end
 
-        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function(object)
             return object.spec_cropSensor ~= nil and object.spec_cropSensor.isAvailable
         end)
 
@@ -180,7 +180,7 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_SEED_RATE_MODE", {
             return false
         end
 
-        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function(object)
             return object.spec_extendedSowingMachine ~= nil
         end)
 
@@ -248,7 +248,7 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_SEED_RATE_UP", {
             return false
         end
 
-        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function(object)
             return object.spec_extendedSowingMachine ~= nil and not object.spec_extendedSowingMachine.seedRateAutoMode
         end)
 
@@ -278,7 +278,7 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_SEED_RATE_DOWN", {
             return false
         end
 
-        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function(object)
             return object.spec_extendedSowingMachine ~= nil and not object.spec_extendedSowingMachine.seedRateAutoMode
         end)
 
@@ -338,7 +338,7 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_SPRAY_AMOUNT_MODE", {
             return false
         end
 
-        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function(object)
             return object.spec_extendedSprayer ~= nil
         end)
 
@@ -406,7 +406,7 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_SPRAY_AMOUNT_UP", {
             return false
         end
 
-        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function(object)
             return object.spec_extendedSprayer ~= nil and not object.spec_extendedSprayer.sprayAmountAutoMode
         end)
 
@@ -436,7 +436,7 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_SPRAY_AMOUNT_DOWN", {
             return false
         end
 
-        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function(object)
             return object.spec_extendedSprayer ~= nil and not object.spec_extendedSprayer.sprayAmountAutoMode
         end)
 
@@ -569,9 +569,9 @@ InteractiveFunctions.addFunction("HEADLAND_MANAGEMENT_TOGGLE", {
     end
 })
 
------------------------------
----   FS22_manureSystem   ---
------------------------------
+-----------------------
+---FS22_manureSystem---
+-----------------------
 
 ---FUNCTION_MS_TOGGLE_PUMP
 InteractiveFunctions.addFunction("MS_TOGGLE_PUMP", {

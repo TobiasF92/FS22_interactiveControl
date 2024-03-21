@@ -42,7 +42,7 @@ Changelog (1.1.0.0):
 - Fixed various small things
 - Optimized function for attacherJoints lift/lower for more functionality
 
-        ]]></en>
+        ]]>        </en>
         <de><![CDATA['Interactive Control' ist ein globaler Skript-Mod für den Landwirtschafts-Simulator 22. Während dieser Mod aktiv ist, sind Sie in der Lage, viele andere Mods zu verwenden, die Interactive Control unterstützen. Mit IC erhalten Sie die Möglichkeit, viele Teile von mehreren (vorbereiteten) Fahrzeugen interaktiv zu steuern.
 
 'IC' bietet verschiedene Möglichkeiten, mit Ihren Fahrzeugen zu interagieren. Sie können Klicksymbole verwenden, die erscheinen, wenn Sie IC einschalten oder wenn Sie in der Nähe sind. Eine weitere Möglichkeit zur interaktiven Bedienung ist über einen Tastendruck möglich. Die Steuerelemente können als Schalter oder zum Erzwingen eines Zustands verwendet werden. Alle Interaktionen sind generell sowohl innherhalb als auch außerhalb eines Fahrzeugs möglich.
@@ -77,7 +77,7 @@ Changelog (1.1.0.0):
 - Verschiedene kleinere Fehler behoben
 - Optimierte Funktion für AttacherJoints heben/senken für mehr Funktionalität
 
-        ]]></de>
+        ]]>        </de>
     </description>
 
     <iconFilename>icon_interactiveControl.png</iconFilename>

@@ -580,7 +580,7 @@ InteractiveFunctions.addFunction("ATTACHERJOINT_TURN_ON_OFF", {
         return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "ATTACHERJOINT_TURN_ON_OFF")
     end,
     isEnabledFunc = function(target, data)
-        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function(object)
             return object.getCanBeTurnedOn ~= nil and object.spec_turnOnVehicle ~= nil
         end)
 
@@ -643,7 +643,7 @@ InteractiveFunctions.addFunction("ATTACHERJOINT_FOLDING_TOGGLE", {
         return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "ATTACHERJOINT_FOLDING_TOGGLE")
     end,
     isEnabledFunc = function(target, data)
-        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function(object)
             return object.spec_foldable ~= nil and #object.spec_foldable.foldingParts > 0 and not object.spec_foldable.useParentFoldingState
         end)
 
@@ -727,7 +727,6 @@ InteractiveFunctions.addFunction("ATTACHERJOINTS_TOGGLE_DISCHARGE", {
             if attachedObject:getIsDischargeNodeActive(currentDischargeNode) then
                 if attachedObject:getCanDischargeToObject(currentDischargeNode) and attachedObject:getCanToggleDischargeToObject() then
                     Dischargeable.actionEventToggleDischarging(attachedObject)
-
                 elseif attachedObject:getCanDischargeToGround(currentDischargeNode) and attachedObject:getCanToggleDischargeToGround() then
                     Dischargeable.actionEventToggleDischargeToGround(attachedObject)
                 end
@@ -747,9 +746,9 @@ InteractiveFunctions.addFunction("ATTACHERJOINTS_TOGGLE_DISCHARGE", {
         return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "ATTACHERJOINTS_TOGGLE_DISCHARGE")
     end,
     isEnabledFunc = function(target, data)
-        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function(object)
             return object.spec_dischargeable ~= nil and object.getCanToggleDischargeToObject ~= nil and object:getCanToggleDischargeToObject()
-                    or object.getCanToggleDischargeToGround ~= nil and object:getCanToggleDischargeToGround()
+                or object.getCanToggleDischargeToGround ~= nil and object:getCanToggleDischargeToGround()
         end)
 
         return attachedObject ~= nil
@@ -771,11 +770,9 @@ InteractiveFunctions.addFunction("DISCHARGE_TOGGLE", {
                 if target:getIsDischargeNodeActive(currentDischargeNode) then
                     if target:getCanDischargeToObject(currentDischargeNode) and target:getCanToggleDischargeToObject() then
                         Dischargeable.actionEventToggleDischarging(target)
-
                     elseif target:getCanDischargeToGround(currentDischargeNode) and
                         target:getCanToggleDischargeToGround() then
                         Dischargeable.actionEventToggleDischargeToGround(target)
-
                     end
                 end
             else
@@ -959,7 +956,7 @@ InteractiveFunctions.addFunction("ATTACHERJOINTS_VARIABLE_WORK_WIDTH_LEFT_INCREA
         return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "ATTACHERJOINTS_VARIABLE_WORK_WIDTH_LEFT_INCREASE")
     end,
     isEnabledFunc = function(target, data)
-        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function(object)
             if object.spec_variableWorkWidth == nil then
                 return false
             end
@@ -990,7 +987,7 @@ InteractiveFunctions.addFunction("ATTACHERJOINTS_VARIABLE_WORK_WIDTH_LEFT_DECREA
         return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "ATTACHERJOINTS_VARIABLE_WORK_WIDTH_LEFT_DECREASE")
     end,
     isEnabledFunc = function(target, data)
-        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function(object)
             if object.spec_variableWorkWidth == nil then
                 return false
             end
@@ -1061,7 +1058,7 @@ InteractiveFunctions.addFunction("ATTACHERJOINTS_VARIABLE_WORK_WIDTH_RIGHT_INCRE
         return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "ATTACHERJOINTS_VARIABLE_WORK_WIDTH_RIGHT_INCREASE")
     end,
     isEnabledFunc = function(target, data)
-        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function(object)
             if object.spec_variableWorkWidth == nil then
                 return false
             end
@@ -1092,7 +1089,7 @@ InteractiveFunctions.addFunction("ATTACHERJOINTS_VARIABLE_WORK_WIDTH_RIGHT_DECRE
         return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "ATTACHERJOINTS_VARIABLE_WORK_WIDTH_RIGHT_DECREASE")
     end,
     isEnabledFunc = function(target, data)
-        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function(object)
             if object.spec_variableWorkWidth == nil then
                 return false
             end
@@ -1138,7 +1135,7 @@ InteractiveFunctions.addFunction("ATTACHERJOINTS_VARIABLE_WORK_WIDTH_TOGGLE", {
         return InteractiveFunctions.attacherJointsLoad(xmlFile, key, data, "ATTACHERJOINTS_VARIABLE_WORK_WIDTH_TOGGLE")
     end,
     isEnabledFunc = function(target, data)
-        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function(object)
             if object.spec_variableWorkWidth == nil then
                 return false
             end
@@ -1213,7 +1210,7 @@ InteractiveFunctions.addFunction("ATTACHERJOINTS_ATTACH_DETACH", {
         -- no attachable vehicle in range
         if info.attachable == nil then
             -- is there a detachable vehicle?
-            local _, detachableObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+            local _, detachableObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function(object)
                 return object.isDetachAllowed ~= nil and object:isDetachAllowed()
             end)
 

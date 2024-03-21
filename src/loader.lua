@@ -142,7 +142,7 @@ local function defaultDashboardStateFunc(vehicle, superFunc, dashboard, newValue
         end
     end
 
-    superFunc(vehicle, dashboard,newValue, minValue, maxValue, isActive)
+    superFunc(vehicle, dashboard, newValue, minValue, maxValue, isActive)
 end
 
 ---Appended function: InGameMenuGeneralSettingsFrame.onFrameOpen

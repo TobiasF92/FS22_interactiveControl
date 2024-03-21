@@ -60,7 +60,6 @@ function AdditionalSettingsManager:loadFromXML()
                 local value
                 if existingSetting.type == AdditionalSettingsManager.TYPE_CHECKBOX then
                     value = xmlFile:getValue(settingKey .. "#boolean", false)
-
                 elseif existingSetting.type == AdditionalSettingsManager.TYPE_MULTIBOX then
                     value = xmlFile:getValue(settingKey .. "#integer", 1)
                 end
@@ -90,7 +89,6 @@ function AdditionalSettingsManager:saveToXMLFile()
 
             if setting.type == AdditionalSettingsManager.TYPE_CHECKBOX then
                 xmlFile:setValue(settingKey .. "#boolean", setting.value)
-
             elseif setting.type == AdditionalSettingsManager.TYPE_MULTIBOX then
                 xmlFile:setValue(settingKey .. "#integer", setting.value)
             end
@@ -163,7 +161,6 @@ function AdditionalSettingsManager:addSetting(name, type, title, toolTip, initVa
         if initValue == nil then
             initValue = false
         end
-
     elseif type == AdditionalSettingsManager.TYPE_MULTIBOX then
         if callback == nil then
             callback = "onSettingChangedMultibox"
@@ -223,7 +220,6 @@ function AdditionalSettingsManager.createGuiElement(settingsFrame, setting, targ
 
     if setting.type == AdditionalSettingsManager.TYPE_CHECKBOX then
         element:setIsChecked(setting.value)
-
     elseif setting.type == AdditionalSettingsManager.TYPE_MULTIBOX then
         element:setTexts(setting.options)
         element:setState(setting.value, false)
@@ -277,7 +273,6 @@ function AdditionalSettingsManager.updateGui(settingsFrame, modEnvironment)
             if element ~= nil then
                 if setting.type == AdditionalSettingsManager.TYPE_CHECKBOX then
                     element:setIsChecked(setting.value == CheckedOptionElement.STATE_CHECKED)
-
                 elseif setting.type == AdditionalSettingsManager.TYPE_MULTIBOX then
                     element:setState(setting.value)
                 end

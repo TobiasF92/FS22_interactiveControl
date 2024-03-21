@@ -22,10 +22,10 @@
         <text name="actionIC_unfoldImplement" text="IC: Desdobrar implemento"/>
 
         <text name="actionIC_foldVehicle" text="IC: Dobrar veículo" />
-		<text name="actionIC_unfoldVehicle" text="IC: Desdobrar veículo" />
+        <text name="actionIC_unfoldVehicle" text="IC: Desdobrar veículo" />
 
         <text name="actionIC_foldPipe" text="IC: Dobre o tubo" />
-		<text name="actionIC_unfoldPipe" text="IC: Desdobre o tubo" />
+        <text name="actionIC_unfoldPipe" text="IC: Desdobre o tubo" />
 
         <text name="actionIC_openRoof" text="IC: Abrir teto"/>
         <text name="actionIC_closeRoof" text="IC: Fechar teto"/>
