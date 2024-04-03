@@ -61,6 +61,28 @@ InteractiveFunctions.addFunction("GPS_TOGGLE", {
     end
 })
 
+---FUNCTION_GPS_TOGGLE_ACTIVE
+InteractiveFunctions.addFunction("GPS_TOGGLE_ACTIVE", {
+    posFunc = function(target, data, noEventSend)
+        local GlobalPositioningSystem = getExternalModClass("FS22_guidanceSteering", "GlobalPositioningSystem")
+
+        if GlobalPositioningSystem ~= nil then
+            if target.spec_globalPositioningSystem ~= nil and GlobalPositioningSystem.actionEventToggleGuidanceSteering ~= nil then
+                GlobalPositioningSystem.actionEventToggleGuidanceSteering(target)
+            end
+        end
+    end,
+    updateFunc = function(target, data)
+        if target.spec_globalPositioningSystem ~= nil then
+            return target.spec_globalPositioningSystem.guidanceIsActive
+        end
+        return nil
+    end,
+    isEnabledFunc = function(target, data)
+        return target.spec_globalPositioningSystem ~= nil
+    end
+})
+
 ---------------------------
 ---FS22_precisionFarming---
 ---------------------------
