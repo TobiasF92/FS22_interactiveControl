@@ -189,4 +189,4 @@ MS_TOGGLE_PUMP_DIRECTION<sup>2</sup> | Toggle [ManureSystem](https://farming-sim
 
 ## Copyright
 
-Copyright (c) 2022, John Deere 6930. All rights reserved.
+Copyright (c) 2024, John Deere 6930. All rights reserved.
