@@ -25,6 +25,7 @@
         <text name="actionIC_unfoldVehicle" text="IC: Развернуть ТС" />
 
         <text name="actionIC_foldPipe" text="IC: Сложить трубу" />
+
         <text name="actionIC_unfoldPipe" text="IC: Развернуть трубу" />
 
         <text name="actionIC_openRoof" text="IC: Открыть крышу"/>
