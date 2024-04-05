@@ -61,6 +61,28 @@ InteractiveFunctions.addFunction("GPS_TOGGLE", {
     end
 })
 
+---FUNCTION_GPS_TOGGLE_ACTIVE
+InteractiveFunctions.addFunction("GPS_TOGGLE_ACTIVE", {
+    posFunc = function(target, data, noEventSend)
+        local GlobalPositioningSystem = getExternalModClass("FS22_guidanceSteering", "GlobalPositioningSystem")
+
+        if GlobalPositioningSystem ~= nil then
+            if target.spec_globalPositioningSystem ~= nil and GlobalPositioningSystem.actionEventToggleGuidanceSteering ~= nil then
+                GlobalPositioningSystem.actionEventToggleGuidanceSteering(target)
+            end
+        end
+    end,
+    updateFunc = function(target, data)
+        if target.spec_globalPositioningSystem ~= nil then
+            return target.spec_globalPositioningSystem.guidanceIsActive
+        end
+        return nil
+    end,
+    isEnabledFunc = function(target, data)
+        return target.spec_globalPositioningSystem ~= nil
+    end
+})
+
 ---------------------------
 ---FS22_precisionFarming---
 ---------------------------
@@ -120,7 +142,7 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_CROP_SENSOR_TOGGLE", {
             return false
         end
 
-        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function(object)
             return object.spec_cropSensor ~= nil and object.spec_cropSensor.isAvailable
         end)
 
@@ -180,7 +202,7 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_SEED_RATE_MODE", {
             return false
         end
 
-        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function(object)
             return object.spec_extendedSowingMachine ~= nil
         end)
 
@@ -248,7 +270,7 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_SEED_RATE_UP", {
             return false
         end
 
-        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function(object)
             return object.spec_extendedSowingMachine ~= nil and not object.spec_extendedSowingMachine.seedRateAutoMode
         end)
 
@@ -278,7 +300,7 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_SEED_RATE_DOWN", {
             return false
         end
 
-        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function(object)
             return object.spec_extendedSowingMachine ~= nil and not object.spec_extendedSowingMachine.seedRateAutoMode
         end)
 
@@ -338,7 +360,7 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_SPRAY_AMOUNT_MODE", {
             return false
         end
 
-        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function(object)
             return object.spec_extendedSprayer ~= nil
         end)
 
@@ -406,7 +428,7 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_SPRAY_AMOUNT_UP", {
             return false
         end
 
-        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function(object)
             return object.spec_extendedSprayer ~= nil and not object.spec_extendedSprayer.sprayAmountAutoMode
         end)
 
@@ -436,7 +458,7 @@ InteractiveFunctions.addFunction("PF_ATTACHERJOINTS_SPRAY_AMOUNT_DOWN", {
             return false
         end
 
-        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function (object)
+        local _, attachedObject = InteractiveFunctions.getAttacherJointObjectToUse(data, target, function(object)
             return object.spec_extendedSprayer ~= nil and not object.spec_extendedSprayer.sprayAmountAutoMode
         end)
 
@@ -564,6 +586,55 @@ InteractiveFunctions.addFunction("HEADLAND_MANAGEMENT_TOGGLE", {
     isEnabledFunc = function(target, data)
         if target.spec_HeadlandManagement ~= nil then
             return target.spec_HeadlandManagement.exists
+        end
+        return false
+    end
+})
+
+-----------------------
+---FS22_manureSystem---
+-----------------------
+
+---FUNCTION_MS_TOGGLE_PUMP
+InteractiveFunctions.addFunction("MS_TOGGLE_PUMP", {
+    posFunc = function(target, data, noEventSend)
+        local ManureSystemPumpMotor = getExternalModClass("FS22_manureSystem", "ManureSystemPumpMotor")
+
+        if ManureSystemPumpMotor ~= nil then
+            ManureSystemPumpMotor.actionEventTogglePump(target)
+        end
+    end,
+    updateFunc = function(target, data)
+        if target.spec_manureSystemPumpMotor ~= nil then
+            return target.spec_manureSystemPumpMotor.pumpIsRunning
+        end
+        return nil
+    end,
+    isEnabledFunc = function(target, data)
+        if target.spec_manureSystemPumpMotor ~= nil then
+            return true
+        end
+        return false
+    end
+})
+
+InteractiveFunctions.addFunction("MS_TOGGLE_PUMP_DIRECTION", {
+    posFunc = function(target, data, noEventSend)
+        local ManureSystemPumpMotor = getExternalModClass("FS22_manureSystem", "ManureSystemPumpMotor")
+
+        if ManureSystemPumpMotor ~= nil then
+            ManureSystemPumpMotor.actionEventTogglePumpDirection(target)
+        end
+    end,
+    updateFunc = function(target, data)
+        if target.spec_manureSystemPumpMotor and target.spec_manureSystemPumpMotor.pumpDirection == 1 then
+            return true
+        end
+        return false
+    end,
+    isEnabledFunc = function(target, data)
+        if target.spec_manureSystemPumpMotor ~= nil then
+            return true
         end
         return false
     end

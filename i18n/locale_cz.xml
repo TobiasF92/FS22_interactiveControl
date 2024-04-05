@@ -8,13 +8,13 @@
         <!-- interactive control actions -->
         <text name="actionIC_activate" text="IC: Aktivovat"/>
         <text name="actionIC_deactivate" text="IC: Deaktivovat"/>
-        
+
         <text name="actionIC_startMotor" text="IC: Spustit motor"/>
         <text name="actionIC_stopMotor" text="IC: Zastavit motor"/>
-        
+
         <text name="actionIC_liftImplement" text="IC: Zvednout nástroj"/>
         <text name="actionIC_lowerImplement" text="IC: Spustit nástroj"/>
-        
+
         <text name="actionIC_turnOnImplement" text="IC: Spustit nástroj"/>
         <text name="actionIC_turnOffImplement" text="IC: Zastavit nástroj"/>
 
@@ -22,29 +22,29 @@
         <text name="actionIC_unfoldImplement" text="IC: Rozložit nástroj"/>
 
         <text name="actionIC_foldVehicle" text="IC: Složit stroj" />
-		<text name="actionIC_unfoldVehicle" text="IC: Rozložit stroj" />
-        
+        <text name="actionIC_unfoldVehicle" text="IC: Rozložit stroj" />
+
         <text name="actionIC_foldPipe" text="IC: Složit odhazovou rouru" />
-		<text name="actionIC_unfoldPipe" text="IC: Rozložit odhazovou rouru" />
-        
+        <text name="actionIC_unfoldPipe" text="IC: Rozložit odhazovou rouru" />
+
         <text name="actionIC_openRoof" text="IC: Otevřít střechu"/>
         <text name="actionIC_closeRoof" text="IC: Zavřít střechu"/>
-        
+
         <text name="actionIC_openDoor" text="IC: Otevřít dveře"/>
         <text name="actionIC_closeDoor" text="IC: Zavřít dveře"/>
-        
+
         <text name="actionIC_openWindow" text="IC: Otevřít okno"/>
         <text name="actionIC_closeWindow" text="IC: Zavřít okno"/>
-        
+
         <text name="actionIC_lightsOn" text="IC: Zapnout světla"/>
         <text name="actionIC_lightsOff" text="IC: Vypnout světla"/>
-        
+
         <text name="actionIC_highbeamlightsOn" text="IC: Zapnout dálková světla"/>
         <text name="actionIC_highbeamlightsOff" text="IC: Vypnout dálková světla"/>
-        
+
         <text name="actionIC_workLightsFrontOn" text="IC: Zapnout přední pracovní světla"/>
         <text name="actionIC_workLightsFrontOff" text="IC: Vypnout přední pracovní světla"/>
-        
+
         <text name="actionIC_workLightsBackOn" text="IC: Zapnout zadní pracovní světla"/>
         <text name="actionIC_workLightsBackOff" text="IC: Vypnout zadní pracovní světla"/>
 
@@ -56,7 +56,7 @@
 
         <text name="actionIC_hazardLightsOn" text="IC: Zapnout výstražná světla"/>
         <text name="actionIC_hazardLightsOff" text="IC: Vypnout výstražná světla"/>
-        
+
         <text name="actionIC_pipeLightsOn" text="IC: Zapnout vykládací světla"/>
         <text name="actionIC_pipeLightsOff" text="IC: Vypnout vykládací světla"/>
 
@@ -64,14 +64,19 @@
         <text name="actionIC_gs_deactivate" text="IC: Deaktivovat GS"/>
 
         <text name="actionIC_cruiseControl_toggle" text="IC: Přepnout tempomat"/>
-        
+
         <text name="actionIC_openCover" text="IC: Otevřít kryt"/>
         <text name="actionIC_closeCover" text="IC: Zavřít kryt"/>
 
+        <text name="actionIC_discharge" text="IC: Vykládání"/>
+        <text name="actionIC_stop_discharge" text="IC: Zastavení vykládky"/>
+
         <text name="actionIC_radioOn" text="IC: Zapnout rádio"/>
         <text name="actionIC_radioOff" text="IC: Vypnout rádio"/>
-    
+
         <text name="actionIC_crabSteering_toggle" text="IC: Přepnout režim řízení"/>
+
+        <text name="actionIC_reverseDriving_toggle" text="IC: Změna směru jízdy"/>
 
         <text name="actionIC_parkingbrakeOn" text="IC: Zatáhnout parkovací brzdu" />
         <text name="actionIC_parkingbrakeOff" text="IC: Uvolnit parkovací brzdu" />
@@ -85,10 +90,16 @@
         <text name="actionIC_diffLockBackOn" text="IC: Zapnout zadní uzávěrku diferenciálu" />
         <text name="actionIC_diffLockBackOff" text="IC: Vypnout zadní uzávěrku diferenciálu" />
 
+        <text name="actionIC_turnPumpOn" text="IC: Zapnutí čerpadla" />
+        <text name="actionIC_turnPumpOff" text="IC: Vypnutí čerpadla" />
+
+        <text name="actionIC_pumpDirectionDrain" text="IC: Změňte směr čerpadla na: Vyprázdnit" />
+        <text name="actionIC_pumpDirectionFill" text="IC: Změňte směr čerpadla na: Plnění" />
+
         <!-- inputs -->
         <text name="input_IC_CLICK" text="IC: Interaktivní ovládání bod kliknutí"/>
         <text name="input_IC_TOGGLE_STATE" text="IC: Přepnout Interaktivní ovládání"/>
-        
+
         <!-- settings -->
         <text name="settingsIC_title" text="Interaktivní ovládání"/>
         <text name="settingsIC_state_title" text="Stav IC"/>

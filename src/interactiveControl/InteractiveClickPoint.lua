@@ -155,6 +155,17 @@ function InteractiveClickPoint:delete()
     InteractiveClickPoint:superClass().delete(self)
 end
 
+---Returns true if is active, false otherwise
+---@return boolean isActivatable
+function InteractiveClickPoint:isActivatable()
+    -- check node visibility
+    if not getVisibility(self.node) then
+        return false
+    end
+
+    return InteractiveClickPoint:superClass().isActivatable(self)
+end
+
 ---Updates screen position of clickPoint
 ---@param mousePosX number x position of mouse
 ---@param mousePosY number y position of mouse
@@ -165,8 +176,9 @@ function InteractiveClickPoint:updateScreenPosition(mousePosX, mousePosY)
     self.screenPosX = sx
     self.screenPosY = sy
 
+    local nodeIsVisible = getVisibility(self.node)
     local isOnScreen = sx > -1 and sx < 2 and sy > -1 and sy < 2 and sz <= 1
-    self:setIsActive(isOnScreen)
+    self:setIsActive(nodeIsVisible and isOnScreen)
 
     if isOnScreen then
         if self.alignToCamera then
@@ -180,6 +192,7 @@ function InteractiveClickPoint:updateScreenPosition(mousePosX, mousePosY)
                     dirY = -dirY
                     dirZ = -dirZ
                 end
+
                 I3DUtil.setWorldDirection(self.node, dirX, dirY, dirZ, 0, 1, 0)
             end
         else
@@ -197,7 +210,7 @@ function InteractiveClickPoint:updateClickable(mousePosX, mousePosY)
     if mousePosX ~= nil and mousePosY ~= nil then
         local halfSize = self.size / 2
         local isMouseOver = mousePosX > self.screenPosX - halfSize and mousePosX < self.screenPosX + halfSize
-                        and mousePosY > self.screenPosY - halfSize and mousePosY < self.screenPosY + halfSize
+            and mousePosY > self.screenPosY - halfSize and mousePosY < self.screenPosY + halfSize
 
         if self.clickIconNode ~= nil then
             local scale = getScale(self.clickIconNode)

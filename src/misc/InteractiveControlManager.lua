@@ -83,8 +83,8 @@ function InteractiveControlManager:isICActive()
         return self.playerInRange
     end
 
-    if controlledVehicle.getState ~= nil then
-        return controlledVehicle:getState()
+    if controlledVehicle.getICState ~= nil then
+        return controlledVehicle:getICState()
     end
 
     return false
@@ -112,7 +112,8 @@ end
 
 ---Installs InteractiveControl spec in all vehicles
 function InteractiveControlManager.installSpecializations(vehicleTypeManager, specializationManager, modDirectory, modName)
-    specializationManager:addSpecialization("interactiveControl", "InteractiveControl", Utils.getFilename("src/vehicles/specializations/InteractiveControl.lua", modDirectory), nil)
+    local specFilename = Utils.getFilename("src/vehicles/specializations/InteractiveControl.lua", modDirectory)
+    specializationManager:addSpecialization("interactiveControl", "InteractiveControl", specFilename, nil)
 
     local function getInteractiveControlForced(specializations)
         for _, spec in ipairs(specializations) do
@@ -126,7 +127,7 @@ function InteractiveControlManager.installSpecializations(vehicleTypeManager, sp
 
     for typeName, typeEntry in pairs(vehicleTypeManager:getTypes()) do
         local add = SpecializationUtil.hasSpecialization(Enterable, typeEntry.specializations)
-                    or SpecializationUtil.hasSpecialization(Attachable, typeEntry.specializations)
+            or SpecializationUtil.hasSpecialization(Attachable, typeEntry.specializations)
 
         if not add then
             add = getInteractiveControlForced(typeEntry.specializations)
