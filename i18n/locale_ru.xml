@@ -70,7 +70,7 @@
         <text name="actionIC_closeCover" text="IC: Закрыть крышку"/>
 
         <text name="actionIC_discharge" text="IC: Разгрузка"/>
-        <text name="actionIC_stop_discharge" text="IC: Остановите разгрузку"/>
+        <text name="actionIC_stop_discharge" text="IC: Остановить разгрузку"/>
 
         <text name="actionIC_radioOn" text="IC: Включить радио"/>
         <text name="actionIC_radioOff" text="IC: Выключить радио"/>
@@ -94,8 +94,8 @@
         <text name="actionIC_turnPumpOn" text="IC: Включить насос" />
         <text name="actionIC_turnPumpOff" text="IC: Выключить насос" />
 
-        <text name="actionIC_pumpDirectionDrain" text="IC: Изменить направление движения насоса на: Пустой" />
-        <text name="actionIC_pumpDirectionFill" text="IC: Изменить направление насоса на: Заполнение" />
+        <text name="actionIC_pumpDirectionDrain" text="IC: Изменить направление перекачивания на: Опорожнение" />
+        <text name="actionIC_pumpDirectionFill" text="IC: Изменить направление перекачивания на: Заполнение" />
 
         <!-- inputs -->
         <text name="input_IC_CLICK" text="IC: Кнопка действия Интерактивного Контроля"/>
