@@ -83,8 +83,8 @@ function InteractiveControlManager:isICActive()
         return self.playerInRange
     end
 
-    if controlledVehicle.getICState ~= nil then
-        return controlledVehicle:getICState()
+    if controlledVehicle.isICActive ~= nil then
+        return controlledVehicle:isICActive()
     end
 
     return false
