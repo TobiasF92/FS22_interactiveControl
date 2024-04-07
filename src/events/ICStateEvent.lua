@@ -1,6 +1,6 @@
 ---@class ICStateEvent
-
 ICStateEvent = {}
+
 local icStateEvent_mt = Class(ICStateEvent, Event)
 
 InitEventClass(ICStateEvent, "ICStateEvent")
@@ -36,7 +36,7 @@ function ICStateEvent:run(connection)
         g_server:broadcastEvent(self, false, connection, self.object)
     end
 
-    self.object:setICState(self.state, true)
+    self.object:setICActive(self.state, true)
 end
 
 function ICStateEvent.sendEvent(object, state, noEventSend)

@@ -1,6 +1,6 @@
 ---@class ICNumStateEvent
-
 ICNumStateEvent = {}
+
 local icNumStateEvent_mt = Class(ICNumStateEvent, Event)
 
 InitEventClass(ICNumStateEvent, "ICNumStateEvent")
